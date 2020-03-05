@@ -1,10 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-
-
 export default class Navbar extends React.Component{
-
+  constructor(props){
+    super(props);
+  }
 
     render(){
         return (
@@ -25,10 +25,10 @@ export default class Navbar extends React.Component{
               <ul>
                 <li>
                   <Link to="/acceuil">
-                  <a  >
+                  
                     <span><img src="images/icon1.png" alt="" /></span>
                     Home
-                  </a></Link>
+                  </Link>
                 </li>
                 <li>
                     <Link to='/compagnies'>
@@ -37,16 +37,16 @@ export default class Navbar extends React.Component{
                     Companies
                   </Link>
                   <ul>
-                  <Link to='/compagnies'> <li><a  >Companies</a></li></Link>
-                  <Link to='/compagnies:id'> <li><a  >Company Profile</a></li></Link>
+                  <Link to='/compagnies'> <li> Companies</li></Link>
+                  <Link to='/compagnies:id'> <li>Company Profile</li></Link>
                   </ul>
                 </li>
                 <li>
                 <Link to='/projects'> 
-                  <a >
+                  
                     <span><img src="images/icon3.png" alt="" /></span>
                     Projects
-                  </a></Link>
+                  </Link>
                 </li>
                 <li>
                   
@@ -68,14 +68,14 @@ export default class Navbar extends React.Component{
                 </li>
                 <li>
                   
-                  <a   className="not-box-openm">
+                  <Link  to='#' className="not-box-openm">
                     <span><img src="images/icon6.png" alt="" /></span>
                     Messages
-                  </a>
+                  </Link>
                   <div className="notification-box msg" id="message">
                     <div className="nt-">
                       <h4 />
-                      <a  >Clear all</a>
+                      
                     </div>
                     <div className="nott-list">
                       <div className="notfication-details">
@@ -115,14 +115,13 @@ export default class Navbar extends React.Component{
                   </div>{/*notification-box end*/}
                 </li>
                 <li>
-                  <a   className="not-box-open">
+                  <Link to='#'   className="not-box-open">
                     <span><img src="images/icon7.png" alt="" /></span>
                     Notification
-                  </a>
+                  </Link>
                   <div className="notification-box noti" id="notification">
                     <div className="nt-">
                       <h4 />
-                      <a  >Clear all</a>
                     </div>
                     <div className="nott-list">
                       <div className="notfication-details">
@@ -192,7 +191,7 @@ export default class Navbar extends React.Component{
             <div className="user-account">
               <div className="user-info">
                 <img src="images/resources/user.png" alt="" />
-                <a  >John</a>
+                <Link to="#" >John</Link>
                 <i className="la la-sort-down" />
               </div>
               <div className="user-account-settingss" id="users">
@@ -226,12 +225,10 @@ export default class Navbar extends React.Component{
                 </div>{/*search_form end*/}
                 <h3>Setting</h3>
                 <ul className="us-links">
-                  <li><a  >Account Setting</a></li>
-                  <li><a  >Privacy</a></li>
-                  <li><a  >Faqs</a></li>
-                  <li><a  >Terms &amp; Conditions</a></li>
+                  <li><Link to='#' >Account Setting</Link></li>
+                  
                 </ul>
-                <h3 className="tc"><a  >Logout</a></h3>
+                <h3 className="tc" onClick={this.props.Logout}><Link to="/" >Logout</Link></h3>
               </div>{/*user-account-settingss end*/}
             </div>
           </div>{/*header-data end*/}

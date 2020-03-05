@@ -34,7 +34,7 @@ export default class Home extends React.Component{
                             <span>155</span>
                           </li>
                           <li>
-                            <a href="http://www.gambolthemes.net/workwise-new/my-profile.html" title>View Profile</a>
+                            <a href="http://www.gambolthemes.net/workwise-new/my-profile.html" >View Profile</a>
                           </li>
                         </ul>
                       </div>{/*user-data end*/}
@@ -69,20 +69,20 @@ export default class Home extends React.Component{
                             <span><i className="la la-plus" /></span>
                           </div>
                           <div className="view-more">
-                            <a href="#" title>View More</a>
+                            <a href="#" >View More</a>
                           </div>
                         </div>{/*suggestions-list end*/}
                       </div>{/*suggestions end*/}
                       <div className="tags-sec full-width">
                         <ul>
-                          <li><a href="#" title>Help Center</a></li>
-                          <li><a routerlink="/about" title>About</a></li>
-                          <li><a href="#" title>Privacy Policy</a></li>
-                          <li><a href="#" title>Community Guidelines</a></li>
-                          <li><a href="#" title>Cookies Policy</a></li>
-                          <li><a href="#" title>Career</a></li>
-                          <li><a href="#" title>Language</a></li>
-                          <li><a href="#" title>Copyright Policy</a></li>
+                          <li><a href="#" >Help Center</a></li>
+                          <li><a routerlink="/about" >About</a></li>
+                          <li><a href="#" >Privacy Policy</a></li>
+                          <li><a href="#" >Community Guidelines</a></li>
+                          <li><a href="#" >Cookies Policy</a></li>
+                          <li><a href="#" >Career</a></li>
+                          <li><a href="#" >Language</a></li>
+                          <li><a href="#" >Copyright Policy</a></li>
                         </ul>
                         <div className="cp-sec">
                           <img src="assets/images/logo2.png" alt="" />
@@ -99,8 +99,8 @@ export default class Home extends React.Component{
                         </div>
                         <div className="post-st">
                           <ul>
-                            <li><a className="post_project" href="#" title>Post a Project</a></li>
-                            <li><a className="post-jb active" href="#" title>Post a Job</a></li>
+                            <li><a className="post_project" href="#" >Post a Project</a></li>
+                            <li><a className="post-jb active" href="#" >Post a Job</a></li>
                           </ul>
                         </div>{/*post-st end*/}
                       </div>{/*post-topbar end*/}
@@ -115,13 +115,13 @@ export default class Home extends React.Component{
                               </div>
                             </div>
                             <div className="ed-opts">
-                              <a href="#" title className="ed-opts-open"><i className="la la-ellipsis-v" /></a>
+                              <a href="#"className="ed-opts-open"><i className="la la-ellipsis-v" /></a>
                               <ul className="ed-options">
-                                <li><a href="#" title>Edit Post</a></li>
-                                <li><a href="#" title>Unsaved</a></li>
-                                <li><a href="#" title>Unbid</a></li>
-                                <li><a href="#" title>Close</a></li>
-                                <li><a href="#" title>Hide</a></li>
+                                <li><a href="#" >Edit Post</a></li>
+                                <li><a href="#" >Unsaved</a></li>
+                                <li><a href="#" >Unbid</a></li>
+                                <li><a href="#" >Close</a></li>
+                                <li><a href="#" >Hide</a></li>
                               </ul>
                             </div>
                           </div>
@@ -131,22 +131,22 @@ export default class Home extends React.Component{
                               <li><img src="assets/images/icon9.png" alt="" /><span>India</span></li>
                             </ul>
                             <ul className="bk-links">
-                              <li><a href="#" title><i className="la la-envelope" /></a></li>
+                              <li><a href="#" ><i className="la la-envelope" /></a></li>
                             </ul>
                           </div>
                           <div className="job_descp">
                             <h3>Senior Wordpress Developer</h3>
                             <ul className="job-dt">
-                              <li><a href="#" title>Full Time</a></li>
+                              <li><a href="#" >Full Time</a></li>
                               <li><span>$30 / hr</span></li>
                             </ul>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus hendrerit metus, ut ullamcorper quam finibus at. Etiam id magna sit amet... <a href="#" title>view more</a></p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus hendrerit metus, ut ullamcorper quam finibus at. Etiam id magna sit amet... <a href="#" >view more</a></p>
                             <ul className="skill-tags">
-                              <li><a href="#" title>HTML</a></li>
-                              <li><a href="#" title>PHP</a></li>
-                              <li><a href="#" title>CSS</a></li>
-                              <li><a href="#" title>Javascript</a></li>
-                              <li><a href="#" title>Wordpress</a></li> 	
+                              <li><a href="#" >HTML</a></li>
+                              <li><a href="#" >PHP</a></li>
+                              <li><a href="#" >CSS</a></li>
+                              <li><a href="#" >Javascript</a></li>
+                              <li><a href="#" >Wordpress</a></li> 	
                             </ul>
                           </div>
                           <div className="job-status-bar">
@@ -172,44 +172,44 @@ export default class Home extends React.Component{
                               <h3>John Doe</h3>
                               <span>1</span>
                               <ul>
-                                <li><a href="#" title className="followw">Follow</a></li>
-                                <li><a href="#" title className="envlp"><img src="assets/images/envelop.png" alt="" /></a></li>
-                                <li><a href="#" title className="hire">hire</a></li>
+                                <li><a href="#"className="followw">Follow</a></li>
+                                <li><a href="#"className="envlp"><img src="assets/images/envelop.png" alt="" /></a></li>
+                                <li><a href="#"className="hire">hire</a></li>
                               </ul>
-                              <a href="#" title>View Profile</a>
+                              <a href="#" >View Profile</a>
                             </div>{/*user-profy end*/}
                             <div className="user-profy">
                               <img src="assets/images/resources/user2.png" alt="" />
                               <h3>John Doe</h3>
                               <span>2</span>
                               <ul>
-                                <li><a href="#" title className="followw">Follow</a></li>
-                                <li><a href="#" title className="envlp"><img src="assets/images/envelop.png" alt="" /></a></li>
-                                <li><a href="#" title className="hire">hire</a></li>
+                                <li><a href="#"className="followw">Follow</a></li>
+                                <li><a href="#"className="envlp"><img src="assets/images/envelop.png" alt="" /></a></li>
+                                <li><a href="#"className="hire">hire</a></li>
                               </ul>
-                              <a href="#" title>View Profile</a>
+                              <a href="#" >View Profile</a>
                             </div>{/*user-profy end*/}
                             <div className="user-profy">
                               <img src="assets/images/resources/user3.png" alt="" />
                               <h3>John Doe</h3>
                               <span>3</span>
                               <ul>
-                                <li><a href="#" title className="followw">Follow</a></li>
-                                <li><a href="#" title className="envlp"><img src="assets/images/envelop.png" alt="" /></a></li>
-                                <li><a href="#" title className="hire">hire</a></li>
+                                <li><a href="#"className="followw">Follow</a></li>
+                                <li><a href="#"className="envlp"><img src="assets/images/envelop.png" alt="" /></a></li>
+                                <li><a href="#"className="hire">hire</a></li>
                               </ul>
-                              <a href="#" title>View Profile</a>
+                              <a href="#" >View Profile</a>
                             </div>{/*user-profy end*/}
                             <div className="user-profy">
                               <img src="assets/images/resources/user3.png" alt="" />
                               <h3>Heyy</h3>
                               <span>4</span>
                               <ul>
-                                <li><a href="#" title className="followw">Follow</a></li>
-                                <li><a href="#" title className="envlp"><img src="assets/images/envelop.png" alt="" /></a></li>
-                                <li><a href="#" title className="hire">hire</a></li>
+                                <li><a href="#"className="followw">Follow</a></li>
+                                <li><a href="#"className="envlp"><img src="assets/images/envelop.png" alt="" /></a></li>
+                                <li><a href="#"className="hire">hire</a></li>
                               </ul>
-                              <a href="#" title>View Profile</a>
+                              <a href="#" >View Profile</a>
                             </div>{/*user-profy end*/}
                           </div>{/*profiles-slider end*/}
                         </div>{/*top-profiles end*/}
@@ -223,13 +223,13 @@ export default class Home extends React.Component{
                               </div>
                             </div>
                             <div className="ed-opts">
-                              <a href="#" title className="ed-opts-open"><i className="la la-ellipsis-v" /></a>
+                              <a href="#"className="ed-opts-open"><i className="la la-ellipsis-v" /></a>
                               <ul className="ed-options">
-                                <li><a href="#" title>Edit Post</a></li>
-                                <li><a href="#" title>Unsaved</a></li>
-                                <li><a href="#" title>Unbid</a></li>
-                                <li><a href="#" title>Close</a></li>
-                                <li><a href="#" title>Hide</a></li>
+                                <li><a href="#" >Edit Post</a></li>
+                                <li><a href="#" >Unsaved</a></li>
+                                <li><a href="#" >Unbid</a></li>
+                                <li><a href="#" >Close</a></li>
+                                <li><a href="#" >Hide</a></li>
                               </ul>
                             </div>
                           </div>
@@ -239,23 +239,23 @@ export default class Home extends React.Component{
                               <li><img src="assets/images/icon9.png" alt="" /><span>India</span></li>
                             </ul>
                             <ul className="bk-links">
-                              <li><a href="#" title><i className="la la-envelope" /></a></li>
-                              <li><a href="#" title className="bid_now">Bid Now</a></li>
+                              <li><a href="#" ><i className="la la-envelope" /></a></li>
+                              <li><a href="#"className="bid_now">Bid Now</a></li>
                             </ul>
                           </div>
                           <div className="job_descp">
                             <h3>Senior Wordpress Developer</h3>
                             <ul className="job-dt">
-                              <li><a href="#" title>Full Time</a></li>
+                              <li><a href="#" >Full Time</a></li>
                               <li><span>$30 / hr</span></li>
                             </ul>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus hendrerit metus, ut ullamcorper quam finibus at. Etiam id magna sit amet... <a href="#" title>view more</a></p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus hendrerit metus, ut ullamcorper quam finibus at. Etiam id magna sit amet... <a href="#" >view more</a></p>
                             <ul className="skill-tags">
-                              <li><a href="#" title>HTML</a></li>
-                              <li><a href="#" title>PHP</a></li>
-                              <li><a href="#" title>CSS</a></li>
-                              <li><a href="#" title>Javascript</a></li>
-                              <li><a href="#" title>Wordpress</a></li> 	
+                              <li><a href="#" >HTML</a></li>
+                              <li><a href="#" >PHP</a></li>
+                              <li><a href="#" >CSS</a></li>
+                              <li><a href="#" >Javascript</a></li>
+                              <li><a href="#" >Wordpress</a></li> 	
                             </ul>
                           </div>
                           <div className="job-status-bar">
@@ -281,13 +281,13 @@ export default class Home extends React.Component{
                                 </div>
                               </div>
                               <div className="ed-opts">
-                                <a href="#" title className="ed-opts-open"><i className="la la-ellipsis-v" /></a>
+                                <a href="#"className="ed-opts-open"><i className="la la-ellipsis-v" /></a>
                                 <ul className="ed-options">
-                                  <li><a href="#" title>Edit Post</a></li>
-                                  <li><a href="#" title>Unsaved</a></li>
-                                  <li><a href="#" title>Unbid</a></li>
-                                  <li><a href="#" title>Close</a></li>
-                                  <li><a href="#" title>Hide</a></li>
+                                  <li><a href="#" >Edit Post</a></li>
+                                  <li><a href="#" >Unsaved</a></li>
+                                  <li><a href="#" >Unbid</a></li>
+                                  <li><a href="#" >Close</a></li>
+                                  <li><a href="#" >Hide</a></li>
                                 </ul>
                               </div>
                             </div>
@@ -297,22 +297,22 @@ export default class Home extends React.Component{
                                 <li><img src="assets/images/icon9.png" alt="" /><span>India</span></li>
                               </ul>
                               <ul className="bk-links">
-                                <li><a href="#" title><i className="la la-envelope" /></a></li>
+                                <li><a href="#" ><i className="la la-envelope" /></a></li>
                               </ul>
                             </div>
                             <div className="job_descp">
                               <h3>Senior Wordpress Developer</h3>
                               <ul className="job-dt">
-                                <li><a href="#" title>Full Time</a></li>
+                                <li><a href="#" >Full Time</a></li>
                                 <li><span>$30 / hr</span></li>
                               </ul>
-                              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus hendrerit metus, ut ullamcorper quam finibus at. Etiam id magna sit amet... <a href="#" title>view more</a></p>
+                              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus hendrerit metus, ut ullamcorper quam finibus at. Etiam id magna sit amet... <a href="#" >view more</a></p>
                               <ul className="skill-tags">
-                                <li><a href="#" title>HTML</a></li>
-                                <li><a href="#" title>PHP</a></li>
-                                <li><a href="#" title>CSS</a></li>
-                                <li><a href="#" title>Javascript</a></li>
-                                <li><a href="#" title>Wordpress</a></li> 	
+                                <li><a href="#" >HTML</a></li>
+                                <li><a href="#" >PHP</a></li>
+                                <li><a href="#" >CSS</a></li>
+                                <li><a href="#" >Javascript</a></li>
+                                <li><a href="#" >Wordpress</a></li> 	
                               </ul>
                             </div>
                             <div className="job-status-bar">
@@ -342,7 +342,7 @@ export default class Home extends React.Component{
                                       <h3>John Doe</h3>
                                       <span><img src="assets/images/clock.png" alt="" /> 3 min ago</span>
                                       <p>Lorem ipsum dolor sit amet, </p>
-                                      <a href="#" title className="active"><i className="fa fa-reply-all" />Reply</a>
+                                      <a href="#"className="active"><i className="fa fa-reply-all" />Reply</a>
                                     </div>
                                   </div>{/*comment-list end*/}
                                   <ul>
@@ -355,7 +355,7 @@ export default class Home extends React.Component{
                                           <h3>John Doe</h3>
                                           <span><img src="assets/images/clock.png" alt="" /> 3 min ago</span>
                                           <p>Hi John </p>
-                                          <a href="#" title><i className="fa fa-reply-all" />Reply</a>
+                                          <a href="#" ><i className="fa fa-reply-all" />Reply</a>
                                         </div>
                                       </div>{/*comment-list end*/}
                                     </li>
@@ -370,7 +370,7 @@ export default class Home extends React.Component{
                                       <h3>John Doe</h3>
                                       <span><img src="assets/images/clock.png" alt="" /> 3 min ago</span>
                                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus hendrerit metus, ut ullamcorper quam finibus at.</p>
-                                      <a href="#" title><i className="fa fa-reply-all" />Reply</a>
+                                      <a href="#" ><i className="fa fa-reply-all" />Reply</a>
                                     </div>
                                   </div>{/*comment-list end*/}
                                 </li>
@@ -406,8 +406,8 @@ export default class Home extends React.Component{
                         <h3>Track Time on Workwise</h3>
                         <span>Pay only for the Hours worked</span>
                         <div className="sign_link">
-                          <h3><a href="sign-in.html" title>Sign up</a></h3>
-                          <a href="#" title>Learn More</a>
+                          <h3><a href="sign-in.html" >Sign up</a></h3>
+                          <a href="#" >Learn More</a>
                         </div>
                       </div>{/*widget-about end*/}
                       <div className="widget widget-jobs">
@@ -553,7 +553,7 @@ export default class Home extends React.Component{
                             <span><i className="la la-plus" /></span>
                           </div>
                           <div className="view-more">
-                            <a href="#" title>View More</a>
+                            <a href="#" >View More</a>
                           </div>
                         </div>{/*suggestions-list end*/}
                       </div>
@@ -605,13 +605,13 @@ export default class Home extends React.Component{
                   <div className="col-lg-12">
                     <ul>
                       <li><button className="active" type="submit" value="post">Post</button></li>
-                      <li><a href="#" title>Cancel</a></li>
+                      <li><a href="#" >Cancel</a></li>
                     </ul>
                   </div>
                 </div>
               </form>
             </div>{/*post-project-fields end*/}
-            <a href="#" title><i className="la la-times-circle-o" /></a>
+            <a href="#" ><i className="la la-times-circle-o" /></a>
           </div>{/*post-project end*/}
         </div>{/*post-project-popup end*/}
         <div className="post-popup job_post">
@@ -656,13 +656,13 @@ export default class Home extends React.Component{
                   <div className="col-lg-12">
                     <ul>
                       <li><button className="active" type="submit" value="post">Post</button></li>
-                      <li><a href="#" title>Cancel</a></li>
+                      <li><a href="#" >Cancel</a></li>
                     </ul>
                   </div>
                 </div>
               </form>
             </div>{/*post-project-fields end*/}
-            <a href="#" title><i className="la la-times-circle-o" /></a>
+            <a href="#" ><i className="la la-times-circle-o" /></a>
           </div>{/*post-project end*/}
         </div>{/*post-project-popup end*/}
       </div>
