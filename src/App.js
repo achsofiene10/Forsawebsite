@@ -11,6 +11,7 @@ import Profile from './components/Profile'
 import { createBrowserHistory } from "history";
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
+import Footer from './components/Footer';
 
 
 class App extends React.Component{
@@ -42,7 +43,8 @@ class App extends React.Component{
          <Route path='/acceuil' exact  component={Home}></Route>
          <Route path='/compagnies' exact component={Compagnies}></Route> 
          <Route path='/profile/:id' exact component={Profile}></Route> 
-       </Switch></div> : <Signin history={history} Login={this.Login}></Signin>}
+         
+       </Switch><Footer></Footer></div> : <Signin history={history} Login={this.Login}></Signin>}
     </div>  
     )
 }

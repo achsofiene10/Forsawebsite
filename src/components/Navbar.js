@@ -28,7 +28,7 @@ export default class Navbar extends React.Component{
         <div className="container">
           <div className="header-data">
             <div className="logo">
-              <a  ><img src="images/logo.png" alt="" /></a>
+              <a  ><img src="../images/logo.png" alt="" /></a>
             </div>{/*logo end*/}
             <div className="search-bar">
               <form>
@@ -41,14 +41,14 @@ export default class Navbar extends React.Component{
                 <li>
                   <Link to="/acceuil">
                   
-                    <span><img src="images/icon1.png" alt="" /></span>
+                    <span><img src="../images/icon1.png" alt="" /></span>
                     Home
                   </Link>
                 </li>
                 <li>
                     <Link to='/compagnies'>
                   
-                    <span><img src="images/icon2.png" alt="" /></span>
+                    <span><img src="../images/icon2.png" alt="" /></span>
                     Companies
                   </Link>
                   <ul>
@@ -59,14 +59,14 @@ export default class Navbar extends React.Component{
                 <li>
                 <Link to='/projects'> 
                   
-                    <span><img src="images/icon3.png" alt="" /></span>
+                    <span><img src="../images/icon3.png" alt="" /></span>
                     Projects
                   </Link>
                 </li>
                 <li>
                   
                   <Link to='/profile'> 
-                    <span><img src="images/icon4.png" alt="" /></span>
+                    <span><img src="../images/icon4.png" alt="" /></span>
                     Profiles</Link>
                   
                   <ul>
@@ -77,14 +77,14 @@ export default class Navbar extends React.Component{
                 </li>
                 <li>
                 <Link to='/jobs'>
-                    <span><img src="images/icon5.png" alt="" /></span>
+                    <span><img src="../images/icon5.png" alt="" /></span>
                     Jobs
                   </Link>
                 </li>
                 <li>
                   
                   <Link  to='#' className="not-box-openm">
-                    <span><img src="images/icon6.png" alt="" /></span>
+                    <span><img src="../images/icon6.png" alt="" /></span>
                     Messages
                   </Link>
                   <div className="notification-box msg" id="message">
@@ -95,7 +95,7 @@ export default class Navbar extends React.Component{
                     <div className="nott-list">
                       <div className="notfication-details">
                         <div className="noty-user-img">
-                          <img src="images/resources/ny-img1.png" alt="" />
+                          <img src="../images/resources/ny-img1.png" alt="" />
                         </div>
                         <div className="notification-info">
                           <h3><a  >Jassica William</a> </h3>
@@ -105,7 +105,7 @@ export default class Navbar extends React.Component{
                       </div>
                       <div className="notfication-details">
                         <div className="noty-user-img">
-                          <img src="images/resources/ny-img2.png" alt="" />
+                          <img src="../images/resources/ny-img2.png" alt="" />
                         </div>
                         <div className="notification-info">
                           <h3><a  >Jassica William</a></h3>
@@ -115,7 +115,7 @@ export default class Navbar extends React.Component{
                       </div>
                       <div className="notfication-details">
                         <div className="noty-user-img">
-                          <img src="images/resources/ny-img3.png" alt="" />
+                          <img src="../images/resources/ny-img3.png" alt="" />
                         </div>
                         <div className="notification-info">
                           <h3><a  >Jassica William</a></h3>
@@ -131,7 +131,7 @@ export default class Navbar extends React.Component{
                 </li>
                 <li>
                   <Link to='#'   className="not-box-open">
-                    <span><img src="images/icon7.png" alt="" /></span>
+                    <span><img src="../images/icon7.png" alt="" /></span>
                     Notification
                   </Link>
                   <div className="notification-box noti" id="notification">
@@ -141,7 +141,7 @@ export default class Navbar extends React.Component{
                     <div className="nott-list">
                       <div className="notfication-details">
                         <div className="noty-user-img">
-                          <img src="images/resources/ny-img1.png" alt="" />
+                          <img src="../images/resources/ny-img1.png" alt="" />
                         </div>
                         <div className="notification-info">
                           <h3><a  >Jassica William</a> Comment on your project.</h3>
@@ -150,7 +150,7 @@ export default class Navbar extends React.Component{
                       </div>
                       <div className="notfication-details">
                         <div className="noty-user-img">
-                          <img src="images/resources/ny-img2.png" alt="" />
+                          <img src="../images/resources/ny-img2.png" alt="" />
                         </div>
                         <div className="notification-info">
                           <h3><a  >Jassica William</a> Comment on your project.</h3>
@@ -159,7 +159,7 @@ export default class Navbar extends React.Component{
                       </div>
                       <div className="notfication-details">
                         <div className="noty-user-img">
-                          <img src="images/resources/ny-img3.png" alt="" />
+                          <img src="../images/resources/ny-img3.png" alt="" />
                         </div>
                         <div className="notification-info">
                           <h3><a  >Jassica William</a> Comment on your project.</h3>
@@ -168,7 +168,7 @@ export default class Navbar extends React.Component{
                       </div>
                       <div className="notfication-details">
                         <div className="noty-user-img">
-                          <img src="images/resources/ny-img3.png" alt="" />
+                          <img src="../images/resources/ny-img3.png" alt="" />
                         </div>
                         <div className="notification-info">
                           <h3><a  >Jassica William</a> Comment on your project.</h3>
@@ -176,7 +176,7 @@ export default class Navbar extends React.Component{
                         </div>{/*notification-info */}
                       </div><div className="notfication-details">
                         <div className="noty-user-img">
-                          <img src="images/resources/ny-img3.png" alt="" />
+                          <img src="../images/resources/ny-img3.png" alt="" />
                         </div>
                         <div className="notification-info">
                           <h3><a  >Jassica William</a> Comment on your project.</h3>
@@ -185,7 +185,7 @@ export default class Navbar extends React.Component{
                       </div>
                       <div className="notfication-details">
                         <div className="noty-user-img">
-                          <img src="images/resources/ny-img2.png" alt="" />
+                          <img src="../images/resources/ny-img2.png" alt="" />
                         </div>
                         <div className="notification-info">
                           <h3><a  >Jassica William</a> Comment on your project.</h3>
