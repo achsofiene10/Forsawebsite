@@ -1,11 +1,26 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import jwt from 'jsonwebtoken';
+import axios from 'axios'
 
 export default class Navbar extends React.Component{
   constructor(props){
     super(props);
+    this.state={user:{}}
   }
 
+  componentDidMount(){
+    if (localStorage.getItem('token'))
+    {var decode1 = jwt.decode(localStorage.getItem('token'));}
+    else
+    {var decode1 = jwt.decode(sessionStorage.getItem('token'));}
+    //console.log(decode1)
+     axios.get(`http://localhost:3000/user/${decode1.user_id}/getProfile`).
+    then(res=>{
+       this.setState({user:res.data}, function () {
+        //console.log(this.state.user);
+    });})
+  }
     render(){
         return (
             <div>
@@ -191,7 +206,7 @@ export default class Navbar extends React.Component{
             <div className="user-account">
               <div className="user-info">
                 <img src="images/resources/user.png" alt="" />
-                <Link to="#" >John</Link>
+                <Link to="#" >{this.state.user.fullname}</Link>
                 <i className="la la-sort-down" />
               </div>
               <div className="user-account-settingss" id="users">

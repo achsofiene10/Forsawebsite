@@ -1,7 +1,24 @@
 import React from 'react' ;
-import Navbar from './Navbar';
+import jwt from 'jsonwebtoken';
+import axios from 'axios';
+import {Link } from 'react-router-dom';
 
 export default class Home extends React.Component{
+  constructor(props){
+    super(props);
+    this.state={user:{}}
+  }
+  async componentDidMount(){
+    if (localStorage.getItem('token'))
+    {var decode1 = jwt.decode(localStorage.getItem('token'));}
+    else
+    {var decode1 = jwt.decode(sessionStorage.getItem('token'));}
+    //console.log(decode1)
+     await axios.get(`http://localhost:3000/user/${decode1.user_id}/getProfile`).
+    then(res=>{
+       this.setState({user:res.data}, function () {
+    });})
+  }
     render (){
         return (
             <div>
@@ -20,21 +37,17 @@ export default class Home extends React.Component{
                             </div>
                           </div>{/*username-dt end*/}
                           <div className="user-specs">
-                            <h3>John Doe</h3>
+                            <h3>{this.state.user.fullname}</h3>
                             <span>Graphic Designer at Self Employed</span>
                           </div>
                         </div>{/*user-profile end*/}
                         <ul className="user-fw-status">
                           <li>
-                            <h4>Following</h4>
-                            <span>34</span>
+                            <h4>Connections</h4>
+                              <span>{this.state.user.friendlist ? this.state.user.friendlist.length : 0}</span>
                           </li>
                           <li>
-                            <h4>Followers</h4>
-                            <span>155</span>
-                          </li>
-                          <li>
-                            <a href="http://www.gambolthemes.net/workwise-new/my-profile.html" >View Profile</a>
+                            <Link to={`/profile/${this.state.user._id}`} >View Profile</Link>
                           </li>
                         </ul>
                       </div>{/*user-data end*/}

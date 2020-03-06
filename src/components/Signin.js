@@ -38,9 +38,9 @@ export default class Signin extends React.Component{
     {        
       this.props.history.push('/acceuil'); 
       if(remember){
-      sessionStorage.setItem('token',res.data.token);}
+      localStorage.setItem('token',res.data.token);}
       else {
-        localStorage.setItem('token',res.data.token);
+        sessionStorage.setItem('token',res.data.token);
       }
       this.props.Login();
     }});
