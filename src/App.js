@@ -7,6 +7,7 @@ import {Route,Link} from 'react-router-dom';
 import {Switch} from 'react-router-dom';
 import Acceuil from './components/Acceuil';
 import Compagnies from './components/Compagnies';
+import Profile from './components/Profile'
 import { createBrowserHistory } from "history";
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
@@ -15,7 +16,7 @@ import axios from 'axios';
 class App extends React.Component{
   constructor(props){
     super(props);
-    this.state={ loggedIn:false,user:{}}
+    this.state={ loggedIn:true,user:{}}
     this.Logout=this.Logout.bind(this)
     this.Login=this.Login.bind(this)
     }
@@ -37,10 +38,10 @@ class App extends React.Component{
     return(
     <div>
        {this.state.loggedIn ?<div> <Navbar Logout={this.Logout}></Navbar> <Switch>
-         <Route path='/' exact  component={Home} ></Route>
-         <Route path='/acceuil' exact  component={Home} ></Route>
-         <Route path='/compagnies' exact component={Compagnies} >
-        </Route> 
+         <Route path='/' exact  component={Home}></Route>
+         <Route path='/acceuil' exact  component={Home}></Route>
+         <Route path='/compagnies' exact component={Compagnies}></Route> 
+         <Route path='/profile/:id' exact component={Profile}></Route> 
        </Switch></div> : <Signin history={history} Login={this.Login}></Signin>}
     </div>  
     )

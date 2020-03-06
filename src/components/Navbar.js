@@ -14,12 +14,12 @@ export default class Navbar extends React.Component{
     {var decode1 = jwt.decode(localStorage.getItem('token'));}
     else
     {var decode1 = jwt.decode(sessionStorage.getItem('token'));}
-    //console.log(decode1)
+    if(decode1){
      axios.get(`http://localhost:3000/user/${decode1.user_id}/getProfile`).
     then(res=>{
        this.setState({user:res.data}, function () {
         //console.log(this.state.user);
-    });})
+    });})}
   }
     render(){
         return (
@@ -205,7 +205,7 @@ export default class Navbar extends React.Component{
             </div>{/*menu-btn end*/}
             <div className="user-account">
               <div className="user-info">
-                <img src="images/resources/user.png" alt="" />
+                <img src={this.state.user.image} alt="" />
                 <Link to="#" >{this.state.user.fullname}</Link>
                 <i className="la la-sort-down" />
               </div>
@@ -241,7 +241,6 @@ export default class Navbar extends React.Component{
                 <h3>Setting</h3>
                 <ul className="us-links">
                   <li><Link to='#' >Account Setting</Link></li>
-                  
                 </ul>
                 <h3 className="tc" onClick={this.props.Logout}><Link to="/" >Logout</Link></h3>
               </div>{/*user-account-settingss end*/}

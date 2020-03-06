@@ -3,6 +3,14 @@ import Navbar from './Navbar';
 
 
 export default class Compagnies extends React.Component{
+  constructor(props){
+    super(props);
+    this.state={companies:{}}
+  }
+
+  componentDidMount(){
+    
+  }
     render (){
         return (
             <div>
