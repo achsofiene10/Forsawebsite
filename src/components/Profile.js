@@ -52,7 +52,7 @@ export default class Profile extends React.Component{
                                   <Suggestions></Suggestions>
                                 </div>{/*main-left-sidebar end*/}
                               </div>
-                              <div className="col-lg-6">
+                              <div className="col-lg-5">
                                 <div className="main-ws-sec">
                                   <div className="user-tab-sec rewivew">
                                     <h3>John Doe</h3>
@@ -61,30 +61,7 @@ export default class Profile extends React.Component{
                                       
                                       
                                     </div>{/*star-descp end*/}
-                                    <div className="tab-feed st2 settingjb">
-                                      <ul>
-                                        <li data-tab="feed-dd" className="active">
-                                          <a href="#" >
-                                            <img src="../images/ic1.png" alt="" />
-                                            <span>Feed</span>
-                                          </a>
-                                        </li>
-                                        <li data-tab="info-dd">
-                                          <Link to="#" >
-                                            <img src="../images/ic2.png" alt="" />
-                                            <span>Info</span>
-                                          </Link>
-                                        </li>
-                                        <li data-tab="saved-jobs">
-                                          <a href="#" >
-                                            <img src="../images/ic4.png" alt="" />
-                                            <span>Jobs</span>
-                                          </a>
-                                        </li>
-                                        
-                                        
-                                      </ul>
-                                    </div>{/* tab-feed end*/}
+                                    
                                   </div>{/*user-tab-sec end*/}
                                   <h5>Posts</h5>
                                   <br/>
@@ -107,11 +84,16 @@ export default class Profile extends React.Component{
                                   
                                   <div className="col-lg-3">
                                     <div className="right-sidebar">
-                                      <Infoprofile></Infoprofile>
                                     </div>{/*right-sidebar end*/}
                                   </div>
+                                 
                                 </div>
-                              </div>{/* main-section-data end*/}
+                               
+                                </div>{/* main-section-data end*/}
+                                <br />
+                                <div className="col-lg-4">
+                                <Infoprofile></Infoprofile>
+                                </div>
                             </div> 
                           </div>
                         </div>

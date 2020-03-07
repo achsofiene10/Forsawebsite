@@ -29,6 +29,7 @@ export default class Home extends React.Component{
     render (){
         return (
             <div>
+              
         <main>
           <div className="main-section">
             <div className="container">
