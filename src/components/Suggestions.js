@@ -38,7 +38,7 @@ export default class Suggestions extends React.Component{
                             <span><i className="la la-plus" /></span>
                           </div>
                           <div className="view-more">
-                            <a href="#" >View More</a>
+                            <a href="# " >View More</a>
                           </div>
                         </div>{/*suggestions-list end*/}
                       </div>

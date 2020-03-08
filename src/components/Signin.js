@@ -113,8 +113,8 @@ export default class Signin extends React.Component{
                 <div className="col-lg-6">
                   <div className="login-sec">
                     <ul className="sign-control">
-                      <li data-tab="tab-1" className="current" ><a href="#" >Sign in</a></li>				
-                      <li data-tab="tab-2"><a href="#" >Sign up</a></li>				
+                      <li data-tab="tab-1" className="current" ><a href="# " >Sign in</a></li>				
+                      <li data-tab="tab-2"><a href="# " >Sign up</a></li>				
                     </ul>			
                     <div className="sign_in_sec current" id="tab-1">
                       <h3>Sign in</h3>
@@ -269,15 +269,15 @@ export default class Signin extends React.Component{
           <div className="footy-sec">
             <div className="container">
               <ul>
-                <li><a  >Help Center</a></li>
-                <li><a >About</a></li>
-                <li><a  >Privacy Policy</a></li>
-                <li><a  >Community Guidelines</a></li>
-                <li><a  >Cookies Policy</a></li>
-                <li><a  >Career</a></li>
-                <li><a >Forum</a></li>
-                <li><a  >Language</a></li>
-                <li><a  >Copyright Policy</a></li>
+                <li>Help Center</li>
+                <li>about</li>
+                <li>Privacy Policy</li>
+                <li>Community Guidelines</li>
+                <li>Cookies Policy</li>
+                <li>Career</li>
+                <li>Forum</li>
+                <li>Language</li>
+                <li>Copyright Policy</li>
               </ul>
               <p><img src="images/copy-icon.png" alt="" />Copyright 2019</p>
             </div>

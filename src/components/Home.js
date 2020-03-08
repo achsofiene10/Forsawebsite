@@ -14,14 +14,14 @@ export default class Home extends React.Component{
     this.state={user:{}}
   }
   async componentDidMount(){
+    var decode1;
     if (localStorage.getItem('token'))
-    {var decode1 = jwt.decode(localStorage.getItem('token'));}
+    { decode1 = jwt.decode(localStorage.getItem('token'));}
     else
-    {var decode1 = jwt.decode(sessionStorage.getItem('token'));}
+    {decode1 = jwt.decode(sessionStorage.getItem('token'));}
     console.log(decode1)
     if(decode1){
-     await axios.get(`http://localhost:3000/user/${decode1.user_id}/getProfile`).
-    then(res=>{
+     await axios.get(`http://localhost:3000/user/${decode1.user_id}/getProfile`).then(res=>{
        this.setState({user:res.data}, function () {
     });})
     }
@@ -63,14 +63,14 @@ export default class Home extends React.Component{
                       <Suggestions></Suggestions>
                       <div className="tags-sec full-width">
                         <ul>
-                          <li><a href="#" >Help Center</a></li>
+                          <li><a href="# " >Help Center</a></li>
                           <li><a href="/about" >About</a></li>
-                          <li><a href="#" >Privacy Policy</a></li>
-                          <li><a href="#" >Community Guidelines</a></li>
-                          <li><a href="#" >Cookies Policy</a></li>
-                          <li><a href="#" >Career</a></li>
-                          <li><a href="#" >Language</a></li>
-                          <li><a href="#" >Copyright Policy</a></li>
+                          <li><a href="# " >Privacy Policy</a></li>
+                          <li><a href="# " >Community Guidelines</a></li>
+                          <li><a href="# " >Cookies Policy</a></li>
+                          <li><a href="# " >Career</a></li>
+                          <li><a href="# " >Language</a></li>
+                          <li><a href="# " >Copyright Policy</a></li>
                         </ul>
                         <div className="cp-sec">
                           <img src="../images/logo2.png" alt="" />
@@ -87,8 +87,8 @@ export default class Home extends React.Component{
                         </div>
                         <div className="post-st">
                           <ul>
-                            <li><a className="post_project" href="#" >Post a Project</a></li>
-                            <li><a className="post-jb active" href="#" >Post a Job</a></li>
+                            <li><a className="post_project" href="# " >Post a Project</a></li>
+                            <li><a className="post-jb active" href="# " >Post a Job</a></li>
                           </ul>
                         </div>{/*post-st end*/}
                       </div>{/*post-topbar end*/}
@@ -129,7 +129,7 @@ export default class Home extends React.Component{
                         <span>Pay only for the Hours worked</span>
                         <div className="sign_link">
                           <h3><a href="sign-in.html" >Sign up</a></h3>
-                          <a href="#" >Learn More</a>
+                          <a href="# " >Learn More</a>
                         </div>
                       </div>{/*widget-about end*/}
 
@@ -185,13 +185,13 @@ export default class Home extends React.Component{
                   <div className="col-lg-12">
                     <ul>
                       <li><button className="active" type="submit" value="post">Post</button></li>
-                      <li><a href="#" >Cancel</a></li>
+                      <li><a href="# " >Cancel</a></li>
                     </ul>
                   </div>
                 </div>
               </form>
             </div>{/*post-project-fields end*/}
-            <a href="#" ><i className="la la-times-circle-o" /></a>
+            <a href="# " ><i className="la la-times-circle-o" /></a>
           </div>{/*post-project end*/}
         </div>{/*post-project-popup end*/}
         <div className="post-popup job_post">
@@ -236,13 +236,13 @@ export default class Home extends React.Component{
                   <div className="col-lg-12">
                     <ul>
                       <li><button className="active" type="submit" value="post">Post</button></li>
-                      <li><a href="#" >Cancel</a></li>
+                      <li><a href="# " >Cancel</a></li>
                     </ul>
                   </div>
                 </div>
               </form>
             </div>{/*post-project-fields end*/}
-            <a href="#" ><i className="la la-times-circle-o" /></a>
+            <a href="# " ><i className="la la-times-circle-o" /></a>
           </div>{/*post-project end*/}
         </div>{/*post-project-popup end*/}
       </div>

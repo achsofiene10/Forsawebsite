@@ -9,10 +9,9 @@ import Acceuil from './components/Acceuil';
 import Compagnies from './components/Compagnies';
 import Profile from './components/Profile'
 import { createBrowserHistory } from "history";
-import jwt from 'jsonwebtoken';
-import axios from 'axios';
-import Footer from './components/Footer';
 
+import Footer from './components/Footer';
+import Chatbox from './components/Chatbox';
 
 class App extends React.Component{
   constructor(props){
@@ -37,14 +36,14 @@ class App extends React.Component{
   render(){
     const history = createBrowserHistory();
     return(
-    <div>
+    <div className="wrapper">
        {this.state.loggedIn ?<div> <Navbar Logout={this.Logout}></Navbar> <Switch>
          <Route path='/' exact  component={Home}></Route>
          <Route path='/acceuil' exact  component={Home}></Route>
          <Route path='/compagnies' exact component={Compagnies}></Route> 
-         <Route path='/profile/:id' exact component={Profile}></Route> 
+         <Route path='/profile' exact component={Profile}></Route> 
          
-       </Switch><Footer></Footer></div> : <Signin history={history} Login={this.Login}></Signin>}
+       </Switch><Chatbox></Chatbox><Footer></Footer></div> : <Signin history={history} Login={this.Login}></Signin>}
     </div>  
     )
 }
