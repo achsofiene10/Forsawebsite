@@ -204,7 +204,7 @@ export default class Navbar extends React.Component{
             </div>{/*menu-btn end*/}
             <div className="user-account">
               <div className="user-info">
-                <img src={this.state.user.image} alt="" />
+              { this.state.user.image ? <img src={`../forsaRESTAPI/${this.state.user.image}`} style={{width: '30px', height: '30px'}} alt="" /> : null }
                 <Link to="# " >{this.state.user.fullname}</Link>
                 <i className="la la-sort-down" />
               </div>

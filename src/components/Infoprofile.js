@@ -6,7 +6,7 @@ export default class Infoprofile extends React.Component{
     }
     render(){
         return(
-          <div className="product-feed-tab animated fadeIn current" id="info-dd">
+          <div className="product-feed-tab " id="info-dd">
             <div className="user-profile-ov">
               <h3><a href="# " className="overview-open">Overview</a> <a href="# " className="overview-open"><i className="fa fa-pencil" /></a></h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tempor aliquam felis, nec condimentum ipsum commodo id. Vivamus sit amet augue nec urna efficitur tincidunt. Vivamus consectetur aliquam lectus commodo viverra. Nunc eu augue nec arcu efficitur faucibus. Aliquam accumsan ac magna convallis bibendum. Quisque laoreet augue eget augue fermentum scelerisque. Vivamus dignissim mollis est dictum blandit. Nam porta auctor neque sed congue. Nullam rutrum eget ex at maximus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget vestibulum lorem.</p>

@@ -10,7 +10,7 @@ export default class Post extends React.Component{
             <div className="post-bar">
         <div className="post_topbar">
           <div className="usy-dt">
-            <img src="images/resources/us-pic.png" alt="" />
+            <img src="images/resources/us-pic.png" style={{width: '50px', height: '50px',borderRadius:'50%'}}  alt="" />
             <div className="usy-name">
               <h3>John Doe</h3>
               <span><img src="images/clock.png" alt="" />3 min ago</span>

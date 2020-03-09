@@ -12,8 +12,8 @@ export default class CompanyBadge extends React.Component{
             <div className="col-lg-3 col-md-4 col-sm-6">
                 <div className="company_profile_info">
                   <div className="company-up-info">
-                    <img src={this.props.company.image} alt="" />
-                     <h3>{this.props.company.fullname}</h3>
+                    <img src={this.props.company.image} style={{width: '91px', height: '91px',borderRadius:'50%'}} alt="" />
+                     <h3>{this.props.company.fullname}</h3> 
                     <h4>Establish Feb, 2004</h4>
                     <ul>
                       <li><a href="# " className="follow">Follow</a></li>

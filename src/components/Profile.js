@@ -1,15 +1,23 @@
 import React from 'react'
-
+import axios from 'axios';
+import {Link} from 'react-router-dom';
 import Infoprofile from './Infoprofile';
 
 export default class Profile extends React.Component{
-    constructor(props){
+    constructor(props)
+    {
         super(props);
-        this.state={Coverimage:null,profileImg:null};
-
+        this.state={Coverimage:null,profileImg:null,user:{}};
     }
-
     componentDidMount(){
+      
+      const user_id=this.props.match.params.id;
+      //console.log(user_id);
+     axios.get(`http://localhost:3000/user/${user_id}/getProfile`).then(res=>{
+       this.setState({user:res.data}, function () {
+         this.setState({profileImg:res.data.image})
+         this.setState({Coverimage:res.data.cover})
+    });})
      
     }
 
@@ -17,38 +25,47 @@ export default class Profile extends React.Component{
       if (event.target.files && event.target.files[0]) {
         let reader = new FileReader();
         reader.onload = (e) => {
-          console.log(e.target)
+          //console.log(e.target)
         };
         reader.readAsDataURL(event.target.files[0]);
         this.setState({
           Coverimage: URL.createObjectURL(event.target.files[0])
         })
-        console.log(event.target.files[0].name)
+        //console.log(event.target.files[0].name)
       }
     }
 
     onProfilePicchange=()=>{
+      const user_id=this.props.match.params.id;
       const image=this.refs.profileimg;
+      var formData = new FormData();
+      formData.append('image',image.files[0])
       if (image.files && image.files[0]) {
         let reader = new FileReader();
         reader.onload = (e) => {
           console.log(e.target)
         };
         reader.readAsDataURL(image.files[0]);
-        this.setState({
-          profileImg: URL.createObjectURL(image.files[0])
-        })
-        console.log(image.files[0].name)
+        axios.post(`http://localhost:3000/user/${user_id}/updateImage`,formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+      }).then(function () {
+        console.log('SUCCESS!!');
+      })
+      .catch(function () {
+        console.log('FAILURE!!');
+      });
+        //console.log(image.files[0].name)
       }
     }
 
 
     render(){
-      console.log(this.state.profileImg)
-      console.log(this.state.Coverimage)
+      //console.log(this.state.profileImg)
+
         return(
                     <div className="wrapper">
-                
                 <section className="cover-sec">
                   { this.state.Coverimage ? <img src={this.state.Coverimage} alt="" style={{width: '1600px', height: '390px'}} /> : <img src="../images/resources/cover-img.jpg" alt="" />}
                         
@@ -72,7 +89,7 @@ export default class Profile extends React.Component{
                                   <div className="main-left-sidebar">
                                     <div className="user_profile">
                                       <div className="user-pro-img">
-                                      { this.state.profileImg ? <img src={this.state.profileImg} alt="" /> :  <img src="../images/resources/user-pro-img.png" alt="" />}
+                                      { this.state.profileImg ? <img src={`../forsaRESTAPI/${this.state.profileImg}`} style={{width: '170px', height: '170px'}} alt="" /> :  <img src="../images/resources/user-pro-img.png" alt="" />}
                                       <div className="add-dp" id="OpenImgUpload"> 
                                           <input  
                                             type={"file"} id="file1" ref='profileimg' onChange={this.onProfilePicchange} />
@@ -82,24 +99,17 @@ export default class Profile extends React.Component{
                                       <div className="user_pro_status">
                                         <ul className="flw-status">
                                           <li>
-                                            <span>Following</span>
-                                            <b>34</b>
-                                          </li>
-                                          <li>
-                                            <span>Followers</span>
-                                            <b>155</b>
+                                            
+                                            <span>Connections</span>
+                                              <b>{this.state.user.friendlist ? this.state.user.friendlist.length : 0}</b>
                                           </li>
                                         </ul>
                                       </div>{/*user_pro_status end*/}
                                       <ul className="social_links">
-                                        <li><a href="# " ><i className="la la-globe" /> www.example.com</a></li>
                                         <li><a href="# " ><i className="fa fa-facebook-square" /> Http://www.facebook.com/john...</a></li>
                                         <li><a href="# " ><i className="fa fa-twitter" /> Http://www.Twitter.com/john...</a></li>
-                                        <li><a href="# " ><i className="fa fa-google-plus-square" /> Http://www.googleplus.com/john...</a></li>
-                                        <li><a href="# " ><i className="fa fa-behance-square" /> Http://www.behance.com/john...</a></li>
-                                        <li><a href="# " ><i className="fa fa-pinterest" /> Http://www.pinterest.com/john...</a></li>
                                         <li><a href="# " ><i className="fa fa-instagram" /> Http://www.instagram.com/john...</a></li>
-                                        <li><a href="# " ><i className="fa fa-youtube" /> Http://www.youtube.com/john...</a></li>
+                                        
                                       </ul>
                                     </div>{/*user_profile end*/}
                                     <div className="suggestions full-width">
@@ -166,9 +176,9 @@ export default class Profile extends React.Component{
                                 <div className="col-lg-5">
                                   <div className="main-ws-sec">
                                     <div className="user-tab-sec rewivew">
-                                      <h3>John Doe</h3>
+                                    <h3>{this.state.user.fullname}</h3>
                                       <div className="star-descp">
-                                        <span>Graphic Designer at Self Employed</span>
+        {this.state.user.title ? <span> {this.state.user.title} : </span> : null}
                                         <ul>
                                           <li><i className="fa fa-star" /></li>
                                           <li><i className="fa fa-star" /></li>
@@ -187,10 +197,10 @@ export default class Profile extends React.Component{
                                             </a>
                                           </li>
                                           <li data-tab="info-dd">
-                                            <a href="# " >
+                                            <Link to="# " >
                                               <img src="../images/ic2.png" alt="" />
                                               <span>Info</span>
-                                            </a>
+                                            </Link>
                                           </li>
                                           <li data-tab="saved-jobs">
                                             <a href="# " >
@@ -1324,7 +1334,6 @@ export default class Profile extends React.Component{
                                         </div>
                                       </div>
                                     </div>{/*product-feed-tab end*/}
-                                    
                                     <Infoprofile></Infoprofile>
 
                                     </div>{/*product-feed-tab end*/}
@@ -1762,25 +1771,7 @@ export default class Profile extends React.Component{
                               </div> 
                             </div>
                           </div></main>
-                      <footer>
-                        <div className="footy-sec mn no-margin">
-                          <div className="container">
-                            <ul>
-                              <li><a href="help-center.html" >Help Center</a></li>
-                              <li><a href="about.html" >About</a></li>
-                              <li><a href="# " >Privacy Policy</a></li>
-                              <li><a href="# " >Community Guidelines</a></li>
-                              <li><a href="# " >Cookies Policy</a></li>
-                              <li><a href="# " >Career</a></li>
-                              <li><a href="forum.html" >Forum</a></li>
-                              <li><a href="# " >Language</a></li>
-                              <li><a href="# " >Copyright Policy</a></li>
-                            </ul>
-                            <p><img src="../images/copy-icon2.png" alt="" />Copyright 2019</p>
-                            <img className="fl-rgt" src="../images/logo2.png" alt="" />
-                          </div>
-                        </div>
-                      </footer>{/*footer end*/}
+                      
                       <div className="overview-box" id="overview-box">
                         <div className="overview-edit">
                           <h3>Overview</h3>

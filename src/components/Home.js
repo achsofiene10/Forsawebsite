@@ -27,6 +27,7 @@ export default class Home extends React.Component{
     }
   }
     render (){
+      console.log(`forsaRESTAPI/${this.state.user.image}`)
         return (
             <div>
               
@@ -41,7 +42,7 @@ export default class Home extends React.Component{
                         <div className="user-profile">
                           <div className="username-dt">
                             <div className="usr-pic">
-                              <img src={this.state.user.image} alt="" />
+                              { this.state.user.image ? <img src={`../forsaRESTAPI/${this.state.user.image}`} style={{width: '100px', height: '100px'}} alt="" /> : null }
                             </div>
                           </div>{/*username-dt end*/}
                           <div className="user-specs">
@@ -83,7 +84,7 @@ export default class Home extends React.Component{
                     <div className="main-ws-sec">
                       <div className="post-topbar">
                         <div className="user-picy">
-                          <img src="../images/resources/user-pic.png" alt="" />
+                        { this.state.user.image ? <img src={`../forsaRESTAPI/${this.state.user.image}`} style={{width: '50px', height: '50px',borderRadius:'50%'}}  /> : null }
                         </div>
                         <div className="post-st">
                           <ul>

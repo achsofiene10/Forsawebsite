@@ -11,7 +11,8 @@ export default class Compagnies extends React.Component{
 
    componentDidMount(){
      axios.get(`http://localhost:3000/user/users`).then(res=>{
-       //console.log(res.data); this.setState({companies:res.data});  
+       //console.log(res.data);
+        this.setState({companies:res.data});  
       });
   }
 
@@ -48,10 +49,7 @@ export default class Compagnies extends React.Component{
           </div>{/*process-comm end*/}
         </div>
       </section>{/*companies-info end*/}
-    );
-  }
-});
-               
+              
             </div>
         )
     }

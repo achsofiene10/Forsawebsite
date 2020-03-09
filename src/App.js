@@ -16,7 +16,7 @@ import Chatbox from './components/Chatbox';
 class App extends React.Component{
   constructor(props){
     super(props);
-    this.state={ loggedIn:true,user:{}}
+    this.state={ loggedIn:false,user:{}}
     this.Logout=this.Logout.bind(this)
     this.Login=this.Login.bind(this)
     }
@@ -41,7 +41,7 @@ class App extends React.Component{
          <Route path='/' exact  component={Home}></Route>
          <Route path='/acceuil' exact  component={Home}></Route>
          <Route path='/compagnies' exact component={Compagnies}></Route> 
-         <Route path='/profile' exact component={Profile}></Route> 
+         <Route path='/profile/:id' exact component={Profile}></Route> 
          
        </Switch><Chatbox></Chatbox><Footer></Footer></div> : <Signin history={history} Login={this.Login}></Signin>}
     </div>  
