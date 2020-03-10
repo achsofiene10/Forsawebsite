@@ -27,7 +27,7 @@ export default class Home extends React.Component{
     }
   }
     render (){
-      console.log(`forsaRESTAPI/${this.state.user.image}`)
+      //console.log(`forsaRESTAPI/${this.state.user.image}`)
         return (
             <div>
               
@@ -47,7 +47,7 @@ export default class Home extends React.Component{
                           </div>{/*username-dt end*/}
                           <div className="user-specs">
                             <h3>{this.state.user.fullname}</h3>
-                            <span>Graphic Designer at Self Employed</span>
+        <span>{this.state.user.title}</span>
                           </div>
                         </div>{/*user-profile end*/}
                         <ul className="user-fw-status">

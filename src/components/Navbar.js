@@ -6,7 +6,7 @@ import axios from 'axios'
 export default class Navbar extends React.Component{
   constructor(props){
     super(props);
-    this.state={user:{}}
+    this.state={user:{},status:''}
   }
 
   componentDidMount(){
@@ -18,10 +18,49 @@ export default class Navbar extends React.Component{
     if(decode1){
      axios.get(`http://localhost:3000/user/${decode1.user_id}/getProfile`).then(res=>{
        this.setState({user:res.data}, function () {
+         if(this.state.status==''){
+         this.setState({status:res.data.status})}
         //console.log(this.state.user);
     });})}
   }
+
+  Changetitle=(event)=>{
+    event.preventDefault();
+    const newtitle=this.refs.titleupdate.value;
+    if((newtitle!=='')|| (newtitle != null)){
+    console.log(newtitle)
+    const obj={
+      title:newtitle
+    }
+   
+    axios.post(`http://localhost:3000/user/${this.state.user._id}/updatetitle`,obj).then(
+      res=>{
+        if(res.status===200){
+          window.location.reload();
+        }
+         //console.log(this.state.user);
+     }).catch(err=>console.log(err.data));}
+    }
+    
+    setOffline=(event)=>{
+      console.log(event.target.value);
+      this.setState({
+        status: !this.state.status,
+      });
+      axios.post(`http://localhost:3000/user/${this.state.user._id}/updateStatus`).
+      then().catch();
+    }
+
+    setOnline=(event)=>{
+      this.setState({
+        status: !this.state.status,
+      });
+      console.log(event.target.value)
+      axios.post(`http://localhost:3000/user/${this.state.user._id}/updateStatus`).
+      then().catch();
+    }
     render(){
+      console.log(this.state.status)
         return (
             <div>
                 <header>
@@ -65,14 +104,14 @@ export default class Navbar extends React.Component{
                 </li>
                 <li>
                   
-                  <Link to='/profile'> 
+                  <Link to='/friends'> 
                     <span><img src="../images/icon4.png" alt="" /></span>
                     Profiles</Link>
                   
                   <ul>
                   
-                    <li><Link to='/profile'> User Profile</Link></li>
-                    <Link to='/profile'>   <li>my-profile-feed</li></Link>
+                    <li><Link to='/profile'> My profile</Link></li>
+                    <Link to='/profile'>   <li>My friendlist</li></Link>
                   </ul>
                 </li>
                 <li>
@@ -211,30 +250,58 @@ export default class Navbar extends React.Component{
               <div className="user-account-settingss" id="users">
                 <h3>Online Status</h3>
                 <ul className="on-off-status">
-                  <li>
-                    <div className="fgt-sec">
-                      <input type="radio" name="cc" id="c5" />
-                      <label htmlFor="c5">
-                        <span />
-                      </label>
-                      <small>Online</small>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="fgt-sec">
-                      <input type="radio" name="cc" id="c6" />
-                      <label htmlFor="c6">
-                        <span />
-                      </label>
-                      <small>Offline</small>
-                    </div>
-                  </li>
+                  {this.state.status===1 || this.state.status==true  ?
+                   <div>
+                    <li>
+                <div className="fgt-sec">
+                  
+                  <input defaultChecked={this.state.status} onClick={this.setOnline} type="radio" name="cc" id="c5" />
+                  <label htmlFor="c5">
+                    <span />
+                  </label>
+                  <small>Online</small>
+                </div>
+              </li>
+              <li>
+                <div className="fgt-sec">
+                  <input defaultChecked={!this.state.status} onClick={this.setOffline} type="radio" name="cc" id="c6" />
+                  <label htmlFor="c6">
+                    <span />
+                  </label>
+                  <small>Offline</small>
+                </div>
+              </li>  
+                  </div>: null }
+                  {(!this.state.status || this.state.status===0 || this.state.status===false) ?
+                   <div>
+                    <li>
+                <div className="fgt-sec">
+                  
+                  <input defaultChecked={this.state.status} onClick={this.setOnline} type="radio" name="cc" id="c5" />
+                  <label htmlFor="c5">
+                    <span />
+                  </label>
+                  <small>Online</small>
+                </div>
+              </li>
+              <li>
+                <div className="fgt-sec">
+                  <input defaultChecked={!this.state.status} onClick={this.setOffline} type="radio" name="cc" id="c6" />
+                  <label htmlFor="c6">
+                    <span />
+                  </label>
+                  <small>Offline</small>
+                </div>
+              </li>  
+                  </div>: null }
+                
+                  
                 </ul>
                 <h3>Custom Status</h3>
                 <div className="search_form">
-                  <form>
-                    <input type="text" name="search" />
-                    <button type="submit">Ok</button>
+                  <form >
+                    <input type="text" placeholder={this.state.user.title} ref="titleupdate" name="search" />
+                    <button type="submit" onClick={this.Changetitle}>Ok</button>
                   </form>
                 </div>{/*search_form end*/}
                 <h3>Setting</h3>

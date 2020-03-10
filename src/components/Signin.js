@@ -8,8 +8,7 @@ import axios from 'axios';
 export default class Signin extends React.Component{
   constructor(props){
     super(props);
-    this.login=this.login.bind(this)
-
+    this.login=this.login.bind(this);
     this.state={email :'',
       password:'',
     };
@@ -43,7 +42,8 @@ export default class Signin extends React.Component{
         sessionStorage.setItem('token',res.data.token);
       }
       this.props.Login();
-    }});
+    }}
+    ).catch(err=> alert(err));
   
   }
   usernameChange(event){
@@ -82,13 +82,14 @@ export default class Signin extends React.Component{
       .then(res => {console.log(res.data,res.status)
       if (res.status===201){
         alert("User created");
-        this.props.Login();
-        this.props.history.push('/acceuil'); 
+        //this.props.Login();
+        window.location.reload();
       }
       else{
         alert("Verifier vos données ")
       }
-      }).catch(err=>console.log(err));
+      }).catch(err=>{console.log(err) ;
+        alert(err)});
     }    
   }
 

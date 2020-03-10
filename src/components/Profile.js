@@ -10,7 +10,6 @@ export default class Profile extends React.Component{
         this.state={Coverimage:null,profileImg:null,user:{}};
     }
     componentDidMount(){
-      
       const user_id=this.props.match.params.id;
       //console.log(user_id);
      axios.get(`http://localhost:3000/user/${user_id}/getProfile`).then(res=>{
@@ -21,29 +20,33 @@ export default class Profile extends React.Component{
      
     }
 
-    onCoverChange=(event)=>{
-      if (event.target.files && event.target.files[0]) {
-        let reader = new FileReader();
-        reader.onload = (e) => {
-          //console.log(e.target)
-        };
-        reader.readAsDataURL(event.target.files[0]);
-        this.setState({
-          Coverimage: URL.createObjectURL(event.target.files[0])
-        })
-        //console.log(event.target.files[0].name)
-      }
+    onCoverChange=()=>{
+      const cover=this.refs.coverimg;
+      const user_id=this.props.match.params.id;
+      var formData = new FormData();
+      formData.append('cover',cover.files[0]);
+      axios.post(`http://localhost:3000/user/${user_id}/updatecover`,formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+      }).then(function () {
+        console.log('SUCCESS!!');
+      })
+      .catch(function () {
+        console.log('FAILURE!!');
+      });
+      window.location.reload();
     }
 
     onProfilePicchange=()=>{
       const user_id=this.props.match.params.id;
       const image=this.refs.profileimg;
       var formData = new FormData();
-      formData.append('image',image.files[0])
       if (image.files && image.files[0]) {
+        formData.append('image',image.files[0])
         let reader = new FileReader();
         reader.onload = (e) => {
-          console.log(e.target)
+          //console.log(e.target)
         };
         reader.readAsDataURL(image.files[0]);
         axios.post(`http://localhost:3000/user/${user_id}/updateImage`,formData, {
@@ -58,22 +61,24 @@ export default class Profile extends React.Component{
       });
         //console.log(image.files[0].name)
       }
+      
+        window.location.reload();
+      
+      
     }
-
-
     render(){
       //console.log(this.state.profileImg)
 
         return(
                     <div className="wrapper">
                 <section className="cover-sec">
-                  { this.state.Coverimage ? <img src={this.state.Coverimage} alt="" style={{width: '1600px', height: '390px'}} /> : <img src="../images/resources/cover-img.jpg" alt="" />}
+                  { this.state.Coverimage ? <img src={`../forsaRESTAPI/${this.state.Coverimage}`} alt="" style={{width: '1600px', height: '390px'}} /> : <img src="" alt="" />}
                         
                         <div className="add-pic-box">
                           <div className="container">
                             <div className="row no-gutters">
                               <div className="col-lg-12 col-sm-12">					
-                                <input  type="file" id="file" onChange={this.onCoverChange} />
+                                <input  type="file" id="file" ref='coverimg' onChange={this.onCoverChange} />
                                 <label htmlFor="file">Change Image</label>				
                               </div>
                             </div>
@@ -89,7 +94,7 @@ export default class Profile extends React.Component{
                                   <div className="main-left-sidebar">
                                     <div className="user_profile">
                                       <div className="user-pro-img">
-                                      { this.state.profileImg ? <img src={`../forsaRESTAPI/${this.state.profileImg}`} style={{width: '170px', height: '170px'}} alt="" /> :  <img src="../images/resources/user-pro-img.png" alt="" />}
+                                      { this.state.profileImg ? <img src={`../forsaRESTAPI/${this.state.profileImg}`} style={{width: '170px', height: '170px'}} alt="" /> :  <img src="" alt="" />}
                                       <div className="add-dp" id="OpenImgUpload"> 
                                           <input  
                                             type={"file"} id="file1" ref='profileimg' onChange={this.onProfilePicchange} />
@@ -178,15 +183,8 @@ export default class Profile extends React.Component{
                                     <div className="user-tab-sec rewivew">
                                     <h3>{this.state.user.fullname}</h3>
                                       <div className="star-descp">
-        {this.state.user.title ? <span> {this.state.user.title} : </span> : null}
-                                        <ul>
-                                          <li><i className="fa fa-star" /></li>
-                                          <li><i className="fa fa-star" /></li>
-                                          <li><i className="fa fa-star" /></li>
-                                          <li><i className="fa fa-star" /></li>
-                                          <li><i className="fa fa-star-half-o" /></li>
-                                        </ul>
-                                        <a href="# " >Status</a>
+                                      {this.state.user.title ? <span> {this.state.user.title} </span> : null}
+                                        
                                       </div>{/*star-descp end*/}
                                       <div className="tab-feed st2 settingjb">
                                         <ul>
