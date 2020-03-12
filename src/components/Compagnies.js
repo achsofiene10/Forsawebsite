@@ -10,21 +10,21 @@ export default class Compagnies extends React.Component{
   }
 
    componentDidMount(){
-     axios.get(`http://localhost:3000/user/users`).then(res=>{
-       //console.log(res.data);
+     axios.get(`http://localhost:3000/company/companys`).then(res=>{
         this.setState({companies:res.data});  
       });
   }
 
   Callcompany(data,index){
-    if(data.Category==='Company') {
       return(
-    <CompanyBadge key={index} company={data} ></CompanyBadge> )};
+    <CompanyBadge key={index} company={data} ></CompanyBadge> );
 
   }
     render (){
+      
       const {companies}=this.state;
-        return (
+      console.log(companies)
+             return (
             <div>
       <section className="companies-info">
         <div className="container">
@@ -33,7 +33,7 @@ export default class Compagnies extends React.Component{
           </div>{/*company-title end*/}
           <div className="companies-list">
             <div className="row">
-               {companies.users ? companies.users.map((company,index)=> {
+               {companies.companies ? companies.companies.map((company,index)=> {
                  return this.Callcompany(company,index)
                   }):null}
               

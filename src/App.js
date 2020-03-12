@@ -10,19 +10,25 @@ import Compagnies from './components/Compagnies';
 import Profile from './components/Profile'
 import { createBrowserHistory } from "history";
 import About from './components/About'
+import Jobs from './components/Jobs'
+import loadjs from 'loadjs'
 
 import Footer from './components/Footer';
 import Chatbox from './components/Chatbox';
 import AccountSetting from './components/AccountSetting';
+import $ from 'jquery';
+
 
 class App extends React.Component{
   constructor(props){
     super(props);
-    this.state={ loggedIn:true,user:{}}
+    this.state={ loggedIn:false,user:{}}
     this.Logout=this.Logout.bind(this)
     this.Login=this.Login.bind(this)
     }
     componentDidMount(){
+      
+    
     if(localStorage.getItem('token') || sessionStorage.getItem('token')  ){
       this.setState({loggedIn:true})
     }
@@ -46,7 +52,8 @@ class App extends React.Component{
          <Route path='/compagnies' exact component={Compagnies}></Route>
          <Route path='/about' exact component={About} ></Route>
          <Route path='/profile/:id' exact component={Profile}></Route>
-         <Route path='/profile/:id/settings' exact component={AccountSetting}></Route>  
+         <Route path='/profile/:id/settings' exact component={AccountSetting}></Route> 
+         <Route path='/jobs/' exact component={Jobs}></Route> 
        </Switch><Chatbox></Chatbox><Footer></Footer></div> : <Signin history={history} Login={this.Login}></Signin>}
     </div>  
     )

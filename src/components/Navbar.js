@@ -55,12 +55,12 @@ export default class Navbar extends React.Component{
       this.setState({
         status: !this.state.status,
       });
-      console.log(event.target.value)
+      //console.log(event.target.value)
       axios.post(`http://localhost:3000/user/${this.state.user._id}/updateStatus`).
       then().catch();
     }
     render(){
-      console.log(this.state.status)
+      //console.log(this.state.status)
         return (
             <div>
                 <header>

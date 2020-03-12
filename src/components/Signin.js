@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
-
+import $ from 'jquery';
 
 
 
@@ -19,25 +19,48 @@ export default class Signin extends React.Component{
 
     }
   componentDidMount(){
+    //  ============= SIGNIN CONTROL FUNCTION =========
+  
+    $('.sign-control li').on("click", function(){
+      var tab_id = $(this).attr('data-tab');
+      $('.sign-control li').removeClass('current');
+      $('.sign_in_sec').removeClass('current');
+      $(this).addClass('current animated fadeIn');
+      $("#"+tab_id).addClass('current animated fadeIn');
+      return false;
+  });
+
+  //  ============= SIGNIN TAB FUNCTIONALITY =========
+
+  $('.signup-tab ul li').on("click", function(){
+      var tab_id = $(this).attr('data-tab');
+      $('.signup-tab ul li').removeClass('current');
+      $('.dff-tab').removeClass('current');
+      $(this).addClass('current animated fadeIn');
+      $("#"+tab_id).addClass('current animated fadeIn');
+      return false;
+  });
+
     this.props.history.push('/'); 
   }
 
   login(event){
     event.preventDefault();
     const remember=this.refs.remember.checked;
+    const category=this.refs.categorysignin.value;
     console.log(remember)
     const obj = {
         email : this.state.email,
         password :this.state.password
   };
-  console.log(obj);
-  axios.post('http://localhost:3000/user/login', obj)
+  console.log(obj,category);
+  axios.post( `http://localhost:3000/${category}/login`, obj)
       .then(res => {console.log(res.data)
       if(res.status===200)
     {        
       this.props.history.push('/acceuil'); 
       if(remember){
-      localStorage.setItem('token',res.data.token);}
+        localStorage.setItem('token',res.data.token);}
       else {
         sessionStorage.setItem('token',res.data.token);
       }
@@ -69,15 +92,14 @@ export default class Signin extends React.Component{
       alert("mot de passe doit etre identiques")
     }
     else {
+      if(category==='User'){
       const obj={
         'image':image,
         'email':email,
         'country':country,
-        'Category':category,
         'fullname':fullname,
         'password':password
       }
-      console.log(obj)
       axios.post('http://localhost:3000/user/signup', obj)
       .then(res => {console.log(res.data,res.status)
       if (res.status===201){
@@ -90,7 +112,29 @@ export default class Signin extends React.Component{
       }
       }).catch(err=>{console.log(err) ;
         alert(err)});
-    }    
+    
+    }else{ 
+      const obj={
+        'image':image,
+        'email':email,
+        'country':country,
+        'CompanyName':fullname,
+        'password':password
+      }
+      axios.post('http://localhost:3000/company/signup', obj)
+      .then(res => {console.log(res.data,res.status)
+      if (res.status===201){
+        alert("company created");
+        //this.props.Login();
+        window.location.reload();
+      }
+      else{
+        alert("Verifier vos données ")
+      }
+      }).catch(err=>{console.log(err) ;
+        alert(err)});
+    } }
+         
   }
 
     render(){
@@ -133,6 +177,16 @@ export default class Signin extends React.Component{
                               <i className="la la-lock" />
                             </div>
                           </div>
+                          <div className="col-lg-12 no-pdd">
+                              <div className="sn-field">
+                                <select ref="categorysignin">
+                                  <option>user</option>
+                                  <option>company</option>
+                                </select>
+                                <i className="la la-dropbox" />
+                                <span><i className="fa fa-ellipsis-h" /></span>
+                              </div>
+                            </div>
                           <div className="col-lg-12 no-pdd">
                             <div className="checky-sec">
                               <div className="fgt-sec">

@@ -2,22 +2,357 @@ import React from 'react'
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import Infoprofile from './Infoprofile';
-
+import e from 'jquery';
+import $ from 'jquery';
 export default class Profile extends React.Component{
     constructor(props)
     {
         super(props);
-        this.state={Coverimage:null,profileImg:null,user:{}};
+        this.state={Coverimage:null,profileImg:null,user:{},skills:[]};
+        this.updateOverview=this.updateOverview.bind(this)
     }
     componentDidMount(){
+      $(".post_project").on("click", function(){
+        $(".post-popup.pst-pj").addClass("active");
+        $(".wrapper").addClass("overlay");
+        return false;
+    });
+    $(".post-project > a").on("click", function(){
+        $(".post-popup.pst-pj").removeClass("active");
+        $(".wrapper").removeClass("overlay");
+        return false;
+    });
+  
+    //  ============= POST JOB POPUP FUNCTION =========
+  
+    $(".post-jb").on("click", function(){
+        $(".post-popup.job_post").addClass("active");
+        $(".wrapper").addClass("overlay");
+        return false;
+    });
+    $(".post-project > a").on("click", function(){
+        $(".post-popup.job_post").removeClass("active");
+        $(".wrapper").removeClass("overlay");
+        return false;
+    });
+  
+    //  ============= SIGNIN CONTROL FUNCTION =========
+  
+    $('.sign-control li').on("click", function(){
+        var tab_id = $(this).attr('data-tab');
+        $('.sign-control li').removeClass('current');
+        $('.sign_in_sec').removeClass('current');
+        $(this).addClass('current animated fadeIn');
+        $("#"+tab_id).addClass('current animated fadeIn');
+        return false;
+    });
+  
+    //  ============= SIGNIN TAB FUNCTIONALITY =========
+  
+    $('.signup-tab ul li').on("click", function(){
+        var tab_id = $(this).attr('data-tab');
+        $('.signup-tab ul li').removeClass('current');
+        $('.dff-tab').removeClass('current');
+        $(this).addClass('current animated fadeIn');
+        $("#"+tab_id).addClass('current animated fadeIn');
+        return false;
+    });
+  
+    //  ============= SIGNIN SWITCH TAB FUNCTIONALITY =========
+  
+    $('.tab-feed ul li').on("click", function(){
+        var tab_id = $(this).attr('data-tab');
+        $('.tab-feed ul li').removeClass('active');
+        $('.product-feed-tab').removeClass('current');
+        $(this).addClass('active animated fadeIn');
+        $("#"+tab_id).addClass('current animated fadeIn');
+        return false;
+    });
+  
+    //  ============= COVER GAP FUNCTION =========
+  
+    var gap = $(".container").offset().left;
+    $(".cover-sec > a, .chatbox-list").css({
+        "right": gap
+    });
+  
+    //  ============= OVERVIEW EDIT FUNCTION =========
+  
+    $(".overview-open").on("click", function(){
+        $("#overview-box").addClass("open");
+        $(".wrapper").addClass("overlay");
+        return false;
+    });
+    $(".close-box").on("click", function(){
+        $("#overview-box").removeClass("open");
+        $(".wrapper").removeClass("overlay");
+        return false;
+    });
+    /*$(".save").on("click", function(){
+      $("#overview-box").removeClass("open");
+      $(".wrapper").removeClass("overlay");
+      return false;
+  });*/
+  $(".cancel").on("click", function(){
+    $("#overview-box").removeClass("open");
+    $(".wrapper").removeClass("overlay");
+    return false;
+});
+  
+    //  ============= EXPERIENCE EDIT FUNCTION =========
+  
+    $(".exp-bx-open").on("click", function(){
+        $("#experience-box").addClass("open");
+        $(".wrapper").addClass("overlay");
+        return false;
+    });
+    $(".close-box").on("click", function(){
+        $("#experience-box").removeClass("open");
+        $(".wrapper").removeClass("overlay");
+        return false;
+    });
+    $(".save").on("click", function(){
+      $("#experience-box").removeClass("open");
+      $(".wrapper").removeClass("overlay");
+      return false;
+  });
+  $(".cancel").on("click", function(){
+    $("#experience-box").removeClass("open");
+    $(".wrapper").removeClass("overlay");
+    return false;
+});
+  
+    //  ============= EDUCATION EDIT FUNCTION =========
+  
+    $(".ed-box-open").on("click", function(){
+        $("#education-box").addClass("open");
+        $(".wrapper").addClass("overlay");
+        return false;
+    });
+    $(".close-box").on("click", function(){
+        $("#education-box").removeClass("open");
+        $(".wrapper").removeClass("overlay");
+        return false;
+    });
+    $(".save").on("click", function(){
+      $("#education-box").removeClass("open");
+      $(".wrapper").removeClass("overlay");
+      return false;
+  });
+  $(".cancel").on("click", function(){
+    $("#education-box").removeClass("open");
+    $(".wrapper").removeClass("overlay");
+    return false;
+});
+  
+    //  ============= LOCATION EDIT FUNCTION =========
+  
+    $(".lct-box-open").on("click", function(){
+        $("#location-box").addClass("open");
+        $(".wrapper").addClass("overlay");
+        return false;
+    });
+    $(".close-box").on("click", function(){
+        $("#location-box").removeClass("open");
+        $(".wrapper").removeClass("overlay");
+        return false;
+    });
+   
+  $(".cancel").on("click", function(){
+    $("#location-box").removeClass("open");
+    $(".wrapper").removeClass("overlay");
+    return false;
+});
+  
+    //  ============= SKILLS EDIT FUNCTION =========
+  
+    $(".skills-open").on("click", function(){
+        $("#skills-box").addClass("open");
+        $(".wrapper").addClass("overlay");
+        return false;
+    });
+    $(".close-box").on("click", function(){
+        $("#skills-box").removeClass("open");
+        $(".wrapper").removeClass("overlay");
+        return false;
+    });
+  
+ 
+  $(".cancel").on("click", function(){
+    $("#skills-box").removeClass("open");
+    $(".wrapper").removeClass("overlay");
+    return false;
+});
+  
+    //  ============= ESTABLISH EDIT FUNCTION =========
+  
+    $(".esp-bx-open").on("click", function(){
+        $("#establish-box").addClass("open");
+        $(".wrapper").addClass("overlay");
+        return false;
+    });
+    $(".close-box").on("click", function(){
+        $("#establish-box").removeClass("open");
+        $(".wrapper").removeClass("overlay");
+        return false;
+    });
+    $(".save").on("click", function(){
+      $("#establish-box").removeClass("open");
+      $(".wrapper").removeClass("overlay");
+      return false;
+  });
+  $(".cancel").on("click", function(){
+    $("#establish-box").removeClass("open");
+    $(".wrapper").removeClass("overlay");
+    return false;
+});
+  
+    //  ============= CREATE PORTFOLIO FUNCTION =========
+  
+    $(".portfolio-btn > a").on("click", function(){
+        $("#create-portfolio").addClass("open");
+        $(".wrapper").addClass("overlay");
+        return false;
+    });
+    $(".close-box").on("click", function(){
+        $("#create-portfolio").removeClass("open");
+        $(".wrapper").removeClass("overlay");
+        return false;
+    });
+    
+  
+    //  ============= EMPLOYEE EDIT FUNCTION =========
+  
+    $(".emp-open").on("click", function(){
+        $("#total-employes").addClass("open");
+        $(".wrapper").addClass("overlay");
+        return false;
+    });
+    $(".close-box").on("click", function(){
+        $("#total-employes").removeClass("open");
+        $(".wrapper").removeClass("overlay");
+        return false;
+    });
+    $(".save").on("click", function(){
+      $("#total-employes").removeClass("open");
+      $(".wrapper").removeClass("overlay");
+      return false;
+  });
+  $(".cancel").on("click", function(){
+    $("#total-employes").removeClass("open");
+    $(".wrapper").removeClass("overlay");
+    return false;
+});
+  
+    //  =============== Ask a Question Popup ============
+  
+    $(".ask-question").on("click", function(){
+        $("#question-box").addClass("open");
+        $(".wrapper").addClass("overlay");
+        return false;
+    });
+    $(".close-box").on("click", function(){
+        $("#question-box").removeClass("open");
+        $(".wrapper").removeClass("overlay");
+        return false;
+    });
+    $(".save").on("click", function(){
+      $("#question-box").removeClass("open");
+      $(".wrapper").removeClass("overlay");
+      return false;
+  });
+  $(".cancel").on("click", function(){
+    $("#question-box").removeClass("open");
+    $(".wrapper").removeClass("overlay");
+    return false;
+});
+  
+  
+    //  ============== ChatBox ============== 
+  
+  
+    $(".chat-mg").on("click", function(){
+        $(this).next(".conversation-box").toggleClass("active");
+        return false;
+    });
+    $(".close-chat").on("click", function(){
+        $(".conversation-box").removeClass("active");
+        return false;
+    });
+  
+    //  ================== Edit Options Function =================
+  
+  
+    $(".ed-opts-open").on("click", function(){
+        $(this).next(".ed-options").toggleClass("active");
+        return false;
+    });
+  
+  
+    // ============== Menu Script =============
+  
+    $(".menu-btn > a").on("click", function(){
+        $("nav").toggleClass("active");
+        return false;
+    });
+  
+  
+    //  ============ Notifications Open =============
+  
+    $(".not-box-open").on("click", function(){$("#message").hide();
+        $(".user-account-settingss").hide();
+        $(this).next("#notification").toggle();
+    });
+  
+     //  ============ Messages Open =============
+  
+    $(".not-box-openm").on("click", function(){$("#notification").hide();
+        $(".user-account-settingss").hide();
+        $(this).next("#message").toggle();
+    });
+  
+  
+    // ============= User Account Setting Open ===========
+  /*
+  $(".user-info").on("click", function(){$("#users").hide();
+        $(".user-account-settingss").hide();
+        $(this).next("#notification").toggle();
+    });
+    
+  */
+  $( ".user-info" ).click(function() {
+  $( ".user-account-settingss" ).slideToggle( "fast");
+    $("#message").not($(this).next("#message")).slideUp();
+    $("#notification").not($(this).next("#notification")).slideUp();
+    // Animation complete.
+  });
+  
+  
+    //  ============= FORUM LINKS MOBILE MENU FUNCTION =========
+  
+    $(".forum-links-btn > a").on("click", function(){
+        $(".forum-links").toggleClass("active");
+        return false;
+    });
+    $("html").on("click", function(){
+        $(".forum-links").removeClass("active");
+    });
+    $(".forum-links-btn > a, .forum-links").on("click", function(){
+        e.stopPropagation();
+    });
+  
       const user_id=this.props.match.params.id;
       //console.log(user_id);
      axios.get(`http://localhost:3000/user/${user_id}/getProfile`).then(res=>{
        this.setState({user:res.data}, function () {
          this.setState({profileImg:res.data.image})
          this.setState({Coverimage:res.data.cover})
-    });})
-     
+    });}) 
+    axios.get(`http://localhost:3000/skill/${user_id}/getallskills`).then(res=>{
+      
+      this.setState({skills:res.data}, function(){
+        //console.log(this.state.skills,"skills");
+      })}).catch(err=>console.log(err));  
     }
 
     onCoverChange=()=>{
@@ -38,6 +373,8 @@ export default class Profile extends React.Component{
       window.location.reload();
     }
 
+
+
     onProfilePicchange=()=>{
       const user_id=this.props.match.params.id;
       const image=this.refs.profileimg;
@@ -45,9 +382,7 @@ export default class Profile extends React.Component{
       if (image.files && image.files[0]) {
         formData.append('image',image.files[0])
         let reader = new FileReader();
-        reader.onload = (e) => {
-          //console.log(e.target)
-        };
+        
         reader.readAsDataURL(image.files[0]);
         axios.post(`http://localhost:3000/user/${user_id}/updateImage`,formData, {
           headers: {
@@ -59,16 +394,60 @@ export default class Profile extends React.Component{
       .catch(function () {
         console.log('FAILURE!!');
       });
-        //console.log(image.files[0].name)
-      }
-      
-        window.location.reload();
-      
-      
+        window.location.reload();}
     }
-    render(){
-      //console.log(this.state.profileImg)
+        updateOverview(event){
+          $("#overview-box").removeClass("open");
+          $(".wrapper").removeClass("overlay");
+          event.preventDefault();
+          const overview=this.refs.overview.value
+          const obj={
+            overview:overview
+          }
+          axios.post(`http://localhost:3000/user/${this.state.user._id}/updateoverview`,obj).then(
+            res=>{
+              if(res.status===200){
+                const {user}=this.state;
+                user['overview']=overview;
+                this.setState({user:user})
+              }
+           }).catch(err=>console.log(err.data));
+        }
 
+        editLocation=(event)=>{
+          event.preventDefault()
+          $("#location-box").removeClass("open");
+          $(".wrapper").removeClass("overlay");
+          const location=this.refs.selectedLocation.value;
+          const obj={
+            location:location
+          }
+          axios.post(`http://localhost:3000/user/${this.state.user._id}/updatelocation`,obj).then(
+            res=>{
+              if(res.status===200){
+                const {user}=this.state;
+                user['location']=location;
+                this.setState({user:user})
+              }
+           }).catch(err=>console.log(err.data));
+        }
+
+        addSkill=(event)=>{
+          event.preventDefault();
+          $("#skills-box").removeClass("open");
+          $(".wrapper").removeClass("overlay");
+          const skill=this.refs.skill.value;
+          const obj={
+            title:skill
+          }
+          axios.post(`http://localhost:3000/skill/${this.state.user._id}/createskill`,obj).then(
+            res=>{
+              if(res.status===200){
+                  console.log("added")
+              }
+           }).catch(err=>console.log(err.data));
+        }
+    render(){
         return(
                     <div className="wrapper">
                 <section className="cover-sec">
@@ -1332,7 +1711,7 @@ export default class Profile extends React.Component{
                                         </div>
                                       </div>
                                     </div>{/*product-feed-tab end*/}
-                                    <Infoprofile></Infoprofile>
+                                     <Infoprofile skills={this.state.skills} user={this.state.user}></Infoprofile> 
 
                                     </div>{/*product-feed-tab end*/}
                                     <div className="product-feed-tab" id="rewivewdata">
@@ -1774,10 +2153,9 @@ export default class Profile extends React.Component{
                         <div className="overview-edit">
                           <h3>Overview</h3>
                           <span>5000 character left</span>
-                          <form>
-                            <textarea defaultValue={""} />
-                            <button type="submit" className="save">Save</button>
-                            <button type="submit" className="cancel">Cancel</button>
+                          <form  >
+                            <textarea  ref="overview" defaultValue={this.state.user.overview} />
+                            <button onClick={this.updateOverview}  type="submit" >Save</button>
                           </form>
                           <a href="# " className="close-box"><i className="la la-close" /></a>
                         </div>{/*overview-edit end*/}
@@ -1789,7 +2167,6 @@ export default class Profile extends React.Component{
                             <input type="text" name="subject" placeholder="Subject" />
                             <textarea defaultValue={""} />
                             <button type="submit" className="save">Save</button>
-                            <button type="submit" className="save-add">Save &amp; Add More</button>
                             <button type="submit" className="cancel">Cancel</button>
                           </form>
                           <a href="# " className="close-box"><i className="la la-close" /></a>
@@ -1819,7 +2196,6 @@ export default class Profile extends React.Component{
                             <input type="text" name="degree" placeholder="Degree" />
                             <textarea placeholder="Description" defaultValue={""} />
                             <button type="submit" className="save">Save</button>
-                            <button type="submit" className="save-add">Save &amp; Add More</button>
                             <button type="submit" className="cancel">Cancel</button>
                           </form>
                           <a href="# " className="close-box"><i className="la la-close" /></a>
@@ -1831,26 +2207,22 @@ export default class Profile extends React.Component{
                           <form>
                             <div className="datefm">
                               <select>
-                                <option>Country</option>
-                                <option value="pakistan">Pakistan</option>
-                                <option value="england">England</option>
-                                <option value="india">India</option>
-                                <option value="usa">United Sates</option>
+                                <option value="Tunisia">Tunisia</option>
                               </select>
                               <i className="fa fa-globe" />
                             </div>
                             <div className="datefm">
-                              <select>
-                                <option>City</option>
-                                <option value="london">London</option>
-                                <option value="new-york">New York</option>
-                                <option value="sydney">Sydney</option>
-                                <option value="chicago">Chicago</option>
+                              <select ref="selectedLocation">
+                                <option value="Monastir">Monastir</option>
+                                <option value="Sousse">Sousse</option>
+                                <option value="Tunis">Tunis</option>
+                                <option value="Kairaouan">Kairaouan</option>
+                                <option value="Sfax">Sfax</option>
                               </select>
                               <i className="fa fa-map-marker" />
                             </div>
-                            <button type="submit" className="save">Save</button>
-                            <button type="submit" className="cancel">Cancel</button>
+                            <button onClick={this.editLocation} >Save</button>
+                            <button  className="cancel">Cancel</button>
                           </form>
                           <a href="# " className="close-box"><i className="la la-close" /></a>
                         </div>{/*overview-edit end*/}
@@ -1864,10 +2236,9 @@ export default class Profile extends React.Component{
                             <li><a href="# " className="skl-name">css</a><a href="# " className="close-skl"><i className="la la-close" /></a></li>
                           </ul>
                           <form>
-                            <input type="text" name="skills" placeholder="Skills" />
-                            <button type="submit" className="save">Save</button>
-                            <button type="submit" className="save-add">Save &amp; Add More</button>
-                            <button type="submit" className="cancel">Cancel</button>
+                            <input type="text" ref="skill"name="skills" placeholder="Skills" />
+                            <button onClick={this.addSkill} >Add</button>
+                            <button  className="cancel">Cancel</button>
                           </form>
                           <a href="# " className="close-box"><i className="la la-close" /></a>
                         </div>{/*overview-edit end*/}
