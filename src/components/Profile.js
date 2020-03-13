@@ -8,8 +8,11 @@ export default class Profile extends React.Component{
     constructor(props)
     {
         super(props);
-        this.state={Coverimage:null,profileImg:null,user:{},skills:[]};
+        this.state={Coverimage:null,profileImg:null,user:{},skills:[],education:[],Educationedit:'',experience:[],Experienceedit:''}
         this.updateOverview=this.updateOverview.bind(this)
+        this.Editeducation=this.Editeducation.bind(this);
+        this.Editexperience=this.Editexperience.bind(this)
+
     }
     componentDidMount(){
       $(".post_project").on("click", function(){
@@ -88,11 +91,7 @@ export default class Profile extends React.Component{
         $(".wrapper").removeClass("overlay");
         return false;
     });
-    /*$(".save").on("click", function(){
-      $("#overview-box").removeClass("open");
-      $(".wrapper").removeClass("overlay");
-      return false;
-  });*/
+    
   $(".cancel").on("click", function(){
     $("#overview-box").removeClass("open");
     $(".wrapper").removeClass("overlay");
@@ -106,22 +105,7 @@ export default class Profile extends React.Component{
         $(".wrapper").addClass("overlay");
         return false;
     });
-    $(".close-box").on("click", function(){
-        $("#experience-box").removeClass("open");
-        $(".wrapper").removeClass("overlay");
-        return false;
-    });
-    $(".save").on("click", function(){
-      $("#experience-box").removeClass("open");
-      $(".wrapper").removeClass("overlay");
-      return false;
-  });
-  $(".cancel").on("click", function(){
-    $("#experience-box").removeClass("open");
-    $(".wrapper").removeClass("overlay");
-    return false;
-});
-  
+    
     //  ============= EDUCATION EDIT FUNCTION =========
   
     $(".ed-box-open").on("click", function(){
@@ -129,21 +113,7 @@ export default class Profile extends React.Component{
         $(".wrapper").addClass("overlay");
         return false;
     });
-    $(".close-box").on("click", function(){
-        $("#education-box").removeClass("open");
-        $(".wrapper").removeClass("overlay");
-        return false;
-    });
-    $(".save").on("click", function(){
-      $("#education-box").removeClass("open");
-      $(".wrapper").removeClass("overlay");
-      return false;
-  });
-  $(".cancel").on("click", function(){
-    $("#education-box").removeClass("open");
-    $(".wrapper").removeClass("overlay");
-    return false;
-});
+   
   
     //  ============= LOCATION EDIT FUNCTION =========
   
@@ -351,9 +321,18 @@ export default class Profile extends React.Component{
     axios.get(`http://localhost:3000/skill/${user_id}/getallskills`).then(res=>{
       
       this.setState({skills:res.data}, function(){
-        //console.log(this.state.skills,"skills");
       })}).catch(err=>console.log(err));  
-    }
+    
+    axios.get(`http://localhost:3000/education/${user_id}/getAllEducations`).then(res=>{
+      
+      this.setState({education:res.data}, function(){
+      })}).catch(err=>console.log(err));  
+      axios.get(`http://localhost:3000/experience/${user_id}/getAllExperiences`).then(res=>{
+      
+      this.setState({experience:res.data}, function(){
+      })}).catch(err=>console.log(err));  
+    
+  }
 
     onCoverChange=()=>{
       const cover=this.refs.coverimg;
@@ -443,12 +422,237 @@ export default class Profile extends React.Component{
           axios.post(`http://localhost:3000/skill/${this.state.user._id}/createskill`,obj).then(
             res=>{
               if(res.status===200){
+                  const skills=this.state.skills;
+                  skills['skills'].push({title:skill});
+                  this.setState({skills:skills})
                   console.log("added")
               }
            }).catch(err=>console.log(err.data));
         }
-    render(){
-        return(
+        removeSkill=(index,id)=>{
+          const {skills}=this.state;
+          skills['skills'].splice(index,1);
+          this.setState({skills:skills});
+          axios.delete(`http://localhost:3000/skill/${id}/deleteskill`).then(
+            res=>{
+              if(res.status===200){
+                  console.log("removed")
+              }
+              else alert('error')
+           })
+        }
+        addEducation=(event)=>{
+          $("#education-box").removeClass("open");
+          $(".wrapper").removeClass("overlay");
+          this.setState({Educationedit:''})
+          event.preventDefault();
+          const degree=this.refs.degree.value;
+          const school=this.refs.school.value;
+          const from=this.refs.from.value;
+          const to=this.refs.to.value;
+          const description=this.refs.description.value;
+          const obj={
+            school:school,
+            degree:degree,
+            duration:from+'-'+to,
+            description:description
+          }
+          console.log(obj)
+          axios.post(`http://localhost:3000/education/${this.state.user._id}/createEducation`,obj).then(
+            res=>{
+              if(res.status===200){
+                  const education=this.state.education;
+                  //console.log(res.data)
+                  education['educations'].push({
+                    _id:res.data.education._id,
+                    school:school,
+                    degree:degree,
+                    duration:from+'-'+to,
+                    description:description
+                  });
+                  this.setState({education:education})
+              }
+           }).catch(err=>console.log(err.data));
+        }
+
+        Editeducation(e){
+          this.setState({Educationedit:e},function(){
+            console.log(this.state.Educationedit)
+          })
+        }
+        closeEditEd=(e)=>{
+            e.preventDefault()
+            $("#education-box").removeClass("open");
+            $(".wrapper").removeClass("overlay");
+            this.setState({Educationedit:''},function(){
+              console.log(this.state.Educationedit)
+            })
+        }
+        deleteEducation=(e)=>{
+          e.preventDefault();
+          $("#education-box").removeClass("open");
+          $(".wrapper").removeClass("overlay");
+          axios.delete(`http://localhost:3000/education/${this.state.Educationedit._id}/deleteEducation`).then(res=>
+          {
+            if (res.status==200){
+                const {education}=this.state;
+                const index=education['educations'].findIndex(_education => _education._id===this.state.Educationedit._id);
+                education['educations'].splice(index,1)
+                this.setState({Educationedit:''});
+                this.setState({education:education});           
+            }
+            else{
+              alert('problem on delete')
+            }
+          })
+
+        }
+        saveEducation=(event)=>{
+          $("#education-box").removeClass("open");
+          $(".wrapper").removeClass("overlay");
+          const educationid=this.state.Educationedit._id;
+          console.log(educationid)
+          this.setState({Educationedit:''})
+          event.preventDefault();
+          const degree=this.refs.degree.value;
+          const school=this.refs.school.value;
+          const from=this.refs.from.value;
+          const to=this.refs.to.value;
+          const description=this.refs.description.value;
+          const obj={
+            school:school,
+            degree:degree,
+            duration:from+'-'+to,
+            description:description
+          }
+          console.log(obj)
+          axios.patch(`http://localhost:3000/education/${educationid}/updateEducation`,obj).then(
+            res=>{
+              if(res.status===200){
+                const {education}=this.state;
+                const index=education['educations'].findIndex(_education => _education._id===educationid);
+                education['educations'].splice(index,1);
+                  education['educations'].push({
+                    _id:educationid,
+                    school:school,
+                    degree:degree,
+                    duration:from+'-'+to,
+                    description:description
+                  });
+                  this.setState({education:education})
+              }
+           }).catch(err=>console.log(err.data));
+        }
+
+        addExperience=(e)=>{
+          $("#experience-box").removeClass("open");
+          $(".wrapper").removeClass("overlay");
+          this.setState({Experienceedit:''})
+          e.preventDefault();
+          const titleex=this.refs.titleex.value;
+          const durationex=this.refs.durationex.value;
+          
+          const descriptionex=this.refs.descriptionex.value;
+          const obj={
+            duration:durationex,
+            title:titleex,
+            description:descriptionex
+          }
+          console.log(obj)
+          axios.post(`http://localhost:3000/experience/${this.state.user._id}/createExperience`,obj).then(
+            res=>{
+              if(res.status===200){
+                  const experience=this.state.experience;
+                  experience['experiences'].push({
+                    _id:res.data.experience._id,
+                    title:titleex,
+                    duration:durationex,
+                    description:descriptionex,
+                  });
+                  this.setState({experience:experience})
+              }
+           }).catch(err=>console.log(err.data));
+        }
+        deleteExperience=(e)=>{
+          console.log("delete experience")
+          e.preventDefault();
+          $("#experience-box").removeClass("open");
+          $(".wrapper").removeClass("overlay");
+          axios.delete(`http://localhost:3000/experience/${this.state.Experienceedit._id}/deleteExperience`).then(res=>
+          {
+            if (res.status==200){
+                const {experience}=this.state;
+                const index=experience['experiences'].findIndex(_experience => _experience._id===this.state.Experienceedit._id);
+                experience['experiences'].splice(index,1)
+                this.setState({Experienceedit:''});
+                this.setState({experience:experience});           
+            }
+            else{
+              alert('problem on delete')
+            }
+          })
+
+        }
+        updateExperience=(e)=>{
+          console.log("update experience")
+          $("#experience-box").removeClass("open");
+          $(".wrapper").removeClass("overlay");
+          const experienceid=this.state.Experienceedit._id;
+          this.setState({Experienceedit:''})
+          e.preventDefault();
+          const title=this.refs.titleex.value;
+          const duration=this.refs.durationex.value
+          const description=this.refs.descriptionex.value;
+          const obj={
+            title:title,
+            duration:duration,
+            description:description
+          }
+          console.log(obj)
+          axios.patch(`http://localhost:3000/experience/${experienceid}/updateExperience`,obj).then(
+            res=>{
+              if(res.status===200){
+                const {experience}=this.state;
+                const index=experience['experiences'].findIndex(_experience => _experience._id===experienceid);
+                experience['experiences'].splice(index,1);
+                  experience['experiences'].push({
+                    _id:experienceid,
+                    title:title,
+                    duration:duration,
+                    description:description
+                  });
+                  this.setState({experience:experience})
+              }
+           }).catch(err=>console.log(err.data));
+        }
+
+        closeEditEx=(e)=>{
+          console.log("close edit ex")
+          e.preventDefault();
+          $("#experience-box").removeClass("open");
+          $(".wrapper").removeClass("overlay");
+            this.setState({Experienceedit:''},function(){
+              console.log(this.state.Experienceedit)
+            })
+        }
+        Editexperience(e){
+          console.log(" edit experience")
+          this.setState({Experienceedit:e},function(){
+            console.log(this.state.Experienceedit)
+          })
+        }
+        
+
+            render(){
+              const skills=this.state.skills['skills'];
+              const description=this.state.Educationedit.description;
+              const degree=this.state.Educationedit.degree;
+              const school=this.state.Educationedit.school;
+              const titleex=this.state.Experienceedit.title;
+              const durationex=this.state.Experienceedit.duration;
+              const descriptionex=this.state.Experienceedit.description;
+
+              return(
                     <div className="wrapper">
                 <section className="cover-sec">
                   { this.state.Coverimage ? <img src={`../forsaRESTAPI/${this.state.Coverimage}`} alt="" style={{width: '1600px', height: '390px'}} /> : <img src="" alt="" />}
@@ -1711,7 +1915,7 @@ export default class Profile extends React.Component{
                                         </div>
                                       </div>
                                     </div>{/*product-feed-tab end*/}
-                                     <Infoprofile skills={this.state.skills} user={this.state.user}></Infoprofile> 
+                                     <Infoprofile Editexperience={this.Editexperience} Editeducation={this.Editeducation} skills={this.state.skills} education={this.state.education} experience={this.state.experience} user={this.state.user}></Infoprofile> 
 
                                     </div>{/*product-feed-tab end*/}
                                     <div className="product-feed-tab" id="rewivewdata">
@@ -2164,41 +2368,42 @@ export default class Profile extends React.Component{
                         <div className="overview-edit">
                           <h3>Experience</h3>
                           <form>
-                            <input type="text" name="subject" placeholder="Subject" />
-                            <textarea defaultValue={""} />
-                            <button type="submit" className="save">Save</button>
-                            <button type="submit" className="cancel">Cancel</button>
+                            <input type="text" name="subject" ref="titleex" placeholder="Subject" defaultValue={titleex} />
+                            <input type="text" name="duration" ref="durationex" placeholder="duration"  defaultValue={durationex} />
+                            <input placeholder='description' ref="descriptionex" defaultValue={descriptionex} />
+                            {this.state.Experienceedit!=''  ? <button onClick={this.deleteExperience} >Delete </button> : null}
+                            {this.state.Experienceedit ? <button onClick={this.updateExperience}>Save</button> : <button onClick={this.addExperience}> Add</button>}
+                            <button  onClick={this.closeEditEx}>Cancel</button>
                           </form>
-                          <a href="# " className="close-box"><i className="la la-close" /></a>
                         </div>{/*overview-edit end*/}
                       </div>{/*overview-box end*/}
                       <div className="overview-box" id="education-box">
                         <div className="overview-edit">
                           <h3>Education</h3>
                           <form>
-                            <input type="text" name="school" placeholder="School / University" />
+                            <input type="text" name="school" ref="school" defaultValue={school} placeholder="School / University" />
                             <div className="datepicky">
                               <div className="row">
                                 <div className="col-lg-6 no-left-pd">
                                   <div className="datefm">
-                                    <input type="text" name="from" placeholder="From" className="datepicker" />	
+                                    <input type="text" name="from" ref="from" placeholder="From" className="datepicker" />	
                                     <i className="fa fa-calendar" />
                                   </div>
                                 </div>
                                 <div className="col-lg-6 no-righ-pd">
                                   <div className="datefm">
-                                    <input type="text" name="to" placeholder="To" className="datepicker" />
+                                    <input type="text" name="to" ref="to"  placeholder="To" className="datepicker" />
                                     <i className="fa fa-calendar" />
                                   </div>
                                 </div>
                               </div>
                             </div>
-                            <input type="text" name="degree" placeholder="Degree" />
-                            <textarea placeholder="Description" defaultValue={""} />
-                            <button type="submit" className="save">Save</button>
-                            <button type="submit" className="cancel">Cancel</button>
+                            <input type="text" name="degree" ref="degree" defaultValue={degree} placeholder="Degree" />
+                            <input placeholder="Description" ref="description" defaultValue={description} />
+                            {this.state.Educationedit!=''  ? <button onClick={this.deleteEducation} >Delete </button> : null}
+                            {this.state.Educationedit ? <button onClick={this.saveEducation}>Save</button> : <button onClick={this.addEducation}> Add</button>}
+                            <button  onClick={this.closeEditEd}>Cancel</button>
                           </form>
-                          <a href="# " className="close-box"><i className="la la-close" /></a>
                         </div>{/*overview-edit end*/}
                       </div>{/*overview-box end*/}
                       <div className="overview-box" id="location-box">
@@ -2231,13 +2436,12 @@ export default class Profile extends React.Component{
                         <div className="overview-edit">
                           <h3>Skills</h3>
                           <ul>
-                            <li><a href="# " className="skl-name">HTML</a><a href="# " className="close-skl"><i className="la la-close" /></a></li>
-                            <li><a href="# " className="skl-name">php</a><a href="# " className="close-skl"><i className="la la-close" /></a></li>
-                            <li><a href="# " className="skl-name">css</a><a href="# " className="close-skl"><i className="la la-close" /></a></li>
+                        {skills? skills.map((skill,index) => <li key ={index} ><Link to="# "  className="skl-name">{skill.title}</Link><Link to="# "  className="close-skl" onClick={()=>this.removeSkill(index,skill._id)}><i className="la la-close" /></Link></li>) : null}
+                            
                           </ul>
                           <form>
                             <input type="text" ref="skill"name="skills" placeholder="Skills" />
-                            <button onClick={this.addSkill} >Add</button>
+                            <button onClick={this.addSkill} >Add or Save</button>
                             <button  className="cancel">Cancel</button>
                           </form>
                           <a href="# " className="close-box"><i className="la la-close" /></a>
