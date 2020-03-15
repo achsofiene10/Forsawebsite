@@ -63,20 +63,51 @@ class Job extends React.Component {
 
   editJob=(e)=>{  
     e.preventDefault();
-    $(".post-popup.pst-pj").addClass("active");
+    console.log('clicked')
+    this.setState({editOpen:'active'})
+    //$(".post-popup job_post").addClass("active");
     $(".wrapper").addClass("overlay");
     this.setState({ Opened: '' }) 
   }
 
   cancelEdit=(e)=>{
     e.preventDefault();
-    $(".post-popup.pst-pj").removeClass("active");
+    this.setState({editOpen:''})
     $(".wrapper").removeClass("overlay");
   }
   UpdateJob=(e)=>{
     e.preventDefault();
-    $(".post-popup.pst-pj").removeClass("active");
-    $(".wrapper").removeClass("overlay");
+    const idjob=this.props.job._id
+    const title=this.refs.titleJob.value;
+    const category=this.refs.categoryJ.value;
+    const price=this.refs.priceJ.value;
+    const timejob=this.refs.timejob.value;
+    const skills=this.refs.skillsJ.value;
+    const description=this.refs.descriptionJ.value;
+    if( !title || !category || !price|| !timejob || !skills || !description){
+      alert('remplir tous les champs')
+      e.preventDefault();
+    }else{
+      e.preventDefault();
+      this.setState({editOpen:''})
+      $(".wrapper").removeClass("overlay");
+      const obj={
+        title:title,
+        skills:skills,
+        price:price,
+        time:timejob,
+        description:description,
+        category:category
+      }
+      console.log(obj)
+      axios.patch(`http://localhost:3000/job/${idjob}/updatejob`,obj).then(
+        res=>{
+          if(res.status===200){
+            console.log("job updated")
+            window.location.reload()
+          }
+       }).catch(err=>console.log(err.data)); 
+      }
   }
 
   render() {
@@ -150,18 +181,18 @@ class Job extends React.Component {
           </ul>
           <a href="# "><i className="fas fa-eye" />Views 50</a>
         </div>
-        <div className="post-popup pst-pj">
+        <div className={`post-popup job_post ${this.state.editOpen}`}>
           <div className="post-project">
-            <h3>Post a project</h3>
+            <h3>Edit a job</h3>
             <div className="post-project-fields">
               <form>
                 <div className="row">
                   <div className="col-lg-12">
-                    <input type="text" name="title" ref="titlep" placeholder="Title" />
+                    <input type="text" name="title" ref="titleJob" placeholder="Title" />
                   </div>
                   <div className="col-lg-12">
                     <div className="inp-field">
-                      <select ref="categoryp">
+                      <select ref="categoryJ">
                         <option>Category</option>
                         <option>Category 1</option>
                         <option>Category 2</option>
@@ -170,27 +201,29 @@ class Job extends React.Component {
                     </div>
                   </div>
                   <div className="col-lg-12">
-                    <input type="text" name="skills" ref="skillsp" placeholder="Skills" />
+                    <input type="text" name="skills" ref="skillsJ" placeholder="Skills" />
                   </div>
-                  <div className="col-lg-12">
-                    <div className="price-sec">
-                      <div className="price-br">
-                        <input type="text" name="price1" ref="pricefrom" placeholder="Price" />
-                        <i className="la la-dollar" />
-                      </div>
-                      <span>To</span>
-                      <div className="price-br">
-                        <input type="text" name="price1" ref="priceto" placeholder="Price" />
-                        <i className="la la-dollar" />
-                      </div>
+                  <div className="col-lg-6">
+                    <div className="price-br">
+                      <input type="text" name="price1" ref="priceJ" placeholder="Price" />
+                      <i className="la la-dollar" />
+                    </div>
+                  </div>
+                  <div className="col-lg-6">
+                    <div className="inp-field">
+                      
+                      <select ref="timejob">
+                        <option>Full Time</option>
+                        <option>Half time</option>
+                      </select>
                     </div>
                   </div>
                   <div className="col-lg-12">
-                    <textarea name="description" placeholder="Description" ref="descriptionp" defaultValue={""} />
+                    <textarea name="description" placeholder="Description" ref="descriptionJ" defaultValue={""} />
                   </div>
                   <div className="col-lg-12">
                     <ul>
-                      <li><button  onClick={this.UpdateJob} value="post">Update</button></li>
+                      <li><a href="# " onClick={this.UpdateJob} >Save</a></li>
                       <li><a href="# " onClick={this.cancelEdit} >Cancel</a></li>
                     </ul>
                   </div>
@@ -199,6 +232,7 @@ class Job extends React.Component {
             </div>{/*post-project-fields end*/}
           </div>{/*post-project end*/}
         </div>{/*post-project-popup end*/}
+        
       </div>
     )
   }
@@ -236,7 +270,53 @@ class Project extends React.Component {
         else alert('error')
       })
   }
+  
 
+  editProject=(e)=>{  
+    e.preventDefault();
+    console.log("clicked")
+    this.setState({ Opened: '' })
+    $(".post-popup.pst-pj").addClass("active");
+    $(".wrapper").addClass("overlay");
+  }
+
+  cancelEdit=(e)=>{
+    e.preventDefault();
+    $(".post-popup.pst-pj").removeClass("active");
+    $(".wrapper").removeClass("overlay");
+  }
+  UpdateJob=(e)=>{
+    e.preventDefault();
+    const idproject=this.props.project._id
+    const title=this.refs.title.value;
+    const category=this.refs.category.value;
+    const price=this.refs.price.value;
+    const toprice=this.refs.toprice.value;
+    const skills=this.refs.skills.value;
+    const description=this.refs.description.value;
+    if( !title || !category || !price|| !toprice || !skills || !description){
+      alert('remplir tous les champs')
+    }else{
+    $(".post-popup.pst-pj").removeClass("active");
+    $(".wrapper").removeClass("overlay");
+    const obj={
+      title:title,
+      skills:skills,
+      price:price,
+      toprice:toprice,
+      description:description,
+      category:category
+    }
+      axios.patch(`http://localhost:3000/project/${idproject}/updateproject`,obj).then(
+        res=>{
+          if(res.status===200){
+            console.log("project updated")
+            window.location.reload()
+
+          }
+       }).catch(err=>console.log(err.data)); 
+      }
+    }
   render() {
     const skills = this.props.project.skills.split(" ");
     let date = this.props.project.createdAt.substring(0, 16);
@@ -257,7 +337,7 @@ class Project extends React.Component {
           <div className="ed-opts">
             <Link to="#" onClick={this.openOpts}><i className="la la-ellipsis-v" /></Link>
             <ul className={`ed-options ${this.state.Opened} `}>
-              {Myprofile ? <div> <li><Link to="#" >Edit Post</Link></li> <li><Link to="# " onClick={this.deleteProject}>Delete</Link></li></div> :
+              {Myprofile ? <div> <li><Link to="#" onClick={this.editProject}>Edit Post</Link></li> <li><Link to="# " onClick={this.deleteProject}>Delete</Link></li></div> :
                 <div>
                   <li><a href="#" >Unbid</a></li>
                   <li><a href="#" >Hide</a></li> </div>}
@@ -309,6 +389,55 @@ class Project extends React.Component {
           </ul>
           <a href="#"><i className="fas fa-eye" />Views 50</a>
         </div>
+        <div className="post-popup pst-pj">
+          <div className="post-project">
+            <h3>Edit a project</h3>
+            <div className="post-project-fields">
+              <form>
+                <div className="row">
+                  <div className="col-lg-12">
+                    <input type="text" name="title" ref="title" placeholder="Title" />
+                  </div>
+                  <div className="col-lg-12">
+                    <div className="inp-field">
+                      <select ref="category">
+                        <option>Category</option>
+                        <option>Category 1</option>
+                        <option>Category 2</option>
+                        <option>Category 3</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="col-lg-12">
+                    <input type="text" name="skills" ref="skills" placeholder="Skills" />
+                  </div>
+                  <div className="col-lg-12">
+                    <div className="price-sec">
+                      <div className="price-br">
+                        <input type="text" name="price1" ref="price" placeholder="Price" />
+                        <i className="la la-dollar" />
+                      </div>
+                      <span>To</span>
+                      <div className="price-br">
+                        <input type="text" name="price1" ref="toprice" placeholder="Price" />
+                        <i className="la la-dollar" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-lg-12">
+                    <textarea name="description" placeholder="Description" ref="description" defaultValue={""} />
+                  </div>
+                  <div className="col-lg-12">
+                    <ul>
+                      <li><a href="# " onClick={this.UpdateJob} >Update</a></li>
+                      <li><a href="# " onClick={this.cancelEdit} >Cancel</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </form>
+            </div>{/*post-project-fields end*/}
+          </div>{/*post-project end*/}
+        </div>{/*post-project-popup end*/}
       </div>
 
     )

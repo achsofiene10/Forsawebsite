@@ -654,7 +654,7 @@ export default class Profile extends React.Component{
               const descriptionex=this.state.Experienceedit.description;
               
               const{projects}=this.state.projects;
-              console.log(projects)
+              //console.log(projects)
               const{jobs}=this.state.jobs;
 
               return(
@@ -1329,7 +1329,7 @@ export default class Profile extends React.Component{
                                     <div className="product-feed-tab current" id="feed-dd">
                                       <div className="posts-section">
                                         {/*projects ? projects.map((post,index)=> <Post key={index} post={post} user={this.state.user} ></Post>):null*/}
-                                        {jobs ?  <Post deleteProject={this.deleteProject} deleteJob={this.deleteJob} post={jobs} user={this.state.user} Myprofile={true} ></Post>:null}
+                                        {projects ?  <Post deleteProject={this.deleteProject} deleteJob={this.deleteJob} post={projects} user={this.state.user} Myprofile={false} ></Post>:null}
                                        
                                         <div className="process-comm">
                                           <div className="spinner">
