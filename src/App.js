@@ -5,18 +5,15 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import {Route,Link} from 'react-router-dom';
 import {Switch} from 'react-router-dom';
-import Acceuil from './components/Acceuil';
 import Compagnies from './components/Compagnies';
 import Profile from './components/Profile'
 import { createBrowserHistory } from "history";
 import About from './components/About'
 import Jobs from './components/Jobs'
-import loadjs from 'loadjs'
 
 import Footer from './components/Footer';
 import Chatbox from './components/Chatbox';
 import AccountSetting from './components/AccountSetting';
-import $ from 'jquery';
 
 
 class App extends React.Component{
@@ -46,7 +43,7 @@ class App extends React.Component{
     const history = createBrowserHistory();
     return(
     <div className="wrapper">
-       {this.state.loggedIn ?<div> <Navbar Logout={this.Logout}></Navbar> <Switch>
+       {this.state.loggedIn ?<div> <Navbar Logout={this.Logout} ></Navbar> <Switch>
          <Route path='/' exact  component={Home}></Route>
          <Route path='/acceuil' exact  component={Home}></Route>
          <Route path='/compagnies' exact component={Compagnies}></Route>

@@ -19,7 +19,6 @@ render(){
                       <a className="nav-item nav-link" id="nav-notification-tab" data-toggle="tab" href="#nav-notification" role="tab" aria-controls="nav-notification" aria-selected="false"><i className="fa fa-flash" />Notifications</a>
                       <a className="nav-item nav-link" id="nav-privcy-tab" data-toggle="tab" href="#privcy" role="tab" aria-controls="privacy" aria-selected="false"><i className="fa fa-group" />Requests</a>
                       <a className="nav-item nav-link" id="nav-privacy-tab" data-toggle="tab" href="#privacy" role="tab" aria-controls="privacy" aria-selected="false"><i className="fa fa-paw" />Privacy</a>
-                      <a className="nav-item nav-link" id="nav-blockking-tab" data-toggle="tab" href="#blockking" role="tab" aria-controls="blockking" aria-selected="false"><i className="fa fa-cc-diners-club" />Blocking</a>
                       <a className="nav-item nav-link" id="nav-deactivate-tab" data-toggle="tab" href="#nav-deactivate" role="tab" aria-controls="nav-deactivate" aria-selected="false"><i className="fa fa-random" />Deactivate Account</a>
                     </div>
                   </div>{/*acc-leftbar end*/}

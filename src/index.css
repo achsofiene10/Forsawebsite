@@ -1356,7 +1356,7 @@ main {
 	float: left;
 	text-align: center;
 	font-weight: 600;
-	margin-left: -25px;
+	/*margin-left: -25px;*/
 }
 .like-com li .com {
 	position: relative;
@@ -6839,3 +6839,4 @@ ul#myTab {
     font-size: 14px;
     color: #666666;
 }
+

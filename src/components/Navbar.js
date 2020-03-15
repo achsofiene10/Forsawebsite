@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import jwt from 'jsonwebtoken';
 import axios from 'axios'
+import $ from 'jquery'
 
 export default class Navbar extends React.Component{
   constructor(props){
@@ -10,6 +11,36 @@ export default class Navbar extends React.Component{
   }
 
   componentDidMount(){
+     //  ============ Notifications Open =============
+  
+     $(".not-box-open").on("click", function(){$("#message").hide();
+     $(".user-account-settingss").hide();
+     $(this).next("#notification").toggle();
+ });
+
+  //  ============ Messages Open =============
+
+ $(".not-box-openm").on("click", function(){$("#notification").hide();
+     $(".user-account-settingss").hide();
+     $(this).next("#message").toggle();
+ });
+
+
+ // ============= User Account Setting Open ===========
+
+/*$(".user-info").on("click", function(){$("#users").hide();
+     $(".user-account-settingss").hide();
+     $(this).next("#notification").toggle();
+ });*/
+ 
+
+$( ".user-info" ).click(function() {
+$( ".user-account-settingss" ).slideToggle( "fast");
+ $("#message").not($(this).next("#message")).slideUp();
+ $("#notification").not($(this).next("#notification")).slideUp();
+ // Animation complete.
+});
+
     var decode1;
     if (localStorage.getItem('token'))
     { decode1 = jwt.decode(localStorage.getItem('token'));}
@@ -306,7 +337,7 @@ export default class Navbar extends React.Component{
                 </div>{/*search_form end*/}
                 <h3>Setting</h3>
                 <ul className="us-links">
-                  <li><Link to='#' >Account Setting</Link></li>
+                  <li><Link to={`/profile/${this.state.user._id}/settings`} >Account Setting</Link></li>
                 </ul>
                 <h3 className="tc" onClick={this.props.Logout}><Link to="/" >Logout</Link></h3>
               </div>{/*user-account-settingss end*/}
@@ -315,8 +346,6 @@ export default class Navbar extends React.Component{
         </div>
       </header>{/*header end*/}
             </div>
-      
-      
     
         )
     }

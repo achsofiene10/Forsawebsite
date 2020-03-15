@@ -22,11 +22,7 @@ export default class Home extends React.Component{
       $(".wrapper").addClass("overlay");
       return false;
   });
-  $(".post-project > a").on("click", function(){
-      $(".post-popup.pst-pj").removeClass("active");
-      $(".wrapper").removeClass("overlay");
-      return false;
-  });
+
 
   //  ============= POST JOB POPUP FUNCTION =========
 
@@ -35,12 +31,7 @@ export default class Home extends React.Component{
       $(".wrapper").addClass("overlay");
       return false;
   });
-  $(".post-project > a").on("click", function(){
-      $(".post-popup.job_post").removeClass("active");
-      $(".wrapper").removeClass("overlay");
-      return false;
-  });
-
+  
   //  ============= SIGNIN CONTROL FUNCTION =========
 
   $('.sign-control li').on("click", function(){
@@ -51,9 +42,7 @@ export default class Home extends React.Component{
       $("#"+tab_id).addClass('current animated fadeIn');
       return false;
   });
-
   //  ============= SIGNIN TAB FUNCTIONALITY =========
-
   $('.signup-tab ul li').on("click", function(){
       var tab_id = $(this).attr('data-tab');
       $('.signup-tab ul li').removeClass('current');
@@ -211,52 +200,12 @@ export default class Home extends React.Component{
       return false;
   });
 
-  //  ================== Edit Options Function =================
-
-
-  $(".ed-opts-open").on("click", function(){
-      $(this).next(".ed-options").toggleClass("active");
-      return false;
-  });
-
-
   // ============== Menu Script =============
 
   $(".menu-btn > a").on("click", function(){
       $("nav").toggleClass("active");
       return false;
   });
-
-
-  //  ============ Notifications Open =============
-
-  $(".not-box-open").on("click", function(){$("#message").hide();
-      $(".user-account-settingss").hide();
-      $(this).next("#notification").toggle();
-  });
-
-   //  ============ Messages Open =============
-
-  $(".not-box-openm").on("click", function(){$("#notification").hide();
-      $(".user-account-settingss").hide();
-      $(this).next("#message").toggle();
-  });
-
-
-  // ============= User Account Setting Open ===========
-/*
-$(".user-info").on("click", function(){$("#users").hide();
-      $(".user-account-settingss").hide();
-      $(this).next("#notification").toggle();
-  });
-  
-*/
-$( ".user-info" ).click(function() {
-$( ".user-account-settingss" ).slideToggle( "fast");
-  $("#message").not($(this).next("#message")).slideUp();
-  $("#notification").not($(this).next("#notification")).slideUp();
-  // Animation complete.
-});
 
 
   //  ============= FORUM LINKS MOBILE MENU FUNCTION =========
@@ -272,7 +221,7 @@ $( ".user-account-settingss" ).slideToggle( "fast");
       e.stopPropagation();
   });
 
- 
+
 
 
 
@@ -288,11 +237,82 @@ $( ".user-account-settingss" ).slideToggle( "fast");
     });})
     }
   }
+
+  closePostProject=(e)=>{
+    e.preventDefault();
+    $(".post-popup.pst-pj").removeClass("active");
+    $(".wrapper").removeClass("overlay");
+  }
+  closePostJob=(e)=>{
+    e.preventDefault();
+    $(".post-popup.job_post").removeClass("active");
+    $(".wrapper").removeClass("overlay");
+  }
+
+  PostJob=(e)=>{
+    e.preventDefault();
+    $(".post-popup.job_post").removeClass("active");
+    $(".wrapper").removeClass("overlay");
+    const title=this.refs.titleJ.value;
+    const category=this.refs.categoryJ.value;
+    const price=this.refs.priceJ.value;
+    const timejob=this.refs.timejob.value;
+    const skills=this.refs.skillsJ.value;
+    const description=this.refs.descriptionJ.value;
+    if( !title || !category || !price|| !timejob || !skills || !description){
+      alert('remplir tous les champs')
+    }else{
+      $(".post-popup.job_post").removeClass("active");
+      $(".wrapper").removeClass("overlay");
+      const obj={
+        title:title,
+        skills:skills,
+        price:price,
+        time:timejob,
+        description:description,
+        category:category
+      }
+      axios.post(`http://localhost:3000/job/${this.state.user._id}/createjob`,obj).then(
+        res=>{
+          if(res.status===200){
+            console.log("job created")
+          }
+       }).catch(err=>console.log(err.data)); 
+      }
+  }
+  PostProject=(e)=>{
+    e.preventDefault();
+    const title=this.refs.titlep.value;
+    const category=this.refs.categoryp.value;
+    const price=this.refs.pricefrom.value;
+    const toprice=this.refs.priceto.value;
+    const skills=this.refs.skillsp.value;
+    const description=this.refs.descriptionp.value;
+    if( !title || !category || !price|| !toprice || !skills || !description){
+      alert('remplir tous les champs')
+    }else{
+    $(".post-popup.pst-pj").removeClass("active");
+    $(".wrapper").removeClass("overlay");
+    const obj={
+      title:title,
+      skills:skills,
+      price:price,
+      toprice:toprice,
+      description:description,
+      category:category
+    }
+    //console.log(obj)
+    axios.post(`http://localhost:3000/project/${this.state.user._id}/createproject`,obj).then(
+      res=>{
+        if(res.status===200){
+          console.log("project created")
+        }
+     }).catch(err=>console.log(err.data)); 
+  }
+  }
+
   
-
-
     render (){
-      //console.log(`forsaRESTAPI/${this.state.user.image}`)
         return (
           
             <div>
@@ -359,10 +379,7 @@ $( ".user-account-settingss" ).slideToggle( "fast");
                         </div>{/*post-st end*/}
                       </div>{/*post-topbar end*/}
                       <div className="posts-section">
-
-
-                        <Post></Post>
-                        
+                        <Post ></Post>
                         <div className="top-profiles">
                           <div className="pf-hd">
                             <h3>Top Profiles</h3>
@@ -417,11 +434,11 @@ $( ".user-account-settingss" ).slideToggle( "fast");
               <form>
                 <div className="row">
                   <div className="col-lg-12">
-                    <input type="text" name="title" placeholder="Title" />
+                    <input type="text" name="title" ref="titlep" placeholder="Title" />
                   </div>
                   <div className="col-lg-12">
                     <div className="inp-field">
-                      <select>
+                      <select ref="categoryp">
                         <option>Category</option>
                         <option>Category 1</option>
                         <option>Category 2</option>
@@ -430,34 +447,33 @@ $( ".user-account-settingss" ).slideToggle( "fast");
                     </div>
                   </div>
                   <div className="col-lg-12">
-                    <input type="text" name="skills" placeholder="Skills" />
+                    <input type="text" name="skills" ref="skillsp" placeholder="Skills" />
                   </div>
                   <div className="col-lg-12">
                     <div className="price-sec">
                       <div className="price-br">
-                        <input type="text" name="price1" placeholder="Price" />
+                        <input type="text" name="price1" ref="pricefrom" placeholder="Price" />
                         <i className="la la-dollar" />
                       </div>
                       <span>To</span>
                       <div className="price-br">
-                        <input type="text" name="price1" placeholder="Price" />
+                        <input type="text" name="price1" ref="priceto" placeholder="Price" />
                         <i className="la la-dollar" />
                       </div>
                     </div>
                   </div>
                   <div className="col-lg-12">
-                    <textarea name="description" placeholder="Description" defaultValue={""} />
+                    <textarea name="description" placeholder="Description" ref="descriptionp" defaultValue={""} />
                   </div>
                   <div className="col-lg-12">
                     <ul>
-                      <li><button className="active" type="submit" value="post">Post</button></li>
-                      <li><a href="# " >Cancel</a></li>
+                      <li><button  onClick={this.PostProject} value="post">Post</button></li>
+                      <li><a href="# " onClick={this.closePostProject} >Cancel</a></li>
                     </ul>
                   </div>
                 </div>
               </form>
             </div>{/*post-project-fields end*/}
-            <a href="# " ><i className="la la-times-circle-o" /></a>
           </div>{/*post-project end*/}
         </div>{/*post-project-popup end*/}
         <div className="post-popup job_post">
@@ -467,11 +483,11 @@ $( ".user-account-settingss" ).slideToggle( "fast");
               <form>
                 <div className="row">
                   <div className="col-lg-12">
-                    <input type="text" name="title" placeholder="Title" />
+                    <input type="text" name="title" ref="titleJ" placeholder="Title" />
                   </div>
                   <div className="col-lg-12">
                     <div className="inp-field">
-                      <select>
+                      <select ref="categoryJ">
                         <option>Category</option>
                         <option>Category 1</option>
                         <option>Category 2</option>
@@ -480,35 +496,35 @@ $( ".user-account-settingss" ).slideToggle( "fast");
                     </div>
                   </div>
                   <div className="col-lg-12">
-                    <input type="text" name="skills" placeholder="Skills" />
+                    <input type="text" name="skills" ref="skillsJ" placeholder="Skills" />
                   </div>
                   <div className="col-lg-6">
                     <div className="price-br">
-                      <input type="text" name="price1" placeholder="Price" />
+                      <input type="text" name="price1" ref="priceJ" placeholder="Price" />
                       <i className="la la-dollar" />
                     </div>
                   </div>
                   <div className="col-lg-6">
                     <div className="inp-field">
-                      <select>
+                      
+                      <select ref="timejob">
                         <option>Full Time</option>
                         <option>Half time</option>
                       </select>
                     </div>
                   </div>
                   <div className="col-lg-12">
-                    <textarea name="description" placeholder="Description" defaultValue={""} />
+                    <textarea name="description" placeholder="Description" ref="descriptionJ" defaultValue={""} />
                   </div>
                   <div className="col-lg-12">
                     <ul>
-                      <li><button className="active" type="submit" value="post">Post</button></li>
-                      <li><a href="# " >Cancel</a></li>
+                      <li><button  onClick={this.PostJob} value="post">Post</button></li>
+                      <li><a href="# " onClick={this.closePostJob} >Cancel</a></li>
                     </ul>
                   </div>
                 </div>
               </form>
             </div>{/*post-project-fields end*/}
-            <a href="# " ><i className="la la-times-circle-o" /></a>
           </div>{/*post-project end*/}
         </div>{/*post-project-popup end*/}
       </div>

@@ -4,11 +4,21 @@ import {Link} from 'react-router-dom';
 import Infoprofile from './Infoprofile';
 import e from 'jquery';
 import $ from 'jquery';
+import Post from './Post';
 export default class Profile extends React.Component{
     constructor(props)
     {
         super(props);
-        this.state={Coverimage:null,profileImg:null,user:{},skills:[],education:[],Educationedit:'',experience:[],Experienceedit:''}
+        this.state={Coverimage:null,
+          profileImg:null,
+          user:{},
+          skills:[],
+          education:[],
+          Educationedit:'',
+          experience:[],
+          Experienceedit:'',
+          projects:[],
+          jobs:[]}
         this.updateOverview=this.updateOverview.bind(this)
         this.Editeducation=this.Editeducation.bind(this);
         this.Editexperience=this.Editexperience.bind(this)
@@ -254,6 +264,7 @@ export default class Profile extends React.Component{
   
   
     $(".ed-opts-open").on("click", function(){
+      console.log("clicked ed opts")
         $(this).next(".ed-options").toggleClass("active");
         return false;
     });
@@ -267,36 +278,7 @@ export default class Profile extends React.Component{
     });
   
   
-    //  ============ Notifications Open =============
-  
-    $(".not-box-open").on("click", function(){$("#message").hide();
-        $(".user-account-settingss").hide();
-        $(this).next("#notification").toggle();
-    });
-  
-     //  ============ Messages Open =============
-  
-    $(".not-box-openm").on("click", function(){$("#notification").hide();
-        $(".user-account-settingss").hide();
-        $(this).next("#message").toggle();
-    });
-  
-  
-    // ============= User Account Setting Open ===========
-  /*
-  $(".user-info").on("click", function(){$("#users").hide();
-        $(".user-account-settingss").hide();
-        $(this).next("#notification").toggle();
-    });
-    
-  */
-  $( ".user-info" ).click(function() {
-  $( ".user-account-settingss" ).slideToggle( "fast");
-    $("#message").not($(this).next("#message")).slideUp();
-    $("#notification").not($(this).next("#notification")).slideUp();
-    // Animation complete.
-  });
-  
+   
   
     //  ============= FORUM LINKS MOBILE MENU FUNCTION =========
   
@@ -331,7 +313,14 @@ export default class Profile extends React.Component{
       
       this.setState({experience:res.data}, function(){
       })}).catch(err=>console.log(err));  
-    
+
+      axios.get(`http://localhost:3000/project/${user_id}/getAllprojects`).then(res=>{
+      this.setState({projects:res.data}, function(){
+      })}).catch(err=>console.log(err));  
+
+      axios.get(`http://localhost:3000/job/${user_id}/getAllJobs`).then(res=>{
+      this.setState({jobs:res.data}, function(){
+      })}).catch(err=>console.log(err)); 
   }
 
     onCoverChange=()=>{
@@ -392,7 +381,6 @@ export default class Profile extends React.Component{
               }
            }).catch(err=>console.log(err.data));
         }
-
         editLocation=(event)=>{
           event.preventDefault()
           $("#location-box").removeClass("open");
@@ -641,7 +629,20 @@ export default class Profile extends React.Component{
             console.log(this.state.Experienceedit)
           })
         }
-        
+        deleteProject=(id)=>{
+          const{projects}=this.state;
+          const index=projects['projects'].findIndex(_project => _project._id===id);
+          projects['projects'].splice(index,1);
+          this.setState({projects:projects},function(){
+          });
+        }
+        deleteJob=(id)=>{
+          const{jobs}=this.state;
+          const index=jobs['jobs'].findIndex(_job => _job._id===id);
+          jobs['jobs'].splice(index,1);
+          this.setState({jobs:jobs},function(){
+          });
+        }
 
             render(){
               const skills=this.state.skills['skills'];
@@ -651,6 +652,10 @@ export default class Profile extends React.Component{
               const titleex=this.state.Experienceedit.title;
               const durationex=this.state.Experienceedit.duration;
               const descriptionex=this.state.Experienceedit.description;
+              
+              const{projects}=this.state.projects;
+              console.log(projects)
+              const{jobs}=this.state.jobs;
 
               return(
                     <div className="wrapper">
@@ -694,9 +699,9 @@ export default class Profile extends React.Component{
                                         </ul>
                                       </div>{/*user_pro_status end*/}
                                       <ul className="social_links">
-                                        <li><a href="# " ><i className="fa fa-facebook-square" /> Http://www.facebook.com/john...</a></li>
-                                        <li><a href="# " ><i className="fa fa-twitter" /> Http://www.Twitter.com/john...</a></li>
-                                        <li><a href="# " ><i className="fa fa-instagram" /> Http://www.instagram.com/john...</a></li>
+                                        <li><a href="# " ><i className="fa fa-facebook-square" /> Http://www.facebook.com/</a></li>
+                                        <li><a href="# " ><i className="fa fa-twitter" /> Http://www.Twitter.com/</a></li>
+                                        <li><a href="# " ><i className="fa fa-instagram" /> Http://www.instagram.com/</a></li>
                                         
                                       </ul>
                                     </div>{/*user_profile end*/}
@@ -801,12 +806,7 @@ export default class Profile extends React.Component{
                                               <span>Portfolio</span>
                                             </a>
                                           </li>
-                                          <li data-tab="rewivewdata">
-                                            <a href="# " >
-                                              <img src="../images/review.png" alt="" />
-                                              <span>Reviews</span>
-                                            </a>
-                                          </li>
+                                          
                                         </ul>
                                       </div>{/* tab-feed end*/}
                                     </div>{/*user-tab-sec end*/}
@@ -1328,62 +1328,8 @@ export default class Profile extends React.Component{
                                     </div>
                                     <div className="product-feed-tab current" id="feed-dd">
                                       <div className="posts-section">
-                                        <div className="post-bar">
-                                          <div className="post_topbar">
-                                            <div className="usy-dt">
-                                              <img src="../images/resources/us-pic.png" alt="" />
-                                              <div className="usy-name">
-                                                <h3>John Doe</h3>
-                                                <span><img src="../images/clock.png" alt="" />3 min ago</span>
-                                              </div>
-                                            </div>
-                                            <div className="ed-opts">
-                                              <a href="# " className="ed-opts-open"><i className="la la-ellipsis-v" /></a>
-                                              <ul className="ed-options">
-                                                <li><a href="# " >Edit Post</a></li>
-                                                <li><a href="# " >Unsaved</a></li>
-                                                <li><a href="# " >Unbid</a></li>
-                                                <li><a href="# " >Close</a></li>
-                                                <li><a href="# " >Hide</a></li>
-                                              </ul>
-                                            </div>
-                                          </div>
-                                          <div className="epi-sec">
-                                            <ul className="descp">
-                                              <li><img src="../images/icon8.png" alt="" /><span>Epic Coder</span></li>
-                                              <li><img src="../images/icon9.png" alt="" /><span>India</span></li>
-                                            </ul>
-                                            <ul className="bk-links">
-                                              <li><a href="# " ><i className="la la-envelope" /></a></li>
-                                            </ul>
-                                          </div>
-                                          <div className="job_descp">
-                                            <h3>Senior Wordpress Developer</h3>
-                                            <ul className="job-dt">
-                                              <li><a href="# " >Full Time</a></li>
-                                              <li><span>$30 / hr</span></li>
-                                            </ul>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus hendrerit metus, ut ullamcorper quam finibus at. Etiam id magna sit amet... <a href="# " >view more</a></p>
-                                            <ul className="skill-tags">
-                                              <li><a href="# " >HTML</a></li>
-                                              <li><a href="# " >PHP</a></li>
-                                              <li><a href="# " >CSS</a></li>
-                                              <li><a href="# " >Javascript</a></li>
-                                              <li><a href="# " >Wordpress</a></li> 	
-                                            </ul>
-                                          </div>
-                                          <div className="job-status-bar"><a>Overview</a>
-                                            <ul className="like-com">
-                                              <li>
-                                                <a href="# "><i className="fas fa-heart" /> Like</a>
-                                                <img src="../images/liked-img.png" alt="" />
-                                                <span>25</span>
-                                              </li> 
-                                              <li><a href="# " className="com"><i className="fas fa-comment-alt" /> Comment 15</a></li>
-                                            </ul>
-                                            <a href="# "><i className="fas fa-eye" />Views 50</a>
-                                          </div>
-                                        </div>{/*post-bar end*/}
+                                        {/*projects ? projects.map((post,index)=> <Post key={index} post={post} user={this.state.user} ></Post>):null*/}
+                                        {jobs ?  <Post deleteProject={this.deleteProject} deleteJob={this.deleteJob} post={jobs} user={this.state.user} Myprofile={true} ></Post>:null}
                                        
                                         <div className="process-comm">
                                           <div className="spinner">
