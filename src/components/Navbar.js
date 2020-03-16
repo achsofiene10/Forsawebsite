@@ -135,14 +135,14 @@ $( ".user-account-settingss" ).slideToggle( "fast");
                 </li>
                 <li>
                   
-                  <Link to='/friends'> 
+                  <Link to={`/others/${this.state.user._id}`}> 
                     <span><img src="../images/icon4.png" alt="" /></span>
                     Profiles</Link>
                   
                   <ul>
                   
-                    <li><Link to='/profile'> My profile</Link></li>
-                    <Link to='/profile'>   <li>My friendlist</li></Link>
+                    <li><Link to={`/profile/${this.state.user._id}`}> My profile</Link></li>
+                    <Link to={`/friendlist/${this.state.user._id}`}>   <li>My friendlist</li></Link>
                   </ul>
                 </li>
                 <li>

@@ -117,6 +117,7 @@ class Job extends React.Component {
     let description = this.props.job.description
     const image = this.props.user.image
     const Myprofile = this.props.Myprofile;
+    const title=this.props.job.title;
     return (
       <div className="post-bar">
         <div className="post_topbar">
@@ -188,11 +189,11 @@ class Job extends React.Component {
               <form>
                 <div className="row">
                   <div className="col-lg-12">
-                    <input type="text" name="title" ref="titleJob" placeholder="Title" />
+                    <input type="text" name="title" ref="titleJob" defaultValue={title} placeholder="Title" />
                   </div>
                   <div className="col-lg-12">
                     <div className="inp-field">
-                      <select ref="categoryJ">
+                      <select ref="categoryJ" selected={this.props.job.category}>
                         <option>Category</option>
                         <option>Category 1</option>
                         <option>Category 2</option>
@@ -201,25 +202,25 @@ class Job extends React.Component {
                     </div>
                   </div>
                   <div className="col-lg-12">
-                    <input type="text" name="skills" ref="skillsJ" placeholder="Skills" />
+                    <input type="text" name="skills" ref="skillsJ" defaultValue={skills} placeholder="Skills" />
                   </div>
                   <div className="col-lg-6">
                     <div className="price-br">
-                      <input type="text" name="price1" ref="priceJ" placeholder="Price" />
+                      <input type="text" name="price1" ref="priceJ"  defaultValue={this.props.job.price} placeholder="Price" />
                       <i className="la la-dollar" />
                     </div>
                   </div>
                   <div className="col-lg-6">
                     <div className="inp-field">
                       
-                      <select ref="timejob">
+                      <select ref="timejob" selected={this.props.job.time}>
                         <option>Full Time</option>
                         <option>Half time</option>
                       </select>
                     </div>
                   </div>
                   <div className="col-lg-12">
-                    <textarea name="description" placeholder="Description" ref="descriptionJ" defaultValue={""} />
+                    <textarea name="description" placeholder="Description" defaultValue={this.props.job.description} ref="descriptionJ"  />
                   </div>
                   <div className="col-lg-12">
                     <ul>
@@ -274,7 +275,6 @@ class Project extends React.Component {
 
   editProject=(e)=>{  
     e.preventDefault();
-    console.log("clicked")
     this.setState({ Opened: '' })
     $(".post-popup.pst-pj").addClass("active");
     $(".wrapper").addClass("overlay");
@@ -312,7 +312,6 @@ class Project extends React.Component {
           if(res.status===200){
             console.log("project updated")
             window.location.reload()
-
           }
        }).catch(err=>console.log(err.data)); 
       }
@@ -324,6 +323,7 @@ class Project extends React.Component {
     let description = this.props.project.description
     const image = this.props.user.image
     const Myprofile = this.props.Myprofile;
+    const title=this.props.project.title
     return (
       <div className="post-bar">
         <div className="post_topbar">
@@ -341,7 +341,6 @@ class Project extends React.Component {
                 <div>
                   <li><a href="#" >Unbid</a></li>
                   <li><a href="#" >Hide</a></li> </div>}
-
             </ul>
           </div>
         </div>
@@ -385,7 +384,7 @@ class Project extends React.Component {
              
               <span>{this.props.project.likes.length}</span>
             </li>
-            <li><a href="#" className="com"><i className="fas fa-comment-alt" /> Comments {this.props.project.comments.length}</a></li>
+            <li><a href="#" className="com "><i className="fas fa-comment-alt" /> Comments {this.props.project.comments.length}</a></li>
           </ul>
           <a href="#"><i className="fas fa-eye" />Views 50</a>
         </div>
@@ -396,11 +395,11 @@ class Project extends React.Component {
               <form>
                 <div className="row">
                   <div className="col-lg-12">
-                    <input type="text" name="title" ref="title" placeholder="Title" />
+                    <input type="text" name="title" ref="title" defaultValue={title} placeholder="Title" />
                   </div>
                   <div className="col-lg-12">
                     <div className="inp-field">
-                      <select ref="category">
+                      <select ref="category" selected={this.props.project.category}>
                         <option>Category</option>
                         <option>Category 1</option>
                         <option>Category 2</option>
@@ -409,23 +408,23 @@ class Project extends React.Component {
                     </div>
                   </div>
                   <div className="col-lg-12">
-                    <input type="text" name="skills" ref="skills" placeholder="Skills" />
+                    <input type="text" name="skills" ref="skills" defaultValue={skills} placeholder="Skills" />
                   </div>
                   <div className="col-lg-12">
                     <div className="price-sec">
                       <div className="price-br">
-                        <input type="text" name="price1" ref="price" placeholder="Price" />
+                        <input type="text" name="price1" ref="price" defaultValue={this.props.project.price} placeholder="Price" />
                         <i className="la la-dollar" />
                       </div>
                       <span>To</span>
                       <div className="price-br">
-                        <input type="text" name="price1" ref="toprice" placeholder="Price" />
+                        <input type="text" name="price1" ref="toprice" defaultValue={this.props.project.toprice}  placeholder="Price" />
                         <i className="la la-dollar" />
                       </div>
                     </div>
                   </div>
                   <div className="col-lg-12">
-                    <textarea name="description" placeholder="Description" ref="description" defaultValue={""} />
+                    <textarea name="description" placeholder="Description" defaultValue={description} ref="description"  />
                   </div>
                   <div className="col-lg-12">
                     <ul>
@@ -439,7 +438,6 @@ class Project extends React.Component {
           </div>{/*post-project end*/}
         </div>{/*post-project-popup end*/}
       </div>
-
     )
   }
 }
