@@ -1,7 +1,7 @@
 import React from 'react' ;
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
-import {Link } from 'react-router-dom';
+import {Link, Redirect } from 'react-router-dom';
 import UserTopprofile from './UserTopprofile';
 import Post from './Post';
 import Suggestions from './Suggestions';
@@ -9,12 +9,14 @@ import Topjobs from './Topjobs';
 import Mostviewedpoeple from './Mostviewedpoeple';
 import $ from 'jquery';
 import e from 'jquery';
+import PostHome from './PostHome'
 
 
 export default class Home extends React.Component{
   constructor(props){
     super(props);
-    this.state={user:{}}
+    this.state={user:{},
+    feeds:[]}
   }
   async componentDidMount(){
     $(".post_project").on("click", function(){
@@ -236,6 +238,11 @@ export default class Home extends React.Component{
        this.setState({user:res.data}, function () {
     });})
     }
+    axios.get(`http://localhost:3000/user/${decode1.user_id}/getLatestFeeds`).then(res => {
+      this.setState({ feeds: res.data }, function () {
+      })
+    }).catch(err => console.log(err));
+
   }
 
   closePostProject=(e)=>{
@@ -275,7 +282,12 @@ export default class Home extends React.Component{
       axios.post(`http://localhost:3000/job/${this.state.user._id}/createjob`,obj).then(
         res=>{
           if(res.status===200){
-            console.log("job created")
+            console.log("job created");
+            var {feeds}=this.state;
+            const job=({job:res.data.job,userName:this.state.user.fullname,userImage:this.state.user.image,userid:this.state.user._id,userLocation:this.state.user.location,userJob:this.state.user.title,date:res.data.job.createdAt});
+            console.log(job)
+            feeds=[job,...feeds];
+            this.setState({feeds:feeds})
           }
        }).catch(err=>console.log(err.data)); 
       }
@@ -306,6 +318,10 @@ export default class Home extends React.Component{
       res=>{
         if(res.status===200){
           console.log("project created")
+          var {feeds}=this.state;
+          const project=({project:res.data.project,userName:this.state.user.fullname,userImage:this.state.user.image,userid:this.state.user._id,userLocation:this.state.user.location,userJob:this.state.user.title,date:res.data.project.createdAt});
+          feeds=[project,...feeds];
+          this.setState({feeds:feeds})
         }
      }).catch(err=>console.log(err.data)); 
   }
@@ -313,8 +329,9 @@ export default class Home extends React.Component{
 
   
     render (){
+      //console.log(this.state.feeds)
+      const {user} =this.state
         return (
-          
             <div>
         <main>
           <div className="main-section">
@@ -379,7 +396,7 @@ export default class Home extends React.Component{
                         </div>{/*post-st end*/}
                       </div>{/*post-topbar end*/}
                       <div className="posts-section">
-                        <Post ></Post>
+                        <PostHome post={this.state.feeds.slice(0,1)} ></PostHome>
                         <div className="top-profiles">
                           <div className="pf-hd">
                             <h3>Top Profiles</h3>
@@ -390,10 +407,9 @@ export default class Home extends React.Component{
                             <UserTopprofile></UserTopprofile>
                             <UserTopprofile></UserTopprofile>
                             <UserTopprofile></UserTopprofile>
-
                           </div>{/*profiles-slider end*/}
                         </div>{/*top-profiles end*/}
-                        
+                        <PostHome post={this.state.feeds.slice(1)}></PostHome>
                         <div className="process-comm">
                           <div className="spinner">
                             <div className="bounce1" />

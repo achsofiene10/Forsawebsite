@@ -20,7 +20,7 @@ export default class Post extends React.Component {
     return (
 
       <div>
-        {feeds ? feeds.map((feed, index) => feed.toprice ? <Project key={index} user={user} delete={this.props.deleteProject} project={feed} Myprofile={Myprofile} ></Project> : <Job key={index} Myprofile={Myprofile} delete={this.props.deleteJob} user={user} job={feed}></Job>) : null}
+        {feeds ? feeds.map((feed, index) => feed.project ? <Project key={index} user={user} delete={this.props.deleteProject} project={feed.project} Myprofile={Myprofile} ></Project> : <Job key={index} Myprofile={Myprofile} delete={this.props.deleteJob} user={user} job={feed.job}></Job>) : null}
       </div>
     )
   }
@@ -30,7 +30,7 @@ export default class Post extends React.Component {
 class Job extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { Opened: '' }
+    this.state = { Opened: '',liked:'',Nblikes:0 }
   }
 
   executeOnClick(isExpanded) {
@@ -41,6 +41,12 @@ class Job extends React.Component {
       $(this).next(".ed-options").toggleClass("active");
       return false;
     });
+    axios.get(`http://localhost:3000/job/${this.props.job._id}/getlikesByjob`).then(res=>{
+      if(res.status==200){
+       const index= res.data.likes.findIndex(like=> like.userid===this.props.user._id);
+       index>-1 ? this.setState({liked:'active',Nblikes:res.data.likes.length}) : this.setState({liked:'',Nblikes:res.data.likes.length});
+      }
+    })
   }
   openOpts = () => {
     if (this.state.Opened == '') {
@@ -56,6 +62,7 @@ class Job extends React.Component {
         if (res.status === 200) {
           console.log("removed")
           this.props.delete(job_id);
+          this.setState({ Opened: '' })
         }
         else alert('error')
       })
@@ -108,6 +115,31 @@ class Job extends React.Component {
           }
        }).catch(err=>console.log(err.data)); 
       }
+  }
+  Like=(e)=>{
+    e.preventDefault();
+    const userid=this.props.user._id;
+    if(this.state.liked=='active'){  
+        axios.post(`http://localhost:3000/job/${userid}/${this.props.job._id}/dislike`).then(
+          res=>{
+            if(res.status===200){
+              console.log("like remove");
+              const nb=this.state.Nblikes;
+              this.setState({liked:'',Nblikes:nb-1})
+              console.log(this.state.Nblikes)
+            }
+         }).catch(err=>console.log(err.data)); 
+      }
+    else{
+    axios.post(`http://localhost:3000/job/${userid}/${this.props.job._id}/addlike`).then(
+      res=>{
+        if(res.status===200){
+          console.log("like added");
+          const nb=this.state.Nblikes;
+          this.setState({liked:'active',Nblikes:nb+1})
+          console.log(this.state.Nblikes)
+        }
+     }).catch(err=>console.log(err.data)); }
   }
 
   render() {
@@ -173,8 +205,8 @@ class Job extends React.Component {
         <div className="job-status-bar">
           <ul className="like-com">
             <li>
-              <a href="# "><i className="fas fa-heart" /> Like</a>
-              <span>{this.props.job.likes.length} </span>
+              <a href="# " className={`${this.state.liked}`} onClick={this.Like}><i className="fas fa-heart" /> Like</a>
+              <span>{this.state.Nblikes} </span>
               
             </li>
            
@@ -242,7 +274,7 @@ class Job extends React.Component {
 class Project extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { Opened: '' }
+    this.state = { Opened: '',liked:'',Nblikes:0 }
   }
   executeOnClick(isExpanded) {
     //console.log(isExpanded);
@@ -252,6 +284,12 @@ class Project extends React.Component {
       $(this).next(".ed-options").toggleClass("active");
       return false;
     });
+    axios.get(`http://localhost:3000/project/${this.props.project._id}/getLikesByproject`).then(res=>{
+      if(res.status==200){
+       const index= res.data.likes.findIndex(like=> like.userid===this.props.user._id);
+       index>-1 ? this.setState({liked:'active',Nblikes:res.data.likes.length}) : this.setState({liked:'',Nblikes:res.data.likes.length});
+      }
+    })
   }
   openOpts = () => {
     if (this.state.Opened == '') {
@@ -267,6 +305,7 @@ class Project extends React.Component {
         if (res.status === 200) {
           console.log("removed")
           this.props.delete(project_id);
+          this.setState({ Opened: '' })
         }
         else alert('error')
       })
@@ -316,6 +355,31 @@ class Project extends React.Component {
        }).catch(err=>console.log(err.data)); 
       }
     }
+
+    Like=(e)=>{
+      e.preventDefault();
+      const userid=this.props.user._id;
+      if(this.state.liked=='active'){  
+          axios.post(`http://localhost:3000/project/${userid}/${this.props.project._id}/dislike`).then(
+            res=>{
+              if(res.status===200){
+                console.log("like removed");
+                const nb=this.state.Nblikes;
+                this.setState({liked:'',Nblikes:nb-1})
+              }
+           }).catch(err=>console.log(err.data)); 
+        }
+      else{
+      axios.post(`http://localhost:3000/project/${userid}/${this.props.project._id}/addlike`).then(
+        res=>{
+          if(res.status===200){
+            console.log("like added");
+            const nb=this.state.Nblikes;
+            this.setState({liked:'active',Nblikes:nb+1})
+          }
+       }).catch(err=>console.log(err.data)); }
+    }
+
   render() {
     const skills = this.props.project.skills.split(" ");
     let date = this.props.project.createdAt.substring(0, 16);
@@ -380,9 +444,9 @@ class Project extends React.Component {
         <div className="job-status-bar">
           <ul className="like-com">
             <li>
-              <a href="#" className="active"><i className="fas fa-heart" /> Like</a>
+              <a href="#" className={`${this.state.liked}`} onClick={this.Like}><i className="fas fa-heart" /> Like</a>
              
-              <span>{this.props.project.likes.length}</span>
+              <span>{this.state.Nblikes}</span>
             </li>
             <li><a href="#" className="com "><i className="fas fa-comment-alt" /> Comments {this.props.project.comments.length}</a></li>
           </ul>
