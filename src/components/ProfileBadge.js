@@ -14,12 +14,12 @@ export default class ProfileBadge extends React.Component{
                                   <h3>Mootaz </h3>
                                   <h4>Graphic Designer</h4>
                                   <ul>
-                                    <li><a href="#" title className="follow">Follow</a></li>
-                                    <li><a href="#" title className="message-us"><i className="fa fa-envelope" /></a></li>
-                                    <li><a href="#" title className="hire-us">Hire</a></li>
+                                    <li><a href="#" className="follow">Follow</a></li>
+                                    <li><a href="#" className="message-us"><i className="fa fa-envelope" /></a></li>
+                                    <li><a href="#" className="hire-us">Hire</a></li>
                                   </ul>
                                 </div>
-                                <a href="user-profile.html" title className="view-more-pro">View Profile</a>
+                                <a href="user-profile.html" className="view-more-pro">View Profile</a>
                                </div>{/*company_profile_info end*/}
              </div>
         )

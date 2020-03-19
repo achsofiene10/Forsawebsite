@@ -141,7 +141,7 @@ $( ".user-account-settingss" ).slideToggle( "fast");
                   
                   <ul>
                   
-                    <li><Link to={`/profile/${this.state.user._id}`}> My profile</Link></li>
+                   <Link to={`/profile/${this.state.user._id}`}>  <li> My profile</li></Link>
                     <Link to={`/friendlist/${this.state.user._id}`}>   <li>My friendlist</li></Link>
                   </ul>
                 </li>
@@ -194,7 +194,7 @@ $( ".user-account-settingss" ).slideToggle( "fast");
                         </div>{/*notification-info */}
                       </div>
                       <div className="view-all-nots">
-                        View All Messsages
+                       <Link to='# '  >View All Messsages</Link>
                       </div>
                     </div>{/*nott-list end*/}
                   </div>{/*notification-box end*/}
@@ -262,7 +262,7 @@ $( ".user-account-settingss" ).slideToggle( "fast");
                         </div>{/*notification-info */}
                       </div>
                       <div className="view-all-nots">
-                        View All Notification
+                      <Link to='# '  >View All Notification</Link>
                       </div>
                     </div>{/*nott-list end*/}
                   </div>{/*notification-box end*/}

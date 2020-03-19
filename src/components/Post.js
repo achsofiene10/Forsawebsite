@@ -20,7 +20,7 @@ export default class Post extends React.Component {
     return (
 
       <div>
-        {feeds ? feeds.map((feed, index) => feed.project ? <Project key={index} user={user} delete={this.props.deleteProject} project={feed.project} Myprofile={Myprofile} ></Project> : <Job key={index} Myprofile={Myprofile} delete={this.props.deleteJob} user={user} job={feed.job}></Job>) : null}
+        {feeds ? feeds.map((feed, index) => feed.project ? <Project key={index} user={user} userConnected={user} delete={this.props.deleteProject} project={feed.project} Myprofile={Myprofile} ></Project> : <Job key={index} userConnected={user} Myprofile={Myprofile} delete={this.props.deleteJob} user={user} job={feed.job}></Job>) : null}
       </div>
     )
   }
@@ -30,7 +30,7 @@ export default class Post extends React.Component {
 class Job extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { Opened: '',liked:'',Nblikes:0 }
+    this.state = { Opened: '', liked: '', Nblikes: 0, ClickComments: false, Nbcomments: 0 }
   }
 
   executeOnClick(isExpanded) {
@@ -41,10 +41,15 @@ class Job extends React.Component {
       $(this).next(".ed-options").toggleClass("active");
       return false;
     });
-    axios.get(`http://localhost:3000/job/${this.props.job._id}/getlikesByjob`).then(res=>{
-      if(res.status==200){
-       const index= res.data.likes.findIndex(like=> like.userid===this.props.user._id);
-       index>-1 ? this.setState({liked:'active',Nblikes:res.data.likes.length}) : this.setState({liked:'',Nblikes:res.data.likes.length});
+    axios.get(`http://localhost:3000/job/${this.props.job._id}/getlikesByjob`).then(res => {
+      if (res.status == 200) {
+        const index = res.data.likes.findIndex(like => like.userid === this.props.user._id);
+        index > -1 ? this.setState({ liked: 'active', Nblikes: res.data.likes.length }) : this.setState({ liked: '', Nblikes: res.data.likes.length });
+      }
+    })
+    axios.get(`http://localhost:3000/comment/${this.props.job._id}/getCommentsByjob`).then(res => {
+      if (res.status == 200) {
+        this.setState({ Nbcomments: res.data.comments.length })
       }
     })
   }
@@ -68,79 +73,91 @@ class Job extends React.Component {
       })
   }
 
-  editJob=(e)=>{  
+  editJob = (e) => {
     e.preventDefault();
     console.log('clicked')
-    this.setState({editOpen:'active'})
+    this.setState({ editOpen: 'active' })
     //$(".post-popup job_post").addClass("active");
     $(".wrapper").addClass("overlay");
-    this.setState({ Opened: '' }) 
+    this.setState({ Opened: '' })
   }
 
-  cancelEdit=(e)=>{
+  cancelEdit = (e) => {
     e.preventDefault();
-    this.setState({editOpen:''})
+    this.setState({ editOpen: '' })
     $(".wrapper").removeClass("overlay");
   }
-  UpdateJob=(e)=>{
+  UpdateJob = (e) => {
     e.preventDefault();
-    const idjob=this.props.job._id
-    const title=this.refs.titleJob.value;
-    const category=this.refs.categoryJ.value;
-    const price=this.refs.priceJ.value;
-    const timejob=this.refs.timejob.value;
-    const skills=this.refs.skillsJ.value;
-    const description=this.refs.descriptionJ.value;
-    if( !title || !category || !price|| !timejob || !skills || !description){
+    const idjob = this.props.job._id
+    const title = this.refs.titleJob.value;
+    const category = this.refs.categoryJ.value;
+    const price = this.refs.priceJ.value;
+    const timejob = this.refs.timejob.value;
+    const skills = this.refs.skillsJ.value;
+    const description = this.refs.descriptionJ.value;
+    if (!title || !category || !price || !timejob || !skills || !description) {
       alert('remplir tous les champs')
       e.preventDefault();
-    }else{
+    } else {
       e.preventDefault();
-      this.setState({editOpen:''})
+      this.setState({ editOpen: '' })
       $(".wrapper").removeClass("overlay");
-      const obj={
-        title:title,
-        skills:skills,
-        price:price,
-        time:timejob,
-        description:description,
-        category:category
+      const obj = {
+        title: title,
+        skills: skills,
+        price: price,
+        time: timejob,
+        description: description,
+        category: category
       }
       console.log(obj)
-      axios.patch(`http://localhost:3000/job/${idjob}/updatejob`,obj).then(
-        res=>{
-          if(res.status===200){
+      axios.patch(`http://localhost:3000/job/${idjob}/updatejob`, obj).then(
+        res => {
+          if (res.status === 200) {
             console.log("job updated")
             window.location.reload()
           }
-       }).catch(err=>console.log(err.data)); 
-      }
+        }).catch(err => console.log(err.data));
+    }
   }
-  Like=(e)=>{
+  Like = (e) => {
     e.preventDefault();
-    const userid=this.props.user._id;
-    if(this.state.liked=='active'){  
-        axios.post(`http://localhost:3000/job/${userid}/${this.props.job._id}/dislike`).then(
-          res=>{
-            if(res.status===200){
-              console.log("like remove");
-              const nb=this.state.Nblikes;
-              this.setState({liked:'',Nblikes:nb-1})
-              console.log(this.state.Nblikes)
-            }
-         }).catch(err=>console.log(err.data)); 
-      }
-    else{
-    axios.post(`http://localhost:3000/job/${userid}/${this.props.job._id}/addlike`).then(
-      res=>{
-        if(res.status===200){
-          console.log("like added");
-          const nb=this.state.Nblikes;
-          this.setState({liked:'active',Nblikes:nb+1})
-          console.log(this.state.Nblikes)
-        }
-     }).catch(err=>console.log(err.data)); }
+    const userid = this.props.user._id;
+    if (this.state.liked == 'active') {
+      axios.post(`http://localhost:3000/job/${userid}/${this.props.job._id}/dislike`).then(
+        res => {
+          if (res.status === 200) {
+            console.log("like remove");
+            const nb = this.state.Nblikes;
+            this.setState({ liked: '', Nblikes: nb - 1 })
+            console.log(this.state.Nblikes)
+          }
+        }).catch(err => console.log(err.data));
+    }
+    else {
+      axios.post(`http://localhost:3000/job/${userid}/${this.props.job._id}/addlike`).then(
+        res => {
+          if (res.status === 200) {
+            console.log("like added");
+            const nb = this.state.Nblikes;
+            this.setState({ liked: 'active', Nblikes: nb + 1 })
+            console.log(this.state.Nblikes)
+          }
+        }).catch(err => console.log(err.data));
+    }
   }
+  Addcomment = (e) => {
+    const nb = this.state.Nbcomments;
+    this.setState({ Nbcomments: nb + 1 })
+  }
+
+  OpenComments = (e) => {
+    e.preventDefault();
+    const Status = this.state.ClickComments
+    this.setState({ ClickComments: !Status })
+  }
+
 
   render() {
     const skills = this.props.job.skills.split(" ");
@@ -149,7 +166,7 @@ class Job extends React.Component {
     let description = this.props.job.description
     const image = this.props.user.image
     const Myprofile = this.props.Myprofile;
-    const title=this.props.job.title;
+    const title = this.props.job.title;
     return (
       <div className="post-bar">
         <div className="post_topbar">
@@ -207,13 +224,15 @@ class Job extends React.Component {
             <li>
               <a href="# " className={`${this.state.liked}`} onClick={this.Like}><i className="fas fa-heart" /> Like</a>
               <span>{this.state.Nblikes} </span>
-              
+
             </li>
-           
-    <li><a href="# " className="com"><i className="fas fa-comment-alt" /> Comment {this.props.job.comments.length}</a></li>
+
+            <li><Link to="# " className="com" onClick={this.OpenComments}  ><i className="fas fa-comment-alt" /> Comment {this.state.Nbcomments}</Link></li>
           </ul>
           <a href="# "><i className="fas fa-eye" />Views 50</a>
         </div>
+        {this.state.ClickComments ? <Comments Addcomment={this.Addcomment} userConnected={this.props.userConnected} job={this.props.job}></Comments> : null}
+
         <div className={`post-popup job_post ${this.state.editOpen}`}>
           <div className="post-project">
             <h3>Edit a job</h3>
@@ -238,13 +257,13 @@ class Job extends React.Component {
                   </div>
                   <div className="col-lg-6">
                     <div className="price-br">
-                      <input type="text" name="price1" ref="priceJ"  defaultValue={this.props.job.price} placeholder="Price" />
+                      <input type="text" name="price1" ref="priceJ" defaultValue={this.props.job.price} placeholder="Price" />
                       <i className="la la-dollar" />
                     </div>
                   </div>
                   <div className="col-lg-6">
                     <div className="inp-field">
-                      
+
                       <select ref="timejob" selected={this.props.job.time}>
                         <option>Full Time</option>
                         <option>Half time</option>
@@ -252,7 +271,7 @@ class Job extends React.Component {
                     </div>
                   </div>
                   <div className="col-lg-12">
-                    <textarea name="description" placeholder="Description" defaultValue={this.props.job.description} ref="descriptionJ"  />
+                    <textarea name="description" placeholder="Description" defaultValue={this.props.job.description} ref="descriptionJ" />
                   </div>
                   <div className="col-lg-12">
                     <ul>
@@ -265,7 +284,7 @@ class Job extends React.Component {
             </div>{/*post-project-fields end*/}
           </div>{/*post-project end*/}
         </div>{/*post-project-popup end*/}
-        
+
       </div>
     )
   }
@@ -274,7 +293,7 @@ class Job extends React.Component {
 class Project extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { Opened: '',liked:'',Nblikes:0 }
+    this.state = { Opened: '', liked: '', Nblikes: 0, ClickComments: false, Nbcomments: 0 }
   }
   executeOnClick(isExpanded) {
     //console.log(isExpanded);
@@ -284,10 +303,15 @@ class Project extends React.Component {
       $(this).next(".ed-options").toggleClass("active");
       return false;
     });
-    axios.get(`http://localhost:3000/project/${this.props.project._id}/getLikesByproject`).then(res=>{
-      if(res.status==200){
-       const index= res.data.likes.findIndex(like=> like.userid===this.props.user._id);
-       index>-1 ? this.setState({liked:'active',Nblikes:res.data.likes.length}) : this.setState({liked:'',Nblikes:res.data.likes.length});
+    axios.get(`http://localhost:3000/project/${this.props.project._id}/getLikesByproject`).then(res => {
+      if (res.status == 200) {
+        const index = res.data.likes.findIndex(like => like.userid === this.props.user._id);
+        index > -1 ? this.setState({ liked: 'active', Nblikes: res.data.likes.length }) : this.setState({ liked: '', Nblikes: res.data.likes.length });
+      }
+    })
+    axios.get(`http://localhost:3000/comment/${this.props.project._id}/getCommentsByproject`).then(res => {
+      if (res.status == 200) {
+        this.setState({ Nbcomments: res.data.comments.length })
       }
     })
   }
@@ -310,75 +334,86 @@ class Project extends React.Component {
         else alert('error')
       })
   }
-  
 
-  editProject=(e)=>{  
+
+  editProject = (e) => {
     e.preventDefault();
     this.setState({ Opened: '' })
     $(".post-popup.pst-pj").addClass("active");
     $(".wrapper").addClass("overlay");
   }
 
-  cancelEdit=(e)=>{
+  cancelEdit = (e) => {
     e.preventDefault();
     $(".post-popup.pst-pj").removeClass("active");
     $(".wrapper").removeClass("overlay");
   }
-  UpdateJob=(e)=>{
+  UpdateJob = (e) => {
     e.preventDefault();
-    const idproject=this.props.project._id
-    const title=this.refs.title.value;
-    const category=this.refs.category.value;
-    const price=this.refs.price.value;
-    const toprice=this.refs.toprice.value;
-    const skills=this.refs.skills.value;
-    const description=this.refs.description.value;
-    if( !title || !category || !price|| !toprice || !skills || !description){
+    const idproject = this.props.project._id
+    const title = this.refs.title.value;
+    const category = this.refs.category.value;
+    const price = this.refs.price.value;
+    const toprice = this.refs.toprice.value;
+    const skills = this.refs.skills.value;
+    const description = this.refs.description.value;
+    if (!title || !category || !price || !toprice || !skills || !description) {
       alert('remplir tous les champs')
-    }else{
-    $(".post-popup.pst-pj").removeClass("active");
-    $(".wrapper").removeClass("overlay");
-    const obj={
-      title:title,
-      skills:skills,
-      price:price,
-      toprice:toprice,
-      description:description,
-      category:category
-    }
-      axios.patch(`http://localhost:3000/project/${idproject}/updateproject`,obj).then(
-        res=>{
-          if(res.status===200){
+    } else {
+      $(".post-popup.pst-pj").removeClass("active");
+      $(".wrapper").removeClass("overlay");
+      const obj = {
+        title: title,
+        skills: skills,
+        price: price,
+        toprice: toprice,
+        description: description,
+        category: category
+      }
+      axios.patch(`http://localhost:3000/project/${idproject}/updateproject`, obj).then(
+        res => {
+          if (res.status === 200) {
             console.log("project updated")
             window.location.reload()
           }
-       }).catch(err=>console.log(err.data)); 
-      }
+        }).catch(err => console.log(err.data));
     }
+  }
 
-    Like=(e)=>{
-      e.preventDefault();
-      const userid=this.props.user._id;
-      if(this.state.liked=='active'){  
-          axios.post(`http://localhost:3000/project/${userid}/${this.props.project._id}/dislike`).then(
-            res=>{
-              if(res.status===200){
-                console.log("like removed");
-                const nb=this.state.Nblikes;
-                this.setState({liked:'',Nblikes:nb-1})
-              }
-           }).catch(err=>console.log(err.data)); 
-        }
-      else{
-      axios.post(`http://localhost:3000/project/${userid}/${this.props.project._id}/addlike`).then(
-        res=>{
-          if(res.status===200){
-            console.log("like added");
-            const nb=this.state.Nblikes;
-            this.setState({liked:'active',Nblikes:nb+1})
+  Like = (e) => {
+    e.preventDefault();
+    const userid = this.props.user._id;
+    if (this.state.liked == 'active') {
+      axios.post(`http://localhost:3000/project/${userid}/${this.props.project._id}/dislike`).then(
+        res => {
+          if (res.status === 200) {
+            console.log("like removed");
+            const nb = this.state.Nblikes;
+            this.setState({ liked: '', Nblikes: nb - 1 })
           }
-       }).catch(err=>console.log(err.data)); }
+        }).catch(err => console.log(err.data));
     }
+    else {
+      axios.post(`http://localhost:3000/project/${userid}/${this.props.project._id}/addlike`).then(
+        res => {
+          if (res.status === 200) {
+            console.log("like added");
+            const nb = this.state.Nblikes;
+            this.setState({ liked: 'active', Nblikes: nb + 1 })
+          }
+        }).catch(err => console.log(err.data));
+    }
+  }
+  Addcomment = (e) => {
+    const nb = this.state.Nbcomments;
+    this.setState({ Nbcomments: nb + 1 })
+  }
+
+  OpenComments = (e) => {
+    e.preventDefault();
+    const Status = this.state.ClickComments
+    this.setState({ ClickComments: !Status })
+  }
 
   render() {
     const skills = this.props.project.skills.split(" ");
@@ -387,7 +422,7 @@ class Project extends React.Component {
     let description = this.props.project.description
     const image = this.props.user.image
     const Myprofile = this.props.Myprofile;
-    const title=this.props.project.title
+    const title = this.props.project.title
     return (
       <div className="post-bar">
         <div className="post_topbar">
@@ -445,13 +480,14 @@ class Project extends React.Component {
           <ul className="like-com">
             <li>
               <a href="#" className={`${this.state.liked}`} onClick={this.Like}><i className="fas fa-heart" /> Like</a>
-             
+
               <span>{this.state.Nblikes}</span>
             </li>
-            <li><a href="#" className="com "><i className="fas fa-comment-alt" /> Comments {this.props.project.comments.length}</a></li>
+            <li><Link to="#" className="com " onClick={this.OpenComments}><i className="fas fa-comment-alt" /> Comments {this.state.Nbcomments}</Link></li>
           </ul>
           <a href="#"><i className="fas fa-eye" />Views 50</a>
         </div>
+        {this.state.ClickComments ? <Comments Addcomment={this.Addcomment} userConnected={this.props.userConnected} project={this.props.project}></Comments> : null}
         <div className="post-popup pst-pj">
           <div className="post-project">
             <h3>Edit a project</h3>
@@ -482,13 +518,13 @@ class Project extends React.Component {
                       </div>
                       <span>To</span>
                       <div className="price-br">
-                        <input type="text" name="price1" ref="toprice" defaultValue={this.props.project.toprice}  placeholder="Price" />
+                        <input type="text" name="price1" ref="toprice" defaultValue={this.props.project.toprice} placeholder="Price" />
                         <i className="la la-dollar" />
                       </div>
                     </div>
                   </div>
                   <div className="col-lg-12">
-                    <textarea name="description" placeholder="Description" defaultValue={description} ref="description"  />
+                    <textarea name="description" placeholder="Description" defaultValue={description} ref="description" />
                   </div>
                   <div className="col-lg-12">
                     <ul>
@@ -501,6 +537,104 @@ class Project extends React.Component {
             </div>{/*post-project-fields end*/}
           </div>{/*post-project end*/}
         </div>{/*post-project-popup end*/}
+      </div>
+    )
+  }
+}
+
+
+class Comments extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { comments: [], content: '' }
+  }
+  componentDidMount() {
+    if (this.props.project) {
+      axios.get(`http://localhost:3000/comment/${this.props.project._id}/getCommentsByproject`).then(
+        res => {
+          if (res.status === 200) {
+            console.log(res.data)
+            this.setState({ comments: res.data.comments })
+          }
+        }).catch(err => console.log(err.data));
+    }
+    else {
+      axios.get(`http://localhost:3000/comment/${this.props.job._id}/getCommentsByjob`).then(
+        res => {
+          if (res.status === 200) {
+            console.log(res.data)
+            this.setState({ comments: res.data.comments })
+          }
+        }).catch(err => console.log(err.data));
+    }
+  }
+  AddComment = (e) => {
+    e.preventDefault()
+    const content = this.refs.Content.value
+    this.refs.Content.value = "";
+    this.props.Addcomment();
+    this.setState({ content: '' })
+    const obj = {
+      content: content,
+      name: this.props.userConnected.fullname,
+      image: this.props.userConnected.image,
+    }
+    if (this.props.project) {
+      axios.post(`http://localhost:3000/comment/${this.props.userConnected._id}/${this.props.project._id}/createCommentOnproject`, obj).then(
+        res => {
+          if (res.status === 201) {
+            const comments = this.state.comments;
+            comments.push(res.data.comment);
+            this.setState({ comments: comments })
+          }
+        }).catch(err => console.log(err.data));
+    }
+    else {
+      axios.post(`http://localhost:3000/comment/${this.props.userConnected._id}/${this.props.job._id}/createCommentOnJob`, obj).then(
+        res => {
+          if (res.status === 201) {
+            const comments = this.state.comments;
+            comments.push(res.data.comment);
+            console.log(comments)
+            this.setState({ comments: comments })
+          }
+        }).catch(err => console.log(err.data));
+
+    }
+  }
+  render() {
+    return (
+      <div className="comment-section">
+        <a href="#" className="plus-ic">
+        </a>
+        <div className="comment-sec">
+          <ul>
+            {this.state.comments.map((comment, index) => <li key={index}>
+              <div className="comment-list">
+                <div className="cm_img">
+                  <img src={`../forsaRESTAPI/${comment.image}`} style={{ width: '40px', height: '40px', borderRadius: '50%' }} alt="" />
+                </div>
+                <div className="comment">
+                  <h3>{comment.username}</h3>
+                  <span><img src="../images/clock.png" alt="" /> {comment.time}</span>
+                  <p>{comment.content} </p>
+                </div>
+              </div>{/*comment-list end*/}
+
+            </li>)}
+          </ul>
+        </div>{/*comment-sec end*/}
+        <div className="post-comment">
+          <div className="cm_img">
+            <img src={`../forsaRESTAPI/${this.props.userConnected.image}`} style={{ width: '40px', height: '40px', borderRadius: '50%' }} alt="" />
+          </div>
+          <div className="comment_box">
+            <form>
+              <input type="text" ref="Content" style={{ width: '60%' }} placeholder="Post a comment" />
+              <button onClick={this.AddComment}>Send</button>
+            </form>
+          </div>
+        </div>{/*post-comment end*/}
       </div>
     )
   }

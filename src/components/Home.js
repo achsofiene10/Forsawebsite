@@ -16,7 +16,8 @@ export default class Home extends React.Component{
   constructor(props){
     super(props);
     this.state={user:{},
-    feeds:[]}
+    feeds:[],
+    topjobs:[]}
   }
   async componentDidMount(){
     $(".post_project").on("click", function(){
@@ -232,17 +233,21 @@ export default class Home extends React.Component{
     { decode1 = jwt.decode(localStorage.getItem('token'));}
     else
     {decode1 = jwt.decode(sessionStorage.getItem('token'));}
-    console.log(decode1)
+    //console.log(decode1)
     if(decode1){
      await axios.get(`http://localhost:3000/user/${decode1.user_id}/getProfile`).then(res=>{
-       this.setState({user:res.data}, function () {
-    });})
-    }
-    axios.get(`http://localhost:3000/user/${decode1.user_id}/getLatestFeeds`).then(res => {
-      this.setState({ feeds: res.data }, function () {
-      })
+        this.setState({user:res.data}
+          )
+    });
+    await axios.get(`http://localhost:3000/user/${decode1.user_id}/getLatestFeeds`).then(res => {
+      this.setState({ feeds: res.data})
+    }).catch(err => console.log(err));
+    await axios.get(`http://localhost:3000/job/getTopjobs/5`).then(res => {
+      console.log(res.data)
+      this.setState({ topjobs: res.data})
     }).catch(err => console.log(err));
 
+  }
   }
 
   closePostProject=(e)=>{
@@ -331,7 +336,7 @@ export default class Home extends React.Component{
     render (){
       //console.log(this.state.feeds)
       const {user} =this.state
-        return (
+              return (
             <div>
         <main>
           <div className="main-section">
@@ -396,7 +401,7 @@ export default class Home extends React.Component{
                         </div>{/*post-st end*/}
                       </div>{/*post-topbar end*/}
                       <div className="posts-section">
-                        <PostHome post={this.state.feeds.slice(0,1)} ></PostHome>
+                        <PostHome post={this.state.feeds.slice(0,1)} userConnected={this.state.user}></PostHome> 
                         <div className="top-profiles">
                           <div className="pf-hd">
                             <h3>Top Profiles</h3>
@@ -409,7 +414,7 @@ export default class Home extends React.Component{
                             <UserTopprofile></UserTopprofile>
                           </div>{/*profiles-slider end*/}
                         </div>{/*top-profiles end*/}
-                        <PostHome post={this.state.feeds.slice(1)}></PostHome>
+                        <PostHome post={this.state.feeds.slice(1)}  userConnected={this.state.user} ></PostHome>
                         <div className="process-comm">
                           <div className="spinner">
                             <div className="bounce1" />
@@ -431,9 +436,15 @@ export default class Home extends React.Component{
                           <a href="# " >Learn More</a>
                         </div>
                       </div>{/*widget-about end*/}
-
-                      <Topjobs></Topjobs>
-
+                      <div className="widget widget-jobs">
+                        <div className="sd-title">
+                          <h3>Top Jobs</h3>
+                          <i className="la la-ellipsis-v" />
+                        </div>
+                        <div className="jobs-list">
+                      {this.state.topjobs.map((job,index)=><Topjobs key={index} job={job}></Topjobs>)}
+                        </div>
+                      </div>
                       <Mostviewedpoeple></Mostviewedpoeple>
                       
                     </div>{/*right-sidebar end*/}
