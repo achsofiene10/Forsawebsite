@@ -16,6 +16,7 @@ import Chatbox from './components/Chatbox';
 import AccountSetting from './components/AccountSetting';
 import OtherProfiles from './components/OtherProfiles';
 import Friendlist from './components/Friendlist';
+import Projects from './components/projects';
 
 
 class App extends React.Component{
@@ -53,6 +54,7 @@ class App extends React.Component{
          <Route path='/profile/:id' exact component={Profile}></Route>
          <Route path='/profile/:id/settings' exact component={AccountSetting}></Route> 
          <Route path='/jobs/' exact component={Jobs}></Route>
+         <Route path='/projects/' exact component={Projects}></Route>
          <Route path='/others/:id' exact component={OtherProfiles}></Route>
          <Route path='/friendlist/:id' exact component={Friendlist}></Route>
        </Switch><Chatbox></Chatbox><Footer></Footer></div> : <Signin history={history} Login={this.Login}></Signin>}

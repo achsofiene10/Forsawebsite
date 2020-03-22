@@ -4151,7 +4151,7 @@ a:hover {
 	width: 9px;
 	height: 9px;
 	border:2px solid #ecf5fb;
-	-webkit-border-radius: 100px;
+	-webkit-border-radius: 1 00px;
 	-moz-border-radius: 100px;
 	-ms-border-radius: 100px;
 	-o-border-radius: 100px;

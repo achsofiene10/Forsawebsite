@@ -47,14 +47,13 @@ export default class Signin extends React.Component{
   login(event){
     event.preventDefault();
     const remember=this.refs.remember.checked;
-    const category=this.refs.categorysignin.value;
     console.log(remember)
     const obj = {
         email : this.state.email,
         password :this.state.password
   };
-  console.log(obj,category);
-  axios.post( `http://localhost:3000/${category}/login`, obj)
+  console.log(obj);
+  axios.post( `http://localhost:3000/user/login`, obj)
       .then(res => {console.log(res.data)
       if(res.status===200)
     {        
@@ -97,6 +96,7 @@ export default class Signin extends React.Component{
         'image':image,
         'email':email,
         'country':country,
+        'category':category,
         'fullname':fullname,
         'password':password
       }
@@ -118,10 +118,11 @@ export default class Signin extends React.Component{
         'image':image,
         'email':email,
         'country':country,
-        'CompanyName':fullname,
+        'category':category,
+        'fullname':fullname,
         'password':password
       }
-      axios.post('http://localhost:3000/company/signup', obj)
+      axios.post('http://localhost:3000/user/signup', obj)
       .then(res => {console.log(res.data,res.status)
       if (res.status===201){
         alert("company created");
@@ -179,12 +180,7 @@ export default class Signin extends React.Component{
                           </div>
                           <div className="col-lg-12 no-pdd">
                               <div className="sn-field">
-                                <select ref="categorysignin">
-                                  <option>user</option>
-                                  <option>company</option>
-                                </select>
-                                <i className="la la-dropbox" />
-                                <span><i className="fa fa-ellipsis-h" /></span>
+                                
                               </div>
                             </div>
                           <div className="col-lg-12 no-pdd">

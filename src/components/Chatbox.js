@@ -1,10 +1,33 @@
 import React from 'react';
+import axios from 'axios'
+import jwt from 'jsonwebtoken'
 
 export default class Chatbox extends React.Component{
     constructor(props){
         super(props);
+        this.state={user:{}}
     }
+
+    componentDidMount(){
+      var decode1;
+    if (localStorage.getItem('token'))
+    { decode1 = jwt.decode(localStorage.getItem('token'));}
+    else
+    {decode1 = jwt.decode(sessionStorage.getItem('token'));}
+    //console.log(decode1)
+    if(decode1){
+      axios.get(`http://localhost:3000/user/${decode1.user_id}/getProfile`).then(res=>{
+        this.setState({user:res.data}
+          )
+    });
+      axios.get(`http://localhost:3000/user/${decode1.user_id}/getOnlinefriends`).then(res=>{
+        this.setState({Onlinefriends:res.data}
+          )
+    });
+    }
+  }
     render(){
+      console.log(this.state.Onlinefriends)
         return(
             <div className="chatbox-list">
             <div className="chatbox">
@@ -112,7 +135,7 @@ export default class Chatbox extends React.Component{
                 </div>
                 <div className="chat-list">
                   <div className="conv-list active">
-                    <div className="usrr-pic">
+                      <div className="cm_img">
                       <img src="../images/resources/usy1.png" alt="" />
                       <span className="active-status activee" />
                     </div>
@@ -126,7 +149,7 @@ export default class Chatbox extends React.Component{
                     <span className="msg-numbers">2</span>
                   </div>
                   <div className="conv-list">
-                    <div className="usrr-pic">
+                    <div className="cm_img">  
                       <img src="../images/resources/usy2.png" alt="" />
                     </div>
                     <div className="usy-info">
@@ -137,18 +160,7 @@ export default class Chatbox extends React.Component{
                       <span>11:39 PM</span>
                     </div>
                   </div>
-                  <div className="conv-list">
-                    <div className="usrr-pic">
-                      <img src="../images/resources/usy3.png" alt="" />
-                    </div>
-                    <div className="usy-info">
-                      <h3>John Doe</h3>
-                      <span>Lorem ipsum dolor <img src="../images/smley.png" alt="" /></span>
-                    </div>
-                    <div className="ct-time">
-                      <span>0.28 AM</span>
-                    </div>
-                  </div>
+                  
                 </div>{/*chat-list end*/}
               </div>{/*conversation-box end*/}
             </div>

@@ -704,7 +704,7 @@ export default class Profile extends React.Component {
                           <div className="add-dp" id="OpenImgUpload">
                             <input
                               type={"file"} id="file1" ref='profileimg' onChange={this.onProfilePicchange} />
-                            <label htmlFor="file1"><i className="fas fa-camera" /></label>
+                            <label htmlFor="file1"><i  className="fas fa-camera" /></label>
                           </div>
                         </div>{/*user-pro-img end*/}
                         <div className="user_pro_status">

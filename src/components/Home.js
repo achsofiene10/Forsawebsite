@@ -235,14 +235,15 @@ export default class Home extends React.Component{
     {decode1 = jwt.decode(sessionStorage.getItem('token'));}
     //console.log(decode1)
     if(decode1){
-     await axios.get(`http://localhost:3000/user/${decode1.user_id}/getProfile`).then(res=>{
+      axios.get(`http://localhost:3000/user/${decode1.user_id}/getProfile`).then(res=>{
         this.setState({user:res.data}
           )
     });
-    await axios.get(`http://localhost:3000/user/${decode1.user_id}/getLatestFeeds`).then(res => {
+    axios.get(`http://localhost:3000/user/${decode1.user_id}/getLatestFeeds`).then(res => {
+      console.log(res,"here")
       this.setState({ feeds: res.data})
     }).catch(err => console.log(err));
-    await axios.get(`http://localhost:3000/job/getTopjobs/5`).then(res => {
+     axios.get(`http://localhost:3000/job/getTopjobs/5`).then(res => {
       console.log(res.data)
       this.setState({ topjobs: res.data})
     }).catch(err => console.log(err));
@@ -334,7 +335,7 @@ export default class Home extends React.Component{
 
   
     render (){
-      //console.log(this.state.feeds)
+      console.log(this.state.feeds)
       const {user} =this.state
               return (
             <div>
