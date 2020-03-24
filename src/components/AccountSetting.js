@@ -1,12 +1,67 @@
 import React from 'react';
+import axios from 'axios'
+import jwt from 'jsonwebtoken'
+import {Link} from 'react-router-dom'
 
 export default class AccountSetting extends React.Component{
+  constructor(props){
+    super(props);
+    this.state={user:{}}
+  }
+  componentDidMount(){
+    
+    var decode1;
+    if (localStorage.getItem('token')) 
+    { decode1 = jwt.decode(localStorage.getItem('token')); }
+    else { decode1 = jwt.decode(sessionStorage.getItem('token')); }
+    if (decode1) {
+      axios.get(`http://localhost:3000/user/${decode1.user_id}/getProfile`).then(res => {
+        this.setState({ user: res.data }
+        )
+      });
+    }
+  }
+
+  rejectRequest=(request,index)=>{
+    //e.preventDefault();
+    const obj={
+      friendname:this.state.user.fullname,
+      FriendImage:this.state.user.image,
+      MyImage:request.imageFriend,
+      myname:request.name,
+      mytitle:request.title,
+      friendtitle:this.state.user.title
+    }
+    axios.post(`http://localhost:3000/friend/rejectrequest/${this.state.user._id}/${request.iduser}`,obj).then(res=>
+    {
+      console.log(res.status);
+      const {user}=this.state;
+      user.ReceivedRequests.splice(index,1)
+      this.setState({user:user})
+    }).catch(err => console.log(err))
+  }
+  acceptRequest=(request,index)=>{
+    const obj={
+      friendname:this.state.user.fullname,
+      FriendImage:this.state.user.image,
+      MyImage:request.imageFriend,
+      myname:request.name,
+      mytitle:request.title,
+      friendtitle:this.state.user.title
+    }
+    axios.post(`http://localhost:3000/friend/acceptrequest/${this.state.user._id}/${request.iduser}`,obj).then(res=>
+    {
+      console.log(res.status);
+      const {user}=this.state;
+      user.ReceivedRequests.splice(index,1)
+      this.setState({user:user})
+    }).catch(err => console.log(err))
+  }
 
 render(){
-
-
-      return (
+  const Receivedrequests= this.state.user.ReceivedRequests
   
+      return (
         <section className="profile-account-setting">
           <div className="container">
             <div className="account-tabs-setting">
@@ -154,7 +209,7 @@ render(){
                             </div>
                           </div>
                           <div className="cp-field">
-                            <h5><a href="#" title>Forgot Password?</a></h5>
+                            <h5><a href="#" >Forgot Password?</a></h5>
                           </div>
                           <div className="save-stngs pd2">
                             <ul>
@@ -174,7 +229,7 @@ render(){
                               <img src="../images/resources/ny-img1.png" alt="" />
                             </div>
                             <div className="notification-info">
-                              <h3><a href="#" title>Jassica William</a> Comment on your project.</h3>
+                              <h3><a href="#" >Jassica William</a> Comment on your project.</h3>
                               <span>2 min ago</span>
                             </div>{/*notification-info */}
                           </div>{/*notfication-details end*/}
@@ -183,7 +238,7 @@ render(){
                               <img src="../images/resources/ny-img2.png" alt="" />
                             </div>
                             <div className="notification-info">
-                              <h3><a href="#" title>Poonam Verma</a> Bid on your Latest project.</h3>
+                              <h3><a href="#" >Poonam Verma</a> Bid on your Latest project.</h3>
                               <span>2 min ago</span>
                             </div>{/*notification-info */}
                           </div>{/*notfication-details end*/}
@@ -192,7 +247,7 @@ render(){
                               <img src="../images/resources/ny-img3.png" alt="" />
                             </div>
                             <div className="notification-info">
-                              <h3><a href="#" title>Tonney Dhman</a> Comment on your project.</h3>
+                              <h3><a href="#" >Tonney Dhman</a> Comment on your project.</h3>
                               <span>2 min ago</span>
                             </div>{/*notification-info */}
                           </div>{/*notfication-details end*/}
@@ -201,7 +256,7 @@ render(){
                               <img src="../images/resources/ny-img1.png" alt="" />
                             </div>
                             <div className="notification-info">
-                              <h3><a href="#" title>Jassica William</a> Comment on your project.</h3>
+                              <h3><a href="#" >Jassica William</a> Comment on your project.</h3>
                               <span>2 min ago</span>
                             </div>{/*notification-info */}
                           </div>{/*notfication-details end*/}
@@ -210,7 +265,7 @@ render(){
                               <img src="../images/resources/ny-img1.png" alt="" />
                             </div>
                             <div className="notification-info">
-                              <h3><a href="#" title>Jassica William</a> Comment on your project.</h3>
+                              <h3><a href="#">Jassica William</a> Comment on your project.</h3>
                               <span>2 min ago</span>
                             </div>{/*notification-info */}
                           </div>{/*notfication-details end*/}
@@ -219,7 +274,7 @@ render(){
                               <img src="../images/resources/ny-img2.png" alt="" />
                             </div>
                             <div className="notification-info">
-                              <h3><a href="#" title>Poonam Verma </a> Bid on your Latest project.</h3>
+                              <h3><a href="#" >Poonam Verma </a> Bid on your Latest project.</h3>
                               <span>2 min ago</span>
                             </div>{/*notification-info */}
                           </div>{/*notfication-details end*/}
@@ -228,7 +283,7 @@ render(){
                               <img src="../images/resources/ny-img3.png" alt="" />
                             </div>
                             <div className="notification-info">
-                              <h3><a href="#" title>Tonney Dhman</a> Comment on your project</h3>
+                              <h3><a href="#" >Tonney Dhman</a> Comment on your project</h3>
                               <span>2 min ago</span>
                             </div>{/*notification-info */}
                           </div>{/*notfication-details end*/}
@@ -237,7 +292,7 @@ render(){
                               <img src="../images/resources/ny-img1.png" alt="" />
                             </div>
                             <div className="notification-info">
-                              <h3><a href="#" title>Jassica William</a> Comment on your project.</h3>
+                              <h3><a href="#" >Jassica William</a> Comment on your project.</h3>
                               <span>2 min ago</span>
                             </div>{/*notification-info */}
                           </div>{/*notfication-details end*/}
@@ -248,96 +303,25 @@ render(){
                       <div className="acc-setting">
                         <h3>Requests</h3>
                         <div className="requests-list">
-                          <div className="request-details">
-                            <div className="noty-user-img">
-                              <img src="../images/resources/r-img1.png" alt="" />
+                         
+                         {Receivedrequests ? Receivedrequests.map((request,index)=> 
+
+                          <div key={index} className="request-details">
+                            <div className="cm_img">
+                              <img src={`../forsaRESTAPI/${request.imageFriend}`}   alt="" />
                             </div>
                             <div className="request-info">
-                              <h3>Jessica William</h3>
-                              <span>Graphic Designer</span>
+                            <Link to={`/userprofile/${request.iduser}`} ><h3>{request.name}</h3> </Link>    
+                         <span>{request.title}</span>
                             </div>
                             <div className="accept-feat">
                               <ul>
-                                <li><button type="submit" className="accept-req">Accept</button></li>
-                                <li><button type="submit" className="close-req"><i className="la la-close" /></button></li>
+                                <li><button onClick={()=>this.acceptRequest(request,index)} className="accept-req">Accept</button></li>
+                                <li><button onClick={()=>this.rejectRequest(request,index)} className="close-req"><i className="la la-close" /></button></li>
                               </ul>
                             </div>{/*accept-feat end*/}
-                          </div>{/*request-detailse end*/}
-                          <div className="request-details">
-                            <div className="noty-user-img">
-                              <img src="../images/resources/r-img2.png" alt="" />
-                            </div>
-                            <div className="request-info">
-                              <h3>John Doe</h3>
-                              <span>PHP Developer</span>
-                            </div>
-                            <div className="accept-feat">
-                              <ul>
-                                <li><button type="submit" className="accept-req">Accept</button></li>
-                                <li><button type="submit" className="close-req"><i className="la la-close" /></button></li>
-                              </ul>
-                            </div>{/*accept-feat end*/}
-                          </div>{/*request-detailse end*/}
-                          <div className="request-details">
-                            <div className="noty-user-img">
-                              <img src="../images/resources/r-img3.png" alt="" />
-                            </div>
-                            <div className="request-info">
-                              <h3>Poonam</h3>
-                              <span>Wordpress Developer</span>
-                            </div>
-                            <div className="accept-feat">
-                              <ul>
-                                <li><button type="submit" className="accept-req">Accept</button></li>
-                                <li><button type="submit" className="close-req"><i className="la la-close" /></button></li>
-                              </ul>
-                            </div>{/*accept-feat end*/}
-                          </div>{/*request-detailse end*/}
-                          <div className="request-details">
-                            <div className="noty-user-img">
-                              <img src="../images/resources/r-img4.png" alt="" />
-                            </div>
-                            <div className="request-info">
-                              <h3>Bill Gates</h3>
-                              <span>C &amp; C++ Developer</span>
-                            </div>
-                            <div className="accept-feat">
-                              <ul>
-                                <li><button type="submit" className="accept-req">Accept</button></li>
-                                <li><button type="submit" className="close-req"><i className="la la-close" /></button></li>
-                              </ul>
-                            </div>{/*accept-feat end*/}
-                          </div>{/*request-detailse end*/}
-                          <div className="request-details">
-                            <div className="noty-user-img">
-                              <img src="../images/resources/r-img5.png" alt="" />
-                            </div>
-                            <div className="request-info">
-                              <h3>Jessica William</h3>
-                              <span>Graphic Designer</span>
-                            </div>
-                            <div className="accept-feat">
-                              <ul>
-                                <li><button type="submit" className="accept-req">Accept</button></li>
-                                <li><button type="submit" className="close-req"><i className="la la-close" /></button></li>
-                              </ul>
-                            </div>{/*accept-feat end*/}
-                          </div>{/*request-detailse end*/}
-                          <div className="request-details">
-                            <div className="noty-user-img">
-                              <img src="../images/resources/r-img6.png" alt="" />
-                            </div>
-                            <div className="request-info">
-                              <h3>John Doe</h3>
-                              <span>PHP Developer</span>
-                            </div>
-                            <div className="accept-feat">
-                              <ul>
-                                <li><button type="submit" className="accept-req">Accept</button></li>
-                                <li><button type="submit" className="close-req"><i className="la la-close" /></button></li>
-                              </ul>
-                            </div>{/*accept-feat end*/}
-                          </div>{/*request-detailse end*/}
+                          </div>):null}
+
                         </div>{/*requests-list end*/}
                       </div>{/*acc-setting end*/}
                     </div>

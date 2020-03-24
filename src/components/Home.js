@@ -240,11 +240,9 @@ export default class Home extends React.Component{
           )
     });
     axios.get(`http://localhost:3000/user/${decode1.user_id}/getLatestFeeds`).then(res => {
-      console.log(res,"here")
       this.setState({ feeds: res.data})
     }).catch(err => console.log(err));
      axios.get(`http://localhost:3000/job/getTopjobs/5`).then(res => {
-      console.log(res.data)
       this.setState({ topjobs: res.data})
     }).catch(err => console.log(err));
 
@@ -335,7 +333,6 @@ export default class Home extends React.Component{
 
   
     render (){
-      console.log(this.state.feeds)
       const {user} =this.state
               return (
             <div>
@@ -355,7 +352,7 @@ export default class Home extends React.Component{
                           </div>{/*username-dt end*/}
                           <div className="user-specs">
                             <h3>{this.state.user.fullname}</h3>
-        <span>{this.state.user.title}</span>
+                                <span>{this.state.user.title}</span>
                           </div>
                         </div>{/*user-profile end*/}
                         <ul className="user-fw-status">

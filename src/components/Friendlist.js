@@ -16,12 +16,35 @@ export default class Friendlist extends React.Component{
     { decode1 = jwt.decode(sessionStorage.getItem('token'));}
     if(decode1){
      axios.get(`http://localhost:3000/user/${decode1.user_id}/getProfile`).then(res=>{
+       //console.log(res.data)
        this.setState({user:res.data});
     });}
-
+    axios.get(`http://localhost:3000/user/${decode1.user_id}/getFriendlist`).then(res=>{
+      //console.log(res.data)
+      this.setState({friends:res.data})
+    })
+  }
+  deleteFriend=(friend,index)=>{
+    //e.preventDefault()
+    const obj={
+      friendname:friend.fullname,
+      FriendImage:friend.image,
+      MyImage:this.state.user.image,
+      myname:this.state.user.fullname,
+      mytitle:this.state.user.title,
+      friendtitle:friend.title
+    }
+    console.log(obj,index)
+    axios.post(`http://localhost:3000/friend/deletefriend/${friend._id}/${this.state.user._id}`,obj).then(res=>
+    {
+      console.log(res.status);
+      const {user}=this.state;
+      user.ReceivedRequests.splice(index,1)
+      this.setState({user:user})
+    }).catch(err => console.log(err))
   }
     render(){
-      console.log(this.state.user.friendlist)
+      const friends=this.state.friends
         return(
             <section className="companies-info">
                       <div className="container">
@@ -30,7 +53,7 @@ export default class Friendlist extends React.Component{
                         </div>{/*company-title end*/}
                         <div className="companies-list">
                           <div className="row">
-                            <ProfileBadge></ProfileBadge>
+                            { friends ? friends.map((friend,index)=><ProfileBadge deleteFriend={this.deleteFriend} key={index} index={index} myfriends={true} user={friend}></ProfileBadge>):null  }
                           </div>
                         </div>{/*companies-list end*/}
                         <div className="process-comm">

@@ -2,8 +2,6 @@
 $(window).on("load", function() {
     "use strict";
 
-    
-
     //  ============= PORTFOLIO SLIDER FUNCTION =========
 
     $('.profiles-slider').slick({

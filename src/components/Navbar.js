@@ -142,7 +142,7 @@ $( ".user-account-settingss" ).slideToggle( "fast");
                   <ul>
                   
                    <Link to={`/profile/${this.state.user._id}`}>  <li> My profile</li></Link>
-                    <Link to={`/friendlist/${this.state.user._id}`}>   <li>My friendlist</li></Link>
+        <Link to={`/friendlist/${this.state.user._id}`}>   {this.state.user.friendlist ? <li>Connections ({this.state.user.friendlist.length})</li> :<li>Connections (0)</li>}</Link>
                   </ul>
                 </li>
                 <li>
@@ -339,7 +339,7 @@ $( ".user-account-settingss" ).slideToggle( "fast");
                 <ul className="us-links">
                   <li><Link to={`/profile/${this.state.user._id}/settings`} >Account Setting</Link></li>
                 </ul>
-                <h3 className="tc" onClick={this.props.Logout}><Link to="/" >Logout</Link></h3>
+                <h3 className="tc" onClick={()=>this.props.Logout(this.state.user._id)}><Link to="/" >Logout</Link></h3>
               </div>{/*user-account-settingss end*/}
             </div>
           </div>{/*header-data end*/}
