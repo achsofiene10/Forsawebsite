@@ -270,12 +270,13 @@ $( ".user-account-settingss" ).slideToggle( "fast");
               </ul>
             </nav>{/*nav end*/}
             <div className="menu-btn">
-              <i className="fa fa-bars" />
+            <a href="#" ><i className="fa fa-bars"></i></a>
             </div>{/*menu-btn end*/}
             <div className="user-account">
               <div className="user-info">
-              { this.state.user.image ? <img src={`../forsaRESTAPI/${this.state.user.image}`} style={{width: '30px', height: '30px'}} alt="" /> : null }
-                <Link to="# " >{this.state.user.fullname}</Link>
+                
+                { this.state.user.image ? <img src={`../forsaRESTAPI/${this.state.user.image}`} style={{width: '30px', height: '30px'}} alt="" /> : null }
+                <Link to="# " >{ this.state.user.fullname ?this.state.user.fullname.substring(0,11):null}</Link>
                 <i className="la la-sort-down" />
               </div>
               <div className="user-account-settingss" id="users">

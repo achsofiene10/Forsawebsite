@@ -39,7 +39,9 @@ class App extends React.Component{
       this.setState({loggedIn:false})
       localStorage.removeItem('token');
       sessionStorage.removeItem('token');
-      axios.post(`http://localhost:3000/user/logout/${userid}`).then();
+      axios.post(`http://localhost:3000/user/logout/${userid}`).then(res=>{
+        console.log(res.status)
+      });
     }
 
     Login(){

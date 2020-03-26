@@ -24,7 +24,9 @@ export default class OtherProfiles extends React.Component{
         this.setState({users:res.data}
           )
     });
-  }}
+  } 
+
+}
 
   sendrequest=(friend,index)=>{
     //e.preventDefault()
@@ -44,7 +46,7 @@ export default class OtherProfiles extends React.Component{
   }
 
     render(){
-      //console.log(this.state.users)
+      
         return(
                     <section className="companies-info">
                       <div className="container">
@@ -53,7 +55,7 @@ export default class OtherProfiles extends React.Component{
                         </div>{/*company-title end*/}
                         <div className="companies-list">
                           <div className="row">
-                           {this.state.users ? this.state.users.map((user,index)=> <ProfileBadge sendrequest={this.sendrequest}user={user} key={index}></ProfileBadge> ):null}
+                           {this.state.users ? this.state.users.map((user,index)=> <ProfileBadge sendrequest={this.sendrequest} userConnected={this.state.user} user={user} key={index}></ProfileBadge> ):null}
                           </div>
                         </div>{/*companies-list end*/}
                         <div className="process-comm">

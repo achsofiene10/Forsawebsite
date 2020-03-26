@@ -21,7 +21,8 @@ export default class Userprofile extends React.Component {
       jobs: [],
       feeds: [],
       friendlist:[],
-      friend:false
+      friend:false,
+      sent:false
     }
   }
   componentDidMount() {
@@ -329,16 +330,7 @@ export default class Userprofile extends React.Component {
       })
     }).catch(err => console.log(err));
 
-    axios.get(`http://localhost:3000/project/${user_id}/getAllprojects`).then(res => {
-      this.setState({ projects: res.data }, function () {
-      })
-    }).catch(err => console.log(err));
-
-    axios.get(`http://localhost:3000/job/${user_id}/getAllJobs`).then(res => {
-      this.setState({ jobs: res.data }, function () {
-      })
-    }).catch(err => console.log(err));
-
+    
 
     axios.get(`http://localhost:3000/user/${user_id}/getfeedsProfile`).then(res => {
       this.setState({ feeds: res.data }, function () {
@@ -350,6 +342,9 @@ export default class Userprofile extends React.Component {
 
   sendRequest=(e)=>{
     e.preventDefault();
+    const clicked=this.state.sent
+    if(!clicked){
+    this.setState({sent:true})
     const obj={
       myname:this.state.userConnected.fullname,
       MyImage:this.state.userConnected.image,
@@ -363,6 +358,7 @@ export default class Userprofile extends React.Component {
       console.log(res.status)
     }).catch(err => console.log(err))
   }
+  }
  
   
 
@@ -372,12 +368,20 @@ export default class Userprofile extends React.Component {
     const {skills}=this.state;
     console.log(this.state.friendlist)
     let index=-1;
+    let index2=-1;
     let friend=false;
+    let invit=false;
     if (this.state.friendlist) {
        index=this.state.friendlist.findIndex(friend=> friend.iduser===this.state.user._id)
        if(index>-1){
          friend=true;
        }
+    }
+    if(this.state.userConnected.SentRequests){
+      index2=this.state.userConnected.SentRequests.findIndex(friend=> friend.iduser===this.state.user._id)
+      if(index2>-1){
+        invit=true;
+      }
     }
     return (
       <div>
@@ -397,7 +401,7 @@ export default class Userprofile extends React.Component {
                         </div>{/*user-pro-img end*/}
                         <div className="user_pro_status">
                           <ul className="flw-hr">
-                           { !friend ?  <li><a href="#" className="flww" onClick={this.sendRequest}><i className="la la-plus" /> Connect</a></li>:null }
+                           { !friend ?  <li><a href="#" className="flww" onClick={this.sendRequest}> {this.state.sent || invit ? <text>✅Sent</text>:<text><i className="la la-plus" />Connect</text>}</a></li>:null }
                           </ul>
                           <ul className="flw-status">
                             <li>

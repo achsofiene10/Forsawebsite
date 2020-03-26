@@ -308,7 +308,7 @@ render(){
 
                           <div key={index} className="request-details">
                             <div className="cm_img">
-                              <img src={`../forsaRESTAPI/${request.imageFriend}`}   alt="" />
+                              <img src={`../forsaRESTAPI/${request.imageFriend}`} style={{ width: '40px', height: '40px', borderRadius: '50%' }}   alt="" />
                             </div>
                             <div className="request-info">
                             <Link to={`/userprofile/${request.iduser}`} ><h3>{request.name}</h3> </Link>    

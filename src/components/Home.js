@@ -17,7 +17,8 @@ export default class Home extends React.Component{
     super(props);
     this.state={user:{},
     feeds:[],
-    topjobs:[]}
+    topjobs:[],
+    topprofiles:[]}
   }
   async componentDidMount(){
     $(".post_project").on("click", function(){
@@ -245,6 +246,10 @@ export default class Home extends React.Component{
      axios.get(`http://localhost:3000/job/getTopjobs/5`).then(res => {
       this.setState({ topjobs: res.data})
     }).catch(err => console.log(err));
+    axios.get(`http://localhost:3000/user/${decode1.user_id}/1/getTopprofiles`).then(res => {
+      this.setState({ topprofiles: res.data})
+      console.log(this.state.topprofiles)
+    }).catch(err => console.log(err));
 
   }
   }
@@ -406,10 +411,9 @@ export default class Home extends React.Component{
                             <i className="la la-ellipsis-v" />
                           </div>
                           <div className="profiles-slider">
-                            <UserTopprofile></UserTopprofile>
-                            <UserTopprofile></UserTopprofile>
-                            <UserTopprofile></UserTopprofile>
-                            <UserTopprofile></UserTopprofile>
+                        {this.state.topprofiles ? this.state.topprofiles.map((profile,index)=> <UserTopprofile user={profile} key={index}></UserTopprofile>):null }
+                        
+
                           </div>{/*profiles-slider end*/}
                         </div>{/*top-profiles end*/}
                         <PostHome post={this.state.feeds.slice(1)}  userConnected={this.state.user} ></PostHome>

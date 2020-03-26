@@ -168,7 +168,6 @@ class Job extends React.Component {
 
             <li><Link to="#" className="com " onClick={this.OpenComments}><i className="fas fa-comment-alt" /> Comments {this.state.Nbcomments}</Link></li>
           </ul>
-          <a href="# "><i className="fas fa-eye" />Views 50</a>
         </div>
         {this.state.ClickComments ? <Comments Addcomment={this.Addcomment} userConnected={this.props.userConnected} job={this.props.job.job}></Comments> : null }
 
@@ -316,7 +315,6 @@ class Project extends React.Component {
             </li>
             <li><Link to="#" className="com " onClick={this.OpenComments}><i className="fas fa-comment-alt" /> Comments {this.state.Nbcomments}</Link></li>
           </ul>
-          <a href="#"><i className="fas fa-eye" />Views 50</a>
         </div>
         {this.state.ClickComments ? <Comments Addcomment={this.Addcomment} userConnected={this.props.userConnected} project={this.props.project.project}></Comments> : null }
       </div>

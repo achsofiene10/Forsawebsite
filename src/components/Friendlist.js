@@ -6,7 +6,7 @@ import axios from 'axios'
 export default class Friendlist extends React.Component{
     constructor(props){
         super(props);
-        this.state={user:{}}
+        this.state={user:{},friends:[]}
     }
     componentDidMount(){
       var decode1;
@@ -34,13 +34,11 @@ export default class Friendlist extends React.Component{
       mytitle:this.state.user.title,
       friendtitle:friend.title
     }
-    console.log(obj,index)
     axios.post(`http://localhost:3000/friend/deletefriend/${friend._id}/${this.state.user._id}`,obj).then(res=>
     {
-      console.log(res.status);
-      const {user}=this.state;
-      user.ReceivedRequests.splice(index,1)
-      this.setState({user:user})
+      const {friends}=this.state;
+      friends.splice(index,1)
+      this.setState({friends:friends})
     }).catch(err => console.log(err))
   }
     render(){
