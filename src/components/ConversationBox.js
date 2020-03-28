@@ -1,6 +1,6 @@
 import React from 'react';
 import $ from 'jquery'
-import axis from 'jquery'
+
 
 const URL = 'ws://localhost:3030'
 
@@ -9,14 +9,16 @@ export default class ConversatioBox extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            message: '', messages: [],active:''
+            message: '', messages: [],active:'',Nbmessages:0
         }
     }
 
     ws = new WebSocket(URL)
 
     componentDidMount() {
+
         
+
         this.ws.onopen = () => {
             // on connecting, do nothing but log it to the console
             console.log('connected')
@@ -28,6 +30,8 @@ export default class ConversatioBox extends React.Component {
             // on receiving a message, add it to the list of messages
             const message = JSON.parse(evt.data)
             if(message.idreceiver===this.props.userConnected._id){
+            const {Nbmessages}=this.state;
+            this.setState({Nbmessages:Nbmessages+1})
             this.addMessage(message)}
         }
         this.ws.onclose = () => {
@@ -37,7 +41,18 @@ export default class ConversatioBox extends React.Component {
                 ws: new WebSocket(URL),
             })
         }
+
+        if(this.props.newmsg){
+            this.setState({active:'active'})
+        }
     }
+    componentDidUpdate(){
+        
+            const objDiv = document.getElementById('div1');
+            objDiv.scrollTop = objDiv.scrollHeight;
+          
+    }
+    
 
     addMessage = message =>
         this.setState(state => ({ messages: [...state.messages, message] }))
@@ -62,12 +77,17 @@ export default class ConversatioBox extends React.Component {
         e.preventDefault();
         const active=this.state.active
         if(active){
+            this.setState({Nbmessages:0})
             this.setState({active:''})
         }
         else{
             this.setState({active:'active'})
         }
     }
+    ResetNbmessages=(e)=>{
+        this.setState({Nbmessages:0})
+    }
+    
 
 
     render() {
@@ -75,7 +95,7 @@ export default class ConversatioBox extends React.Component {
             <div className="chatbox">
                 <div className="chat-mg" onClick={this.openball}>
                     <a href="# " ><img src={`../forsaRESTAPI/${this.props.friend.imageFriend}`} alt="" /></a>
-                    <span>25</span>
+                    {this.state.Nbmessages !=0 ? <span> {this.state.Nbmessages}</span>:null }
                 </div>
 
                 <div className={`conversation-box ${this.state.active}`}>
@@ -89,7 +109,7 @@ export default class ConversatioBox extends React.Component {
                             <a href="# " onClick={()=>this.props.Close(this.props.index)}><i className="la la-close" /></a>
                         </div>
                     </div>
-                    <div className="chat-hist" style={{overflowY:'scroll'}} data-mcs-theme="dark">
+                    <div  className="chat-hist" id='div1' style={{overflowY:'scroll'}} data-mcs-theme="dark">
                         <ul>
                             {/*<li className="chat-msg">
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor.</p>
@@ -118,7 +138,7 @@ export default class ConversatioBox extends React.Component {
                     </div>{/*chat-list end*/}
                     <div className="typing-msg">
                         <form onSubmit={e => { e.preventDefault(); this.onSubmitMessage(this.state.message); this.setState({ message: '' }) }}>
-                            <textarea onKeyDown={this.onKeyDown} type="text" placeholder={'Enter message...'} value={this.state.message} onChange={e => this.setState({ message: e.target.value })} />
+                            <textarea onSelect={this.ResetNbmessages}onKeyDown={this.onKeyDown} type="text" placeholder={'Enter message...'} value={this.state.message} onChange={e => this.setState({ message: e.target.value })} />
                             <button type="submit" ><i className="fa fa-send" /></button>
                         </form>
 

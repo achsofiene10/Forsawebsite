@@ -94,7 +94,6 @@ export default class Chatbox extends React.Component {
                 <div className="cm_img">
                   <img src={`../forsaRESTAPI/${friend.imageFriend}`} alt="" />
                   <span className="active-status activee" />
-
                 </div>
                 <div className="usy-info">
               <h3>{friend.name}</h3>
