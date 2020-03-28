@@ -4015,7 +4015,7 @@ a:hover {
 }
 .chatbox {
 	display: inline-block;
-	margin-right: 13px;
+	margin-right: 20px;
 	position: relative;
 }
 .chat-mg {
@@ -4058,7 +4058,7 @@ a:hover {
 .conversation-box {
 	position: absolute;
 	bottom: 132%;
-	right: 100%;
+	right: 30%;
 	width: 350px;
 	background-color: #fff;
 	-webkit-box-shadow: 0 0 10px rgba(0,0,0,0.17);

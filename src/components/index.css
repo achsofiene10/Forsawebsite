@@ -4118,6 +4118,7 @@ a:hover {
 .conv-list {
 	float: left;
 	width: 100%;
+	
 	display: table;
 	padding: 20px 25px;
 	position: relative;
@@ -4319,6 +4320,7 @@ a:hover {
 	border: 0;
 	resize: none;
 }
+
 .typing-msg form button {
 	color: #e44d3a;
 	font-size: 18px;

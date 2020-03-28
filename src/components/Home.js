@@ -192,17 +192,7 @@ export default class Home extends React.Component{
   });
 
 
-  //  ============== ChatBox ============== 
-
-
-  $(".chat-mg").on("click", function(){
-      $(this).next(".conversation-box").toggleClass("active");
-      return false;
-  });
-  $(".close-chat").on("click", function(){
-      $(".conversation-box").removeClass("active");
-      return false;
-  });
+ 
 
   // ============== Menu Script =============
 
@@ -248,7 +238,6 @@ export default class Home extends React.Component{
     }).catch(err => console.log(err));
     axios.get(`http://localhost:3000/user/${decode1.user_id}/1/getTopprofiles`).then(res => {
       this.setState({ topprofiles: res.data})
-      console.log(this.state.topprofiles)
     }).catch(err => console.log(err));
 
   }
