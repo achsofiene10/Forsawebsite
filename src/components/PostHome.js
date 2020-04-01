@@ -4,6 +4,7 @@ import ShowMoreText from 'react-show-more-text';
 import $ from 'jquery'
 import axios from 'axios'
 import jwt from 'jsonwebtoken'
+import Messagebox from './Messagebox';
 
 export default class PostHome extends React.Component {
   constructor(props) {
@@ -32,11 +33,17 @@ export default class PostHome extends React.Component {
 class Job extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { Opened: '', liked: '', Nblikes: 0,ClickComments:false,Nbcomments:0 }
+    this.state = { Opened: '', liked: '', Nblikes: 0,ClickComments:false,Nbcomments:0 ,openMsg:false}
   }
 
   executeOnClick(isExpanded) {
     //console.log(isExpanded);
+  }
+  openDialogMsg=(e)=>{
+    this.setState({openMsg:true})
+  }
+  closeDialog=()=>{
+    this.setState({openMsg:false})
   }
   componentDidMount() {
     $(".ed-opts-open").on("click", function () {
@@ -131,9 +138,9 @@ class Job extends React.Component {
             <li><img src="../images/icon8.png" alt="" /><span>{this.props.job.userJob}</span></li>
             <li><img src="../images/icon9.png" alt="" /><span>{this.props.job.userLocation}</span></li>
           </ul>
-          <ul className="bk-links">
-            <li><a href="# " ><i className="la la-envelope" /></a></li>
-          </ul>
+         
+          {this.props.userid!=this.props.job.job.user ? <ul className="bk-links"><li><Link to="# " onClick={this.openDialogMsg}><i className="la la-envelope" /></Link></li>   </ul> : null} 
+    
         </div>
         <div className="job_descp">
           <h3>{this.props.job.job.title}</h3>
@@ -170,7 +177,7 @@ class Job extends React.Component {
           </ul>
         </div>
         {this.state.ClickComments ? <Comments Addcomment={this.Addcomment} userConnected={this.props.userConnected} job={this.props.job.job}></Comments> : null }
-
+        {this.state.openMsg ? <Messagebox close={this.closeDialog} userConnected={this.props.userid} userid={this.props.job.job.user} username={this.props.job.userName}></Messagebox> : null }
       </div>
     )
   }
@@ -179,10 +186,16 @@ class Job extends React.Component {
 class Project extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { Opened: '', liked: '', Nblikes: 0 ,ClickComments:false,Nbcomments:0}
+    this.state = { Opened: '', liked: '', Nblikes: 0 ,ClickComments:false,Nbcomments:0,openMsg:false}
   }
   executeOnClick(isExpanded) {
     //console.log(isExpanded);
+  }
+  openDialogMsg=(e)=>{
+    this.setState({openMsg:true})
+  }
+  closeDialog=()=>{
+    this.setState({openMsg:false})
   }
   componentDidMount() {
     $(".ed-opts-open").on("click", function () {
@@ -244,8 +257,6 @@ class Project extends React.Component {
 
 
 
-
-
   render() {
     const skills = this.props.project.project.skills.split(" ");
     let date = this.props.project.project.createdAt.substring(0, 16);
@@ -278,10 +289,10 @@ class Project extends React.Component {
             <li><img src="../images/icon8.png" alt="" /><span>{title}</span></li>
             <li><img src="../images/icon9.png" alt="" /><span>{location}</span></li>
           </ul>
-          <ul className="bk-links">
-            <li><a href="#" ><i className="la la-envelope" /></a></li>
-            <li><a href="#" className="bid_now">Bid Now</a></li>
-          </ul>
+          
+         {this.props.userid!=this.props.project.project.user ? <ul className="bk-links"><li><Link to="# " onClick={this.openDialogMsg}><i className="la la-envelope" /></Link></li><li><a href="#" className="bid_now">Bid Now</a></li>   </ul> : null} 
+            
+       
         </div>
         <div className="job_descp">
           <h3>{this.props.project.project.title}</h3>
@@ -317,6 +328,8 @@ class Project extends React.Component {
           </ul>
         </div>
         {this.state.ClickComments ? <Comments Addcomment={this.Addcomment} userConnected={this.props.userConnected} project={this.props.project.project}></Comments> : null }
+        {this.state.openMsg ? <Messagebox close={this.closeDialog} userConnected={this.props.userid} userid={this.props.project.project.user} username={this.props.project.userName}></Messagebox> : null }
+
       </div>
 
     )

@@ -19,6 +19,7 @@ import Friendlist from './components/Friendlist';
 import Projects from './components/projects';
 import Userprofile from './components/Userprofile';
 import axios from 'axios'
+import jwt from 'jsonwebtoken'
 
 
 class App extends React.Component{
@@ -27,6 +28,17 @@ class App extends React.Component{
     this.state={ loggedIn:false,user:{}}
     this.Logout=this.Logout.bind(this)
     this.Login=this.Login.bind(this)
+    }
+    componentWillUnmount(){
+      /*var decode1;
+    if (localStorage.getItem('token'))
+    { decode1 = jwt.decode(localStorage.getItem('token'));}
+    else
+    {decode1 = jwt.decode(sessionStorage.getItem('token'));}
+    if(decode1){
+      axios.post(`http://localhost:3000/user/logout/${decode1.userid}`).then(res=>{
+        console.log(res.status)
+      });}*/
     }
     componentDidMount(){
       

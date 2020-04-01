@@ -1,6 +1,6 @@
 import React from 'react';
 import $ from 'jquery'
-
+import axios from 'axios'
 
 const URL = 'ws://localhost:3030'
 
@@ -16,9 +16,10 @@ export default class ConversatioBox extends React.Component {
     ws = new WebSocket(URL)
 
     componentDidMount() {
-
+        axios.get(`http://localhost:3000/message/getConversation/${this.props.userConnected._id}/${this.props.friend.iduser}/20`).then(res=>{
+        this.setState({messages:res.data})
+      });
         
-
         this.ws.onopen = () => {
             // on connecting, do nothing but log it to the console
             console.log('connected')

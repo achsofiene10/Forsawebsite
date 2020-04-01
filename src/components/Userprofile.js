@@ -4,6 +4,8 @@ import $ from 'jquery'
 import axios from 'axios'
 import PostHome from './PostHome';
 import jwt from 'jsonwebtoken'
+import Messagebox from './Messagebox';
+import { Link } from 'react-router-dom';
 
 
 export default class Userprofile extends React.Component {
@@ -22,7 +24,8 @@ export default class Userprofile extends React.Component {
       feeds: [],
       friendlist:[],
       friend:false,
-      sent:false
+      sent:false,
+      openMsg:false
     }
   }
   componentDidMount() {
@@ -340,6 +343,13 @@ export default class Userprofile extends React.Component {
      
   }
 
+  openDialogMsg=(e)=>{
+    this.setState({openMsg:true})
+  }
+  closeDialog=()=>{
+    this.setState({openMsg:false})
+  }
+
   sendRequest=(e)=>{
     e.preventDefault();
     const clicked=this.state.sent
@@ -366,7 +376,7 @@ export default class Userprofile extends React.Component {
     const { experience } = this.state;
     const { education } = this.state;
     const {skills}=this.state;
-    console.log(this.state.friendlist)
+    //console.log(this.state.friendlist)
     let index=-1;
     let index2=-1;
     let friend=false;
@@ -401,7 +411,7 @@ export default class Userprofile extends React.Component {
                         </div>{/*user-pro-img end*/}
                         <div className="user_pro_status">
                           <ul className="flw-hr">
-                           { !friend ?  <li><a href="#" className="flww" onClick={this.sendRequest}> {this.state.sent || invit ? <text>✅Sent</text>:<text><i className="la la-plus" />Connect</text>}</a></li>:null }
+                           { !friend ?  <li><a href="#" className="flww" onClick={this.sendRequest}> {this.state.sent || invit ? <h1>✅Sent</h1>:<h1><i className="la la-plus" />Connect</h1>}</a></li>:null }
                           </ul>
                           <ul className="flw-status">
                             <li>
@@ -625,7 +635,7 @@ export default class Userprofile extends React.Component {
                   <div className="col-lg-3">
                     <div className="right-sidebar">
                       <div className="message-btn">
-                        <a href="#" ><i className="fa fa-envelope" /> Message</a>
+                        <Link to="#" onClick={this.openDialogMsg}><i className="fa fa-envelope"  /> Message</Link>
                       </div>
                       <div className="widget widget-portfolio">
                         <div className="wd-heady">
@@ -656,8 +666,8 @@ export default class Userprofile extends React.Component {
             </div>
           </div>
         </main>
+        {this.state.openMsg ? <Messagebox close={this.closeDialog} userConnected={this.state.userConnected._id} userid={this.state.user._id} username={this.state.user.fullname}></Messagebox> : null }
       </div>
-
     )
   }
 }
