@@ -52,7 +52,13 @@ $( ".user-account-settingss" ).slideToggle( "fast");
          if(this.state.status==''){
          this.setState({status:res.data.status})}
         //console.log(this.state.user);
-    });})}
+    });})
+    axios.get(`http://localhost:3000/message/getOthersMessages/${decode1.user_id}/5`).then(res=>{
+       this.setState({messages:res.data})
+       console.log(res.data)
+    });
+    
+    }
   }
 
   Changetitle=(event)=>{
@@ -163,36 +169,20 @@ $( ".user-account-settingss" ).slideToggle( "fast");
                       
                     </div>
                     <div className="nott-list">
-                      <div className="notfication-details">
-                        <div className="noty-user-img">
-                          <img src="../images/resources/ny-img1.png" alt="" />
-                        </div>
-                        <div className="notification-info">
-                          <h3>Jassica William </h3>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do.</p>
-                          <span>2 min ago</span>
-                        </div>{/*notification-info */}
+                      {this.state.messages ? this.state.messages.map((message,index)=>
+                      <div key={index} className="notfication-details">
+                      <div className="noty-user-img">
+                        <img src={`../forsaRESTAPI/${message.user.image}`} alt="" />
                       </div>
-                      <div className="notfication-details">
-                        <div className="noty-user-img">
-                          <img src="../images/resources/ny-img2.png" alt="" />
-                        </div>
-                        <div className="notification-info">
-                          <h3>Jassica William</h3>
-                          <p>Lorem ipsum dolor sit amet.</p>
-                          <span>2 min ago</span>
-                        </div>{/*notification-info */}
-                      </div>
-                      <div className="notfication-details">
-                        <div className="noty-user-img">
-                          <img src="../images/resources/ny-img3.png" alt="" />
-                        </div>
-                        <div className="notification-info">
-                          <h3>Jassica William</h3>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempo incididunt ut labore et dolore magna aliqua.</p>
-                          <span>2 min ago</span>
-                        </div>{/*notification-info */}
-                      </div>
+                      <div className="notification-info">
+                        <h3>{message.user.fullname} </h3>
+                      <p>{message.message.message.message}</p>
+                        <span>{message.message.message.date}</span>
+                      </div>{/*notification-info */}
+                    </div>):null}
+                      
+                      
+                      
                       <div className="view-all-nots">
                        <Link to='# '  >View All Messsages</Link>
                       </div>
