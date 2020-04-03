@@ -55,7 +55,7 @@ $( ".user-account-settingss" ).slideToggle( "fast");
     });})
     axios.get(`http://localhost:3000/message/getOthersMessages/${decode1.user_id}/5`).then(res=>{
        this.setState({messages:res.data})
-       console.log(res.data)
+       //console.log(res.data)
     });
     
     }
@@ -172,7 +172,7 @@ $( ".user-account-settingss" ).slideToggle( "fast");
                       {this.state.messages ? this.state.messages.map((message,index)=>
                       <div key={index} className="notfication-details">
                       <div className="noty-user-img">
-                        <img src={`../forsaRESTAPI/${message.user.image}`} alt="" />
+                        <img src={`../forsaRESTAPI/${message.user.image}`} style={{ width: '40px', height: '40px', borderRadius: '50%' }} alt="" />
                       </div>
                       <div className="notification-info">
                         <h3>{message.user.fullname} </h3>
@@ -184,7 +184,7 @@ $( ".user-account-settingss" ).slideToggle( "fast");
                       
                       
                       <div className="view-all-nots">
-                       <Link to='# '  >View All Messsages</Link>
+                       <Link to='/messages'  >View All Messsages</Link>
                       </div>
                     </div>{/*nott-list end*/}
                   </div>{/*notification-box end*/}

@@ -397,12 +397,9 @@ export default class Home extends React.Component{
                         <div className="top-profiles">
                           <div className="pf-hd">
                             <h3>Top Profiles</h3>
-                            <i className="la la-ellipsis-v" />
                           </div>
                           <div className="profiles-slider">
-                        {this.state.topprofiles ? this.state.topprofiles.map((profile,index)=> <UserTopprofile user={profile} key={index}></UserTopprofile>):null }
-                        
-
+                        {this.state.topprofiles ? this.state.topprofiles.map((profile,index)=> <UserTopprofile userConnected={this.state.user} user={profile} key={index}></UserTopprofile>):null }
                           </div>{/*profiles-slider end*/}
                         </div>{/*top-profiles end*/}
                         <PostHome post={this.state.feeds.slice(1)}  userConnected={this.state.user} ></PostHome>

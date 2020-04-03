@@ -4957,21 +4957,20 @@ a:hover {
 	border-radius: 100px;
 }
 .message-dt {
-	float: left;
 	width: auto;
 	padding-left: 85px;
 }
+
 .main-message-box.ta-right {
 	float: right;
 }
 .main-message-box.ta-right .messg-usr-img {
 	left: auto;
-	right: 20px;
-	bottom: 25px;
+	right: 10px;
+	bottom: 17px;
 }
 .main-message-box.ta-right .message-dt {
-	padding-left: 0;
-	padding-right: 85px;
+	padding-right: 65px;
 }
 .main-message-box.ta-right .message-dt > span {
 	float: right;
@@ -5002,9 +5001,11 @@ a:hover {
 	width: 100%;
 	margin-top: 7px;
 }
+
+
 .message-inner-dt > p {
 	float: right;
-	width: 60%;
+	/*width: 60%;*/
 	background-color: #e44d3a;
 	font-size: 14px;
 	line-height: 22px;

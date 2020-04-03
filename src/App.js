@@ -20,6 +20,7 @@ import Projects from './components/projects';
 import Userprofile from './components/Userprofile';
 import axios from 'axios'
 import jwt from 'jsonwebtoken'
+import Messages from './components/Messages';
 
 
 class App extends React.Component{
@@ -68,6 +69,7 @@ class App extends React.Component{
          <Route path='/acceuil' exact  component={Home}></Route>
          <Route path='/compagnies' exact component={Compagnies}></Route>
          <Route path='/about' exact component={About} ></Route>
+         <Route path='/messages' exact component={Messages} ></Route>
          <Route path='/profile/:id' exact component={Profile}></Route>
          <Route path='/profile/:id/settings' exact component={AccountSetting}></Route> 
          <Route path='/jobs/' exact component={Jobs}></Route>

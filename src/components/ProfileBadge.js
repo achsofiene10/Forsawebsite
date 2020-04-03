@@ -1,9 +1,10 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import Messagebox from './Messagebox'
 export default class ProfileBadge extends React.Component {
   constructor(props) {
     super(props)
-    this.state={sent:false}
+    this.state={sent:false,openMsg:false}
   }
   
 
@@ -13,6 +14,13 @@ export default class ProfileBadge extends React.Component {
     this.setState({sent:true})
     this.props.sendrequest(user,index)
     }
+  }
+  
+  openDialogMsg=(e)=>{
+    this.setState({openMsg:true})
+  }
+  closeDialog=()=>{
+    this.setState({openMsg:false})
   }
   render() {
     let sent=false;
@@ -24,7 +32,6 @@ export default class ProfileBadge extends React.Component {
       }
     }}
     return (
-
       <div className="col-lg-3 col-md-4 col-sm-6 col-12">
         <div className="company_profile_info">
           <div className="company-up-info">
@@ -33,14 +40,16 @@ export default class ProfileBadge extends React.Component {
             <h4>{this.props.user.title}</h4>
             <ul>
     {!this.props.myfriends ? <div><li><Link to="# "  onClick={()=>this.sentButton(this.props.user,this.props.index)} className="follow">{this.state.sent || sent ? <h1>✅Sent</h1>:<h1>Connect</h1>}</Link></li>
-              <li><a href="#" className="message-us"><i className="fa fa-envelope" /></a></li> </div> : <div>
+              <li><Link to='#' onClick={this.openDialogMsg} className="message-us"><i className="fa fa-envelope" /></Link></li> </div> : <div>
               <li><Link to="# " className="message-us" onClick={()=>this.props.deleteFriend(this.props.user,this.props.index)}>Delete </Link></li>
-              <li><a href="#" className="message-us"><i className="fa fa-envelope" /></a></li></div> } 
+              <li><Link to='#' onClick={this.openDialogMsg} className="message-us"><i className="fa fa-envelope" /></Link></li> </div> } 
               
             </ul>
           </div>
           <Link to={`/userprofile/${this.props.user._id}`} className="view-more-pro" >View Profile</Link>
         </div>{/*company_profile_info end*/}
+        {this.state.openMsg ? <Messagebox close={this.closeDialog} userConnected={this.props.userConnected._id} userid={this.props.user._id} username={this.props.user.fullname}></Messagebox> : null }
+
       </div>
     )
   }
