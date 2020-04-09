@@ -10,10 +10,7 @@ export default class Messages extends React.Component {
         this.state = { user: {}, Activeconversation: [],Activeuser:{} }
     }
     ws = new WebSocket(URL)
-
-
     componentDidMount() {
-
         var decode1;
         if (localStorage.getItem('token')) { decode1 = jwt.decode(localStorage.getItem('token')); }
         else { decode1 = jwt.decode(sessionStorage.getItem('token')); }
@@ -94,7 +91,6 @@ export default class Messages extends React.Component {
                                                     <div className="usr-msg-details">
                                                         <div className="usr-ms-img">
                                                             <img src={`../forsaRESTAPI/${message.user.image}`} style={{ width: '50px', height: '50px', borderRadius: '50%' }} alt="" />
-                                                            <span className="msg-status" />
                                                         </div>
                                                         <div className="usr-mg-info">
                                                             <h3>{message.user.fullname}</h3>

@@ -6,24 +6,18 @@ export default class Compagnies extends React.Component{
   constructor(props){
     super(props);
     this.state={companies:[]};
-    this.Callcompany=this.Callcompany.bind(this);
   }
 
    componentDidMount(){
-     axios.get(`http://localhost:3000/company/companys`).then(res=>{
-        this.setState({companies:res.data});  
+     axios.get(`http://localhost:3000/user/users`).then(res=>{
+        this.setState({companies:res.data});
       });
   }
 
-  Callcompany(data,index){
-      return(
-    <CompanyBadge key={index} company={data} ></CompanyBadge> );
-
-  }
+  
     render (){
       
       const {companies}=this.state;
-      console.log(companies)
              return (
             <div>
       <section className="companies-info">
@@ -33,9 +27,9 @@ export default class Compagnies extends React.Component{
           </div>{/*company-title end*/}
           <div className="companies-list">
             <div className="row">
-               {companies.companies ? companies.companies.map((company,index)=> {
-                 return this.Callcompany(company,index)
-                  }):null}
+               {companies.users ? companies.users.map((company,index)=> { if(company.category=="Company")
+                     {return <CompanyBadge key={index} company={company} ></CompanyBadge>} }):null }
+
               
              
             </div>

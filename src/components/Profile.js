@@ -5,6 +5,7 @@ import Infoprofile from './Infoprofile';
 import e from 'jquery';
 import $ from 'jquery';
 import Post from './Post';
+import Suggestions from './Suggestions';
 export default class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -19,7 +20,8 @@ export default class Profile extends React.Component {
       Experienceedit: '',
       projects: [],
       jobs: [],
-      feeds:[]
+      feeds:[],
+      suggestions:[]
     }
     this.updateOverview = this.updateOverview.bind(this)
     this.Editeducation = this.Editeducation.bind(this);
@@ -307,6 +309,10 @@ export default class Profile extends React.Component {
 
       this.setState({ skills: res.data }, function () {
       })
+    }).catch(err => console.log(err));
+    axios.get(`http://localhost:3000/user/${user_id}/6/getsuggestions`).then(res => {
+      this.setState({suggestions: res.data})
+      console.log(res.data)
     }).catch(err => console.log(err));
 
     axios.get(`http://localhost:3000/education/${user_id}/getAllEducations`).then(res => {
@@ -723,65 +729,7 @@ export default class Profile extends React.Component {
 
                         </ul>
                       </div>{/*user_profile end*/}
-                      <div className="suggestions full-width">
-                        <div className="sd-title">
-                          <h3>People Viewed Profile</h3>
-                          <i className="la la-ellipsis-v" />
-                        </div>{/*sd-title end*/}
-                        <div className="suggestions-list">
-                          <div className="suggestion-usd">
-                            <img src="../images/resources/s1.png" alt="" />
-                            <div className="sgt-text">
-                              <h4>Jessica William</h4>
-                              <span>Graphic Designer</span>
-                            </div>
-                            <span><i className="la la-plus" /></span>
-                          </div>
-                          <div className="suggestion-usd">
-                            <img src="../images/resources/s2.png" alt="" />
-                            <div className="sgt-text">
-                              <h4>John Doe</h4>
-                              <span>PHP Developer</span>
-                            </div>
-                            <span><i className="la la-plus" /></span>
-                          </div>
-                          <div className="suggestion-usd">
-                            <img src="../images/resources/s3.png" alt="" />
-                            <div className="sgt-text">
-                              <h4>Poonam</h4>
-                              <span>Wordpress Developer</span>
-                            </div>
-                            <span><i className="la la-plus" /></span>
-                          </div>
-                          <div className="suggestion-usd">
-                            <img src="../images/resources/s4.png" alt="" />
-                            <div className="sgt-text">
-                              <h4>Bill Gates</h4>
-                              <span>C &amp; C++ Developer</span>
-                            </div>
-                            <span><i className="la la-plus" /></span>
-                          </div>
-                          <div className="suggestion-usd">
-                            <img src="../images/resources/s5.png" alt="" />
-                            <div className="sgt-text">
-                              <h4>Jessica William</h4>
-                              <span>Graphic Designer</span>
-                            </div>
-                            <span><i className="la la-plus" /></span>
-                          </div>
-                          <div className="suggestion-usd">
-                            <img src="../images/resources/s6.png" alt="" />
-                            <div className="sgt-text">
-                              <h4>John Doe</h4>
-                              <span>PHP Developer</span>
-                            </div>
-                            <span><i className="la la-plus" /></span>
-                          </div>
-                          <div className="view-more">
-                            <a href="# " >View More</a>
-                          </div>
-                        </div>{/*suggestions-list end*/}
-                      </div>{/*suggestions end*/}
+                      <Suggestions suggestions={this.state.suggestions} />
                     </div>{/*main-left-sidebar end*/}
                   </div>
                   <div className="col-lg-5">
@@ -1987,6 +1935,28 @@ export default class Profile extends React.Component {
                     </div>
                   </div>
                   <div className="col-lg-4">
+                  <div className="widget widget-portfolio">
+                        <div className="wd-heady">
+                          <h3>Portfolio</h3>
+                          <img src="../images/photo-icon.png" alt="" />
+                        </div>
+                        <div className="pf-gallery">
+                          <ul>
+                            <li><a href="#" ><img src="../images/resources/pf-gallery1.png" alt="" /></a></li>
+                            <li><a href="#" ><img src="../images/resources/pf-gallery2.png" alt="" /></a></li>
+                            <li><a href="#" ><img src="../images/resources/pf-gallery3.png" alt="" /></a></li>
+                            <li><a href="#" ><img src="../images/resources/pf-gallery4.png" alt="" /></a></li>
+                            <li><a href="#" ><img src="../images/resources/pf-gallery5.png" alt="" /></a></li>
+                            <li><a href="#" ><img src="../images/resources/pf-gallery6.png" alt="" /></a></li>
+                            <li><a href="#" ><img src="../images/resources/pf-gallery7.png" alt="" /></a></li>
+                            <li><a href="#" ><img src="../images/resources/pf-gallery8.png" alt="" /></a></li>
+                            <li><a href="#" ><img src="../images/resources/pf-gallery9.png" alt="" /></a></li>
+                            <li><a href="#" ><img src="../images/resources/pf-gallery10.png" alt="" /></a></li>
+                            <li><a href="#" ><img src="../images/resources/pf-gallery11.png" alt="" /></a></li>
+                            <li><a href="#" ><img src="../images/resources/pf-gallery12.png" alt="" /></a></li>
+                          </ul>
+                        </div>{/*pf-gallery end*/}
+                      </div>{/*widget-portfolio end*/}
                   </div>
                 </div>{/* main-section-data end*/}
               </div>

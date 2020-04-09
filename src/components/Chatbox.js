@@ -92,7 +92,7 @@ export default class Chatbox extends React.Component {
             <div className="chat-list" style={{overflowY:'scroll'}}>
              {this.state.Onlinefriends ? this.state.Onlinefriends.map((friend,index)=><Link to='#' key={index} onClick={()=>this.addChat(friend)}><div  className="conv-list">
                 <div className="cm_img">
-                  <img src={`../forsaRESTAPI/${friend.imageFriend}`} alt="" />
+                  <img src={`../forsaRESTAPI/${friend.imageFriend}`} style={{ width: '40px', height: '40px', borderRadius: '50%' }}  alt="" />
                   <span className="active-status activee" />
                 </div>
                 <div className="usy-info">

@@ -35,9 +35,9 @@ export default class ProfileBadge extends React.Component {
       <div className="col-lg-3 col-md-4 col-sm-6 col-12">
         <div className="company_profile_info">
           <div className="company-up-info">
-            <img src={`../forsaRESTAPI/${this.props.user.image}`} alt="" />
+            <img src={`../forsaRESTAPI/${this.props.user.image}`} style={{ width: '90px', height: '90px', borderRadius: '50%' }} alt="" />
             <h3>{this.props.user.fullname} </h3>
-            <h4>{this.props.user.title}</h4>
+            <h4 style={{height:'14px'}}>{this.props.user.title}</h4>
             <ul>
     {!this.props.myfriends ? <div><li><Link to="# "  onClick={()=>this.sentButton(this.props.user,this.props.index)} className="follow">{this.state.sent || sent ? <h1>✅Sent</h1>:<h1>Connect</h1>}</Link></li>
               <li><Link to='#' onClick={this.openDialogMsg} className="message-us"><i className="fa fa-envelope" /></Link></li> </div> : <div>

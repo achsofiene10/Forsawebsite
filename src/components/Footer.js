@@ -20,8 +20,9 @@ export default class Footer extends React.Component{
               <li><a href="# " >Language</a></li>
               <li><a href="# " >Copyright Policy</a></li>
             </ul>
-            <p><img src="images/copy-icon2.png" alt="" />Copyright 2019</p>
             <img className="fl-rgt" src="../images/logo2.png" alt="" />
+            <p><img src="images/copy-icon2.png" alt="" />Copyright 2019</p>
+
           </div>
         </div>
       </footer>

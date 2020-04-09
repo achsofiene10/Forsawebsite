@@ -18,7 +18,8 @@ export default class Home extends React.Component{
     this.state={user:{},
     feeds:[],
     topjobs:[],
-    topprofiles:[]}
+    topprofiles:[],
+    suggestions:[]}
   }
   async componentDidMount(){
     $(".post_project").on("click", function(){
@@ -236,8 +237,12 @@ export default class Home extends React.Component{
      axios.get(`http://localhost:3000/job/getTopjobs/5`).then(res => {
       this.setState({ topjobs: res.data})
     }).catch(err => console.log(err));
-    axios.get(`http://localhost:3000/user/${decode1.user_id}/1/getTopprofiles`).then(res => {
+    axios.get(`http://localhost:3000/user/${decode1.user_id}/3/getTopprofiles`).then(res => {
       this.setState({ topprofiles: res.data})
+    }).catch(err => console.log(err));
+    axios.get(`http://localhost:3000/user/${decode1.user_id}/6/getsuggestions`).then(res => {
+      this.setState({suggestions: res.data})
+      console.log(res.data)
     }).catch(err => console.log(err));
 
   }
@@ -360,7 +365,7 @@ export default class Home extends React.Component{
                         </ul>
                       </div>{/*user-data end*/}
                       
-                      <Suggestions></Suggestions>
+                      <Suggestions suggestions={this.state.suggestions}></Suggestions>
                       <div className="tags-sec full-width">
                         <ul>
                           <li><a href="# " >Help Center</a></li>
@@ -417,10 +422,9 @@ export default class Home extends React.Component{
                     <div className="right-sidebar">
                       <div className="widget widget-about">
                         <img src="../images/wd-logo.png" alt="" />
-                        <h3>Track Time on Workwise</h3>
-                        <span>Pay only for the Hours worked</span>
+                        <h3>Welcome to Forsa Website</h3>
+                        <span>Start your professional career from here</span>
                         <div className="sign_link">
-                          <h3><a href="sign-in.html" >Sign up</a></h3>
                           <a href="# " >Learn More</a>
                         </div>
                       </div>{/*widget-about end*/}

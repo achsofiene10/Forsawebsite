@@ -6,6 +6,7 @@ import PostHome from './PostHome';
 import jwt from 'jsonwebtoken'
 import Messagebox from './Messagebox';
 import { Link } from 'react-router-dom';
+import Suggestions from './Suggestions'
 
 
 export default class Userprofile extends React.Component {
@@ -426,65 +427,7 @@ export default class Userprofile extends React.Component {
                           <li><a href="# " ><i className="fa fa-instagram" /> Http://www.instagram.com/</a></li>
                         </ul>
                       </div>{/*user_profile end*/}
-                      <div className="suggestions full-width">
-                        <div className="sd-">
-                          <h3>Suggestions</h3>
-                          <i className="la la-ellipsis-v" />
-                        </div>{/*sd- end*/}
-                        <div className="suggestions-list">
-                          <div className="suggestion-usd">
-                            <img src="../images/resources/s1.png" alt="" />
-                            <div className="sgt-text">
-                              <h4>Jessica William</h4>
-                              <span>Graphic Designer</span>
-                            </div>
-                            <span><i className="la la-plus" /></span>
-                          </div>
-                          <div className="suggestion-usd">
-                            <img src="../images/resources/s2.png" alt="" />
-                            <div className="sgt-text">
-                              <h4>John Doe</h4>
-                              <span>PHP Developer</span>
-                            </div>
-                            <span><i className="la la-plus" /></span>
-                          </div>
-                          <div className="suggestion-usd">
-                            <img src="../images/resources/s3.png" alt="" />
-                            <div className="sgt-text">
-                              <h4>Poonam</h4>
-                              <span>Wordpress Developer</span>
-                            </div>
-                            <span><i className="la la-plus" /></span>
-                          </div>
-                          <div className="suggestion-usd">
-                            <img src="../images/resources/s4.png" alt="" />
-                            <div className="sgt-text">
-                              <h4>Bill Gates</h4>
-                              <span>C &amp; C++ Developer</span>
-                            </div>
-                            <span><i className="la la-plus" /></span>
-                          </div>
-                          <div className="suggestion-usd">
-                            <img src="../images/resources/s5.png" alt="" />
-                            <div className="sgt-text">
-                              <h4>Jessica William</h4>
-                              <span>Graphic Designer</span>
-                            </div>
-                            <span><i className="la la-plus" /></span>
-                          </div>
-                          <div className="suggestion-usd">
-                            <img src="../images/resources/s6.png" alt="" />
-                            <div className="sgt-text">
-                              <h4>John Doe</h4>
-                              <span>PHP Developer</span>
-                            </div>
-                            <span><i className="la la-plus" /></span>
-                          </div>
-                          <div className="view-more">
-                            <a href="#" >View More</a>
-                          </div>
-                        </div>{/*suggestions-list end*/}
-                      </div>{/*suggestions end*/}
+                      <Suggestions></Suggestions>
                     </div>{/*main-left-sidebar end*/}
                   </div>
                   <div className="col-lg-6">

@@ -119,9 +119,9 @@ class Job extends React.Component {
       <div className="post-bar">
         <div className="post_topbar">
           <div className="usy-dt">
-            {image ? <img src={`../forsaRESTAPI/${image}`} style={{ width: '50px', height: '50px', borderRadius: '50%' }} alt="" /> : <img src="../images/resources/us-pic.png" alt="" />}
+          {this.props.userid!=this.props.job.job.user ? <Link to={`/userprofile/${this.props.job.job.user}`}>{image ? <img src={`../forsaRESTAPI/${image}`} style={{ width: '50px', height: '50px', borderRadius: '50%' }} alt="" /> : <img src="../images/resources/us-pic.png" alt="" />}</Link>: <Link to={`/profile/${this.props.job.job.user}`}>{image ? <img src={`../forsaRESTAPI/${image}`} style={{ width: '50px', height: '50px', borderRadius: '50%' }} alt="" /> : <img src="../images/resources/us-pic.png" alt="" />}</Link>}
             <div className="usy-name">
-              <h3>{this.props.job.userName}</h3 >
+            {this.props.userid!=this.props.job.job.user ? <Link to={`/userprofile/${this.props.job.job.user}`}> <h3>{this.props.job.userName}</h3 ></Link> : <Link to={`/profile/${this.props.job.job.user}`}> <h3>{this.props.job.userName}</h3 ></Link>}
               <span><img src="../images/clock.png" alt="" />{date}</span>
             </div>
           </div>
@@ -270,9 +270,9 @@ class Project extends React.Component {
       <div className="post-bar">
         <div className="post_topbar">
           <div className="usy-dt">
-            {image ? <img src={`../forsaRESTAPI/${image}`} style={{ width: '50px', height: '50px', borderRadius: '50%' }} alt="" /> : <img src="../images/resources/us-pic.png" alt="" />}
+          {this.props.userid!=this.props.project.project.user ? <Link to={`/userprofile/${this.props.project.project.user}`}>{image ? <img src={`../forsaRESTAPI/${image}`} style={{ width: '50px', height: '50px', borderRadius: '50%' }} alt="" /> : <img src="../images/resources/us-pic.png" alt="" />}</Link>:<Link to={`/profile/${this.props.project.project.user}`}>{image ? <img src={`../forsaRESTAPI/${image}`} style={{ width: '50px', height: '50px', borderRadius: '50%' }} alt="" /> : <img src="../images/resources/us-pic.png" alt="" />}</Link>}
             <div className="usy-name">
-              <h3>{this.props.project.userName}</h3>
+            {this.props.userid!=this.props.project.project.user ? <Link to={`/userprofile/${this.props.project.project.user}`}>  <h3>{this.props.project.userName}</h3></Link>:<Link to={`/profile/${this.props.project.project.user}`}>  <h3>{this.props.project.userName}</h3></Link>}
               <span><img src="../images/clock.png" alt="" />{date}</span>
             </div>
           </div>
