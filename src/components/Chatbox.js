@@ -49,7 +49,7 @@ export default class Chatbox extends React.Component {
       //console.log("message received", evt.data)
       // on receiving a message, add it to the list of messages
       const message = JSON.parse(evt.data)
-      if(message.idreceiver===this.state.user._id){
+      if((message.idreceiver===this.state.user._id) && (!message.idpost) && (!message.idrequest)) {
       this.Newmsg(message)}
   }
   }

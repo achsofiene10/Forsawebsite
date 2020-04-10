@@ -237,7 +237,7 @@ export default class Home extends React.Component{
      axios.get(`http://localhost:3000/job/getTopjobs/5`).then(res => {
       this.setState({ topjobs: res.data})
     }).catch(err => console.log(err));
-    axios.get(`http://localhost:3000/user/${decode1.user_id}/3/getTopprofiles`).then(res => {
+    axios.get(`http://localhost:3000/user/${decode1.user_id}/4/getTopprofiles`).then(res => {
       this.setState({ topprofiles: res.data})
     }).catch(err => console.log(err));
     axios.get(`http://localhost:3000/user/${decode1.user_id}/6/getsuggestions`).then(res => {

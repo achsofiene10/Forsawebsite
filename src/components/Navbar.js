@@ -57,6 +57,10 @@ $( ".user-account-settingss" ).slideToggle( "fast");
        this.setState({messages:res.data})
        //console.log(res.data)
     });
+    axios.get(`http://localhost:3000/notification/getNotifications/${decode1.user_id}/5`).then(res=>{
+       this.setState({notifications:res.data})
+       //console.log(res.data)
+    });
     
     }
   }
@@ -122,15 +126,10 @@ $( ".user-account-settingss" ).slideToggle( "fast");
                   </Link>
                 </li>
                 <li>
-                    <Link to='/compagnies'>
-                  
+                  <Link to='/compagnies'>
                     <span><img src="../images/icon2.png" alt="" /></span>
                     Companies
                   </Link>
-                  <ul>
-                  <Link to='/compagnies'> <li> Companies</li></Link>
-                  <Link to='/compagnies:id'> <li>Company Profile</li></Link>
-                  </ul>
                 </li>
                 <li>
                 <Link to='/projects'> 
@@ -179,7 +178,7 @@ $( ".user-account-settingss" ).slideToggle( "fast");
                       <p>{message.message.message.message}</p>
                         <span>{message.message.message.date}</span>
                       </div>{/*notification-info */}
-                    </div>):null}
+                      </div>):null}
                       
                       
                       
@@ -198,59 +197,21 @@ $( ".user-account-settingss" ).slideToggle( "fast");
                     <div className="nt-">
                     </div>
                     <div className="nott-list">
-                      <div className="notfication-details">
-                        <div className="noty-user-img">
-                          <img src="../images/resources/ny-img1.png" alt="" />
-                        </div>
-                        <div className="notification-info">
-                          <h3>Jassica William Comment on your project.</h3>
-                          <span>2 min ago</span>
-                        </div>{/*notification-info */}
+                    {this.state.notifications ? this.state.notifications.map((message,index)=>
+                      <div key={index} className="notfication-details">
+                      <div className="noty-user-img">
+                        <img src={`../forsaRESTAPI/${message.user.image}`} style={{ width: '40px', height: '40px', borderRadius: '50%' }} alt="" />
                       </div>
-                      <div className="notfication-details">
-                        <div className="noty-user-img">
-                          <img src="../images/resources/ny-img2.png" alt="" />
-                        </div>
-                        <div className="notification-info">
-                          <h3>Jassica William Comment on your project.</h3>
-                          <span>2 min ago</span>
-                        </div>{/*notification-info */}
-                      </div>
-                      <div className="notfication-details">
-                        <div className="noty-user-img">
-                          <img src="../images/resources/ny-img3.png" alt="" />
-                        </div>
-                        <div className="notification-info">
-                          <h3>Jassica William Comment on your project.</h3>
-                          <span>2 min ago</span>
-                        </div>{/*notification-info */}
-                      </div>
-                      <div className="notfication-details">
-                        <div className="noty-user-img">
-                          <img src="../images/resources/ny-img3.png" alt="" />
-                        </div>
-                        <div className="notification-info">
-                          <h3>Jassica William Comment on your project.</h3>
-                          <span>2 min ago</span>
-                        </div>{/*notification-info */}
-                      </div><div className="notfication-details">
-                        <div className="noty-user-img">
-                          <img src="../images/resources/ny-img3.png" alt="" />
-                        </div>
-                        <div className="notification-info">
-                          <h3>Jassica William Comment on your project.</h3>
-                          <span>2 min ago</span>
-                        </div>{/*notification-info */}
-                      </div>
-                      <div className="notfication-details">
-                        <div className="noty-user-img">
-                          <img src="../images/resources/ny-img2.png" alt="" />
-                        </div>
-                        <div className="notification-info">
-                          <h3>Jassica William Comment on your project.</h3>
-                          <span>2 min ago</span>
-                        </div>{/*notification-info */}
-                      </div>
+                      <div className="notification-info">
+                      <p>{message.message.message.message}</p>
+                        <span>{message.message.message.date}</span>
+                      </div>{/*notification-info */}
+                      </div>):null}
+                      
+                      
+                     
+                      
+                      
                       <div className="view-all-nots">
                       <Link to='# '  >View All Notification</Link>
                       </div>

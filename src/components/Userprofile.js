@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken'
 import Messagebox from './Messagebox';
 import { Link } from 'react-router-dom';
 import Suggestions from './Suggestions'
+const URL = 'ws://localhost:3030'
 
 
 export default class Userprofile extends React.Component {
@@ -29,6 +30,7 @@ export default class Userprofile extends React.Component {
       openMsg:false
     }
   }
+  ws = new WebSocket(URL)
   componentDidMount() {
     $(".post_project").on("click", function () {
       $(".post-popup.pst-pj").addClass("active");
@@ -364,6 +366,8 @@ export default class Userprofile extends React.Component {
       friendtitle:this.state.user.title,
       mytitle:this.state.userConnected.title
     }
+    const message = { message: `${this.state.userConnected.fullname} sent you a connection request`, idsender: this.state.userConnected._id,idreceiver:this.state.user._id,date: new Date().toDateString(),idpost:'',idrequest:"x" }
+    this.ws.send(JSON.stringify(message))
     axios.post(`http://localhost:3000/friend/sendrequest/${this.state.user._id}/${this.state.userConnected._id}`,obj).then(res=>
     {
       console.log(res.status)

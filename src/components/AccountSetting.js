@@ -19,6 +19,10 @@ export default class AccountSetting extends React.Component{
         this.setState({ user: res.data }
         )
       });
+      axios.get(`http://localhost:3000/notification/getNotifications/${decode1.user_id}/10`).then(res=>{
+        this.setState({notifications:res.data})
+        //console.log(res.data)
+     });
     }
   }
 
@@ -60,6 +64,7 @@ export default class AccountSetting extends React.Component{
 
 render(){
   const Receivedrequests= this.state.user.ReceivedRequests
+
   
       return (
         <section className="profile-account-setting">
@@ -224,78 +229,21 @@ render(){
                       <div className="acc-setting">
                         <h3>Notifications</h3>
                         <div className="notifications-list">
-                          <div className="notfication-details">
-                            <div className="noty-user-img">
-                              <img src="../images/resources/ny-img1.png" alt="" />
-                            </div>
-                            <div className="notification-info">
-                              <h3><a href="#" >Jassica William</a> Comment on your project.</h3>
-                              <span>2 min ago</span>
-                            </div>{/*notification-info */}
-                          </div>{/*notfication-details end*/}
-                          <div className="notfication-details">
-                            <div className="noty-user-img">
-                              <img src="../images/resources/ny-img2.png" alt="" />
-                            </div>
-                            <div className="notification-info">
-                              <h3><a href="#" >Poonam Verma</a> Bid on your Latest project.</h3>
-                              <span>2 min ago</span>
-                            </div>{/*notification-info */}
-                          </div>{/*notfication-details end*/}
-                          <div className="notfication-details">
-                            <div className="noty-user-img">
-                              <img src="../images/resources/ny-img3.png" alt="" />
-                            </div>
-                            <div className="notification-info">
-                              <h3><a href="#" >Tonney Dhman</a> Comment on your project.</h3>
-                              <span>2 min ago</span>
-                            </div>{/*notification-info */}
-                          </div>{/*notfication-details end*/}
-                          <div className="notfication-details">
-                            <div className="noty-user-img">
-                              <img src="../images/resources/ny-img1.png" alt="" />
-                            </div>
-                            <div className="notification-info">
-                              <h3><a href="#" >Jassica William</a> Comment on your project.</h3>
-                              <span>2 min ago</span>
-                            </div>{/*notification-info */}
-                          </div>{/*notfication-details end*/}
-                          <div className="notfication-details">
-                            <div className="noty-user-img">
-                              <img src="../images/resources/ny-img1.png" alt="" />
-                            </div>
-                            <div className="notification-info">
-                              <h3><a href="#">Jassica William</a> Comment on your project.</h3>
-                              <span>2 min ago</span>
-                            </div>{/*notification-info */}
-                          </div>{/*notfication-details end*/}
-                          <div className="notfication-details">
-                            <div className="noty-user-img">
-                              <img src="../images/resources/ny-img2.png" alt="" />
-                            </div>
-                            <div className="notification-info">
-                              <h3><a href="#" >Poonam Verma </a> Bid on your Latest project.</h3>
-                              <span>2 min ago</span>
-                            </div>{/*notification-info */}
-                          </div>{/*notfication-details end*/}
-                          <div className="notfication-details">
-                            <div className="noty-user-img">
-                              <img src="../images/resources/ny-img3.png" alt="" />
-                            </div>
-                            <div className="notification-info">
-                              <h3><a href="#" >Tonney Dhman</a> Comment on your project</h3>
-                              <span>2 min ago</span>
-                            </div>{/*notification-info */}
-                          </div>{/*notfication-details end*/}
-                          <div className="notfication-details">
-                            <div className="noty-user-img">
-                              <img src="../images/resources/ny-img1.png" alt="" />
-                            </div>
-                            <div className="notification-info">
-                              <h3><a href="#" >Jassica William</a> Comment on your project.</h3>
-                              <span>2 min ago</span>
-                            </div>{/*notification-info */}
-                          </div>{/*notfication-details end*/}
+                          
+                         
+
+                        {this.state.notifications ? this.state.notifications.map((message,index)=>
+                      <div key={index} className="notfication-details">
+                      <div className="noty-user-img">
+                        <img src={`../forsaRESTAPI/${message.user.image}`} style={{ width: '40px', height: '40px', borderRadius: '50%' }} alt="" />
+                      </div>
+                      <div className="notification-info">
+                      <h3>{message.message.message.message}</h3>
+                        <span>{message.message.message.date}</span>
+                      </div>{/*notification-info */}
+                      </div>):null}
+                         
+                          
                         </div>{/*notifications-list end*/}
                       </div>{/*acc-setting end*/}
                     </div>

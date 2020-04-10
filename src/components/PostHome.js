@@ -29,12 +29,15 @@ export default class PostHome extends React.Component {
   }
 
 }
+const URL = 'ws://localhost:3030'
 
 class Job extends React.Component {
   constructor(props) {
     super(props);
     this.state = { Opened: '', liked: '', Nblikes: 0,ClickComments:false,Nbcomments:0 ,openMsg:false}
   }
+  ws = new WebSocket(URL)
+
 
   executeOnClick(isExpanded) {
     //console.log(isExpanded);
@@ -85,6 +88,9 @@ class Job extends React.Component {
         }).catch(err => console.log(err.data));
     }
     else {
+      if(this.props.userid!=this.props.job.job.user){
+        const message = { message: `${this.props.userConnected.fullname} liked your job ${this.props.job.job.title}`, idsender: this.props.userid,idreceiver:this.props.job.job.user,date: new Date().toDateString(),idpost:this.props.job.job._id,idrequest:"" }
+        this.ws.send(JSON.stringify(message))}
       axios.post(`http://localhost:3000/job/${userid}/${this.props.job.job._id}/addlike`).then(
         res => {
           if (res.status === 200) {
@@ -99,6 +105,9 @@ class Job extends React.Component {
   Addcomment=(e)=>{
     const nb = this.state.Nbcomments;
     this.setState({ Nbcomments: nb + 1 })
+    if(this.props.userid!=this.props.job.job.user){
+    const message = { message: `${this.props.userConnected.fullname} commented on your job ${this.props.job.job.title}`, idsender: this.props.userid,idreceiver:this.props.job.job.user,date: new Date().toDateString(),idpost:this.props.job.job._id,idrequest:"" }
+    this.ws.send(JSON.stringify(message))}
   }
 
   OpenComments=(e)=>{
@@ -188,6 +197,7 @@ class Project extends React.Component {
     super(props)
     this.state = { Opened: '', liked: '', Nblikes: 0 ,ClickComments:false,Nbcomments:0,openMsg:false}
   }
+  ws = new WebSocket(URL)
   executeOnClick(isExpanded) {
     //console.log(isExpanded);
   }
@@ -224,6 +234,7 @@ class Project extends React.Component {
     e.preventDefault();
     const userid = this.props.userid;
     if (this.state.liked == 'active') {
+      
       axios.post(`http://localhost:3000/project/${userid}/${this.props.project.project._id}/dislike`).then(
         res => {
           if (res.status === 200) {
@@ -234,6 +245,9 @@ class Project extends React.Component {
         }).catch(err => console.log(err.data));
     }
     else {
+      if(this.props.userid!=this.props.project.project.user){
+        const message = { message: `${this.props.userConnected.fullname} liked your project ${this.props.project.project.title}`, idsender: this.props.userid,idreceiver:this.props.project.project.user,date: new Date().toDateString(),idpost:this.props.project.project._id,idrequest:"" }
+        this.ws.send(JSON.stringify(message))}
       axios.post(`http://localhost:3000/project/${userid}/${this.props.project.project._id}/addlike`).then(
         res => {
           if (res.status === 200) {
@@ -247,6 +261,9 @@ class Project extends React.Component {
   Addcomment=(e)=>{
     const nb = this.state.Nbcomments;
     this.setState({ Nbcomments: nb + 1 })
+    if(this.props.userid!=this.props.project.project.user){
+    const message = { message: `${this.props.userConnected.fullname} commented on your project ${this.props.project.project.title}`, idsender: this.props.userid,idreceiver:this.props.project.project.user,date: new Date().toDateString(),idpost:this.props.project.project._id,idrequest:"" }
+    this.ws.send(JSON.stringify(message))}
   }
 
   OpenComments=(e)=>{
@@ -336,11 +353,15 @@ class Project extends React.Component {
   }
 }
 
+
+
 class Comments extends React.Component {
   constructor(props){
     super(props);
     this.state={comments:[],content:''}
   }
+ 
+
   componentDidMount(){
     if (this.props.project){
     axios.get(`http://localhost:3000/comment/${this.props.project._id}/getCommentsByproject`).then(

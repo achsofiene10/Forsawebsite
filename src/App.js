@@ -19,35 +19,54 @@ import Friendlist from './components/Friendlist';
 import Projects from './components/projects';
 import Userprofile from './components/Userprofile';
 import axios from 'axios'
-import jwt from 'jsonwebtoken'
 import Messages from './components/Messages';
+import jwt from 'jsonwebtoken'
+import { notification } from 'antd';
+import 'antd/dist/antd.css';
+const URL = 'ws://localhost:3030'
+
 
 
 class App extends React.Component{
   constructor(props){
     super(props);
-    this.state={ loggedIn:false,user:{}}
+    this.state={ loggedIn:false,user:{},token:{}}
     this.Logout=this.Logout.bind(this)
     this.Login=this.Login.bind(this)
+
     }
-    componentWillUnmount(){
-      /*var decode1;
-    if (localStorage.getItem('token'))
-    { decode1 = jwt.decode(localStorage.getItem('token'));}
-    else
-    {decode1 = jwt.decode(sessionStorage.getItem('token'));}
-    if(decode1){
-      axios.post(`http://localhost:3000/user/logout/${decode1.userid}`).then(res=>{
-        console.log(res.status)
-      });}*/
-    }
+    ws = new WebSocket(URL)
+
+    
+    
     componentDidMount(){
       
-    
     if(localStorage.getItem('token') || sessionStorage.getItem('token')  ){
       this.setState({loggedIn:true})
     }
+    
+
+    this.ws.onmessage = evt => {  
+      const message = JSON.parse(evt.data)
+      if((message.idreceiver==this.state.token.user_id) && ((message.idpost) || (message.idrequest))) {
+      console.log("notif received",message)
+      this.NewNotif(message)}
     }
+
+    }
+    NewNotif=(_message)=>{
+      notification.open({
+        message: 'New notification',
+        description:
+          _message.message,
+        style: {
+          width: 300,
+          marginLeft:0,
+        },
+      });
+    }
+
+
     Logout(userid){
       this.setState({loggedIn:false})
       localStorage.removeItem('token');
@@ -59,6 +78,11 @@ class App extends React.Component{
 
     Login(){
       this.setState({loggedIn:true})
+    if (localStorage.getItem('token'))
+    { this.setState({token:jwt.decode(localStorage.getItem('token'))});}
+    else
+    {this.setState({token:jwt.decode(sessionStorage.getItem('token'))});}
+
     }
   render(){
     const history = createBrowserHistory();

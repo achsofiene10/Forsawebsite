@@ -2,12 +2,15 @@ import React from 'react'
 import ProfileBadge from './ProfileBadge';
 import axios from 'axios'
 import jwt from 'jsonwebtoken'
+const URL = 'ws://localhost:3030'
 
 export default class OtherProfiles extends React.Component{
     constructor(props){
         super(props);
         this.state={users:[],user:{}}
     }
+     ws = new WebSocket(URL)
+
     componentDidMount(){
       var decode1;
       if (localStorage.getItem('token'))
@@ -38,7 +41,8 @@ export default class OtherProfiles extends React.Component{
       mytitle:this.state.user.title,
       friendtitle:friend.title
     }
-    console.log(obj,index)
+    const message = { message: `${this.state.user.fullname} sent you a connection request`, idsender: this.state.user._id,idreceiver:friend._id,date: new Date().toDateString(),idpost:'',idrequest:"x" }
+    this.ws.send(JSON.stringify(message))
     axios.post(`http://localhost:3000/friend/sendrequest/${friend._id}/${this.state.user._id}`,obj).then(res=>
     {
       console.log(res.status);
