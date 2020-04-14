@@ -12,10 +12,10 @@ variables:
   azureSubscription: '41c8ccb9-5da5-4f87-8723-b277842e71c1'
 
   # Web app name
-  webAppName: ''
+  webAppName: 'Forsawebsite'
   
   # Environment name
-  environmentName: ''
+  environmentName: 'Reactjs environment'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
