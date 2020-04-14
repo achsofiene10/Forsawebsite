@@ -12,7 +12,7 @@ variables:
   azureSubscription: '41c8ccb9-5da5-4f87-8723-b277842e71c1'
 
   # Web app name
-  webAppName: 'ASP-ForsaResource-bf50'
+  webAppName: 'ForsaEnvironment'
   
   # Environment name
   environmentName: 'ForsaEnvironment'
