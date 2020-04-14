@@ -15,7 +15,7 @@ variables:
   webAppName: 'ASP-ForsaResource-bf50'
   
   # Environment name
-  environmentName: 'Reactjs environment'
+  environmentName: 'ForsaEnvironment'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
